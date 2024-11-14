@@ -1,37 +1,37 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import tamaguiConfig from "@/tamagui.config";
+import { Stack } from "expo-router";
+import { TamaguiProvider } from "tamagui";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { useEffect } from "react";
+import * as SplashScreen from "expo-splash-screen";
+import { darkerGrotesqueFonts } from "@/constants/fonts";
+import { useFonts } from "@expo-google-fonts/darker-grotesque";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  const [loaded, error] = useFonts(darkerGrotesqueFonts);
 
   useEffect(() => {
-    if (loaded) {
+    if (loaded || error) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [loaded, error]);
 
   if (!loaded) {
     return null;
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <TamaguiProvider config={tamaguiConfig}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="details" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="(edit)/degree"
+          options={{ headerShown: false, presentation: "card" }}
+        />
       </Stack>
-    </ThemeProvider>
+    </TamaguiProvider>
   );
 }
