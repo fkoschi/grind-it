@@ -32,7 +32,7 @@ const Home: FC = () => {
       );
     }
     return (
-      <ScrollView bgC="#F7F7F7" pl="$8" pt="$4" pr="$4">
+      <ScrollView bgC="#F7F7F7" pl="$8" pt="$4" pr="$8">
         {mockedData.map((card, i) => (
           <Card key={`dashboard-card-${i}`} data={card} />
         ))}
@@ -41,7 +41,7 @@ const Home: FC = () => {
   };
 
   return (
-    <View flex={1}>
+    <View flex={1} bgC="#F7F7F7">
       <Header disabled={noData} />
       <Cards />
     </View>

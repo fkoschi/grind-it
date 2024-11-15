@@ -1,5 +1,6 @@
 import { config } from "@tamagui/config/v3";
 import { createFont, createTamagui, createTokens } from "tamagui";
+import { createAnimations } from "@tamagui/animations-moti";
 
 const tokens = createTokens({
   ...config.tokens,
@@ -38,9 +39,31 @@ const darkerGrotesqueFont = createFont({
   },
 });
 
+const animations = createAnimations({
+  fast: {
+    type: "spring",
+    damping: 20,
+    mass: 1.2,
+    stiffness: 250,
+  },
+  medium: {
+    type: "spring",
+    damping: 10,
+    mass: 0.9,
+    stiffness: 100,
+  },
+  slow: {
+    type: "spring",
+    damping: 5,
+    mass: 0.1,
+    stiffness: 10,
+  },
+});
+
 export const tamaguiConfig = createTamagui({
   ...config,
   tokens,
+  animations,
   shorthands: {
     c: "color",
     bgC: "backgroundColor",

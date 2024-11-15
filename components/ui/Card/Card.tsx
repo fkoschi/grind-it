@@ -1,13 +1,13 @@
 import { FC } from "react";
-import { CoffeeCard as ICoffeeCard } from "@/types";
+import { CoffeeBean } from "@/types";
 import { View, Text, YStack, styled } from "tamagui";
 import { Image } from "expo-image";
-import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { Pressable } from "react-native";
 import { useRouter } from "expo-router";
+import FavoriteButton from "../FavoriteButton/FavoriteButton";
 
 interface CoffeeCardProps {
-  data: ICoffeeCard;
+  data: CoffeeBean;
 }
 
 const StyledCard = styled(YStack, {
@@ -40,10 +40,10 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
       <View flex={0} justifyContent="center">
         <Image
           source={imagePath}
-          style={{ marginLeft: -40, width: 100, height: 100 }}
+          style={{ marginLeft: -24, width: 80, height: 80 }}
         />
       </View>
-      <YStack ml="$4" justifyContent="center">
+      <YStack ml="$4" justifyContent="center" flex={1}>
         <Pressable onPress={() => router.navigate("/details")}>
           <Text
             c="$primary"
@@ -56,13 +56,16 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
             {name}
           </Text>
         </Pressable>
+
         <Pressable onPress={() => router.navigate("/(edit)/degree")}>
-          <Text fontSize={10} mt="$2">
-            Mahlgrad
-          </Text>
-          <Text fontSize={48} c="$primary" fontFamily="BlackMango-Regular">
-            {degreeOfGrinding}
-          </Text>
+          <View flex={1} alignItems="flex-start" justifyContent="flex-end" flexDirection="column">
+            <Text fontSize={10} mt="$2">
+              Mahlgrad
+            </Text>
+            <Text fontSize="$9" lineHeight="$9" c="$primary" fontFamily="BlackMango-Regular">
+              {degreeOfGrinding}
+            </Text>
+          </View>
         </Pressable>
       </YStack>
       <FavoriteButton isFavorite={isFavorit} />
