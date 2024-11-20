@@ -26,10 +26,6 @@ const SearchFilter: FC<Props> = ({
     setFilterData(updatedFilters);
   };
 
-  if (!isVisible) {
-    return null;
-  }
-
   return (
     <View
       flex={0}
@@ -38,7 +34,6 @@ const SearchFilter: FC<Props> = ({
       animation="slow"
       enterStyle={{
         opacity: 0,
-        x: -150,
       }}
     >
       <ScrollView horizontal>

@@ -6,7 +6,10 @@ const tokens = createTokens({
   ...config.tokens,
   color: {
     primary: "#E89E3F",
+    primaryHover: "#E89E3F",
     secondary: "#664F3F",
+    secondaryHover: "#664F3F",
+    screenBackground: "#F7F7F7",
     primaryGreen: "#7AA996",
     white: "#fff",
   },
@@ -39,31 +42,68 @@ const darkerGrotesqueFont = createFont({
   },
 });
 
-const animations = createAnimations({
-  fast: {
-    type: "spring",
+export const animationsReanimated = createAnimations({
+  "75ms": {
+    type: "timing",
+    duration: 75,
+  },
+  "100ms": {
+    type: "timing",
+    duration: 100,
+  },
+  "200ms": {
+    type: "timing",
+    duration: 200,
+  },
+  superBouncy: {
+    damping: 5,
+    mass: 0.7,
+    stiffness: 200,
+  },
+  bouncy: {
+    damping: 9,
+    mass: 0.9,
+    stiffness: 150,
+  },
+  medium: {
+    damping: 15,
+    stiffness: 120,
+    mass: 1,
+  },
+  lazy: {
+    damping: 18,
+    stiffness: 50,
+  },
+  slow: {
+    damping: 15,
+    stiffness: 40,
+  },
+  quick: {
     damping: 20,
     mass: 1.2,
     stiffness: 250,
   },
-  medium: {
-    type: "spring",
+  tooltip: {
     damping: 10,
     mass: 0.9,
     stiffness: 100,
   },
-  slow: {
-    type: "spring",
+  quicker: {
+    damping: 20,
+    mass: 0.7,
+    stiffness: 250,
+  },
+  quickest: {
     damping: 5,
-    mass: 0.1,
-    stiffness: 10,
+    mass: 0.2,
+    stiffness: 300,
   },
 });
 
 export const tamaguiConfig = createTamagui({
   ...config,
   tokens,
-  animations,
+  animations: animationsReanimated,
   shorthands: {
     c: "color",
     bgC: "backgroundColor",
@@ -79,6 +119,7 @@ export const tamaguiConfig = createTamagui({
     pl: "paddingLeft",
     pr: "paddingRight",
     pt: "paddingTop",
+    pb: "paddingBottom",
   } as const,
 });
 

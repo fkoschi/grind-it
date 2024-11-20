@@ -26932,8 +26932,20 @@
         "fast": {
           "type": "spring",
           "damping": 20,
-          "mass": 0.5,
+          "mass": 1.2,
+          "stiffness": 250
+        },
+        "medium": {
+          "type": "spring",
+          "damping": 10,
+          "mass": 0.9,
           "stiffness": 100
+        },
+        "slow": {
+          "type": "spring",
+          "damping": 5,
+          "mass": 0.1,
+          "stiffness": 10
         }
       },
       "usePresence": "Function",
@@ -37292,7 +37304,8 @@
       "p": "padding",
       "pl": "paddingLeft",
       "pr": "paddingRight",
-      "pt": "paddingTop"
+      "pt": "paddingTop",
+      "pb": "paddingBottom"
     },
     "tokens": {
       "color": {
@@ -37308,6 +37321,13 @@
           "key": "$secondary",
           "name": "c-secondary",
           "val": "#664F3F",
+          "variable": ""
+        },
+        "screenBackground": {
+          "isVar": true,
+          "key": "$screenBackground",
+          "name": "c-screenBackground",
+          "val": "#F7F7F7",
           "variable": ""
         },
         "primaryGreen": {
@@ -38108,7 +38128,8 @@
       "padding": "p",
       "paddingLeft": "pl",
       "paddingRight": "pr",
-      "paddingTop": "pt"
+      "paddingTop": "pt",
+      "paddingBottom": "pb"
     },
     "parsed": true,
     "getNewCSS": "Function",
@@ -38127,6 +38148,13 @@
         "key": "$secondary",
         "name": "c-secondary",
         "val": "#664F3F",
+        "variable": ""
+      },
+      "$color.screenBackground": {
+        "isVar": true,
+        "key": "$screenBackground",
+        "name": "c-screenBackground",
+        "val": "#F7F7F7",
         "variable": ""
       },
       "$color.primaryGreen": {

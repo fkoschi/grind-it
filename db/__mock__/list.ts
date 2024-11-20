@@ -1,6 +1,8 @@
 import { CoffeeBean } from "@/types";
 
-export const dashboardListData: Array<CoffeeBean> = [
+export const dashboardListData: Array<CoffeeBean> = [];
+
+export const _dashboardListData: Array<CoffeeBean> = [
   {
     id: 1,
     roastHouse: "Supremo",

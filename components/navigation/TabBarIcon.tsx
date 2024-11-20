@@ -1,9 +1,29 @@
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
+import { FC, ReactElement } from "react";
+import { View } from "tamagui";
+import { HapticTab } from "../HapticTab";
 
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { type IconProps } from '@expo/vector-icons/build/createIconSet';
-import { type ComponentProps } from 'react';
-
-export function TabBarIcon({ style, ...rest }: IconProps<ComponentProps<typeof Ionicons>['name']>) {
-  return <Ionicons size={28} style={[{ marginBottom: -3 }, style]} {...rest} />;
+interface Props {
+  onPress: () => void;
+  icon: ReactElement;
 }
+const TabBarIcon: FC<Props> = ({ onPress, icon }) => {
+  return (
+    <View flex={1} alignItems="center">
+      <HapticTab
+        style={{
+          flex: 1,
+          zIndex: 999999,
+          maxHeight: 60,
+          width: 80,
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+        onPress={onPress}
+      >
+        {icon}
+      </HapticTab>
+    </View>
+  );
+};
+
+export default TabBarIcon;

@@ -7,20 +7,17 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+    "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.grind-it"
+      "bundleIdentifier": "com.fkoschi.grind-it"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.fkoschi.grindit"
     },
     "web": {
       "bundler": "metro",
@@ -28,7 +25,17 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      "expo-asset",
       "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
       [
         "expo-font",
         {
@@ -37,14 +44,7 @@
           ]
         }
       ],
-      [
-        "expo-asset",
-        {
-          "assets": [
-            "./assets/images/coffee-cup.png"
-          ]
-        }
-      ]
+      "expo-sqlite"
     ],
     "experiments": {
       "typedRoutes": true

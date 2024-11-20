@@ -1,4 +1,4 @@
-import { ComponentProps, FC, useState } from "react";
+import { FC } from "react";
 import { styled, View } from "tamagui";
 import ThemedText from "../ThemedText";
 import { Pressable } from "react-native";
@@ -11,14 +11,15 @@ const StyledFilterChip = styled(View, {
   alignSelf: "flex-start",
   py: "$3",
   borderRadius: "$6",
-  borderColor: "#664F3F",
+  borderColor: "$primary",
+  bgC: "$white",
   borderWidth: 1,
   variants: {
     active: {
       ":boolean": (active: boolean) => {
         if (active) {
           return {
-            backgroundColor: "#664F3F",
+            backgroundColor: "$primary",
           };
         }
       },

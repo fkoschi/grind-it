@@ -1,0 +1,20 @@
+import { FC } from "react";
+import Svg, { G, Path, Defs, ClipPath, Rect } from "react-native-svg";
+
+const SaveIcon: FC = () => (
+  <Svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+    <G clip-path="url(#clip0_17_17296)">
+      <Path
+        d="M17.59 3.59C17.21 3.21 16.7 3 16.17 3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V7.83C21 7.3 20.79 6.79 20.41 6.42L17.59 3.59ZM12 19C10.34 19 9 17.66 9 16C9 14.34 10.34 13 12 13C13.66 13 15 14.34 15 16C15 17.66 13.66 19 12 19ZM13 9H7C5.9 9 5 8.1 5 7C5 5.9 5.9 5 7 5H13C14.1 5 15 5.9 15 7C15 8.1 14.1 9 13 9Z"
+        fill="white"
+      />
+    </G>
+    <Defs>
+      <ClipPath id="clip0_17_17296">
+        <Rect width="24" height="24" fill="white" />
+      </ClipPath>
+    </Defs>
+  </Svg>
+);
+
+export default SaveIcon;

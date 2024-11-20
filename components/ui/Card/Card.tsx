@@ -5,12 +5,14 @@ import { Image } from "expo-image";
 import { Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
+import ThemedText from "../ThemedText";
 
 interface CoffeeCardProps {
   data: CoffeeBean;
 }
 
 const StyledCard = styled(YStack, {
+  flex: 1,
   flexDirection: "row",
   backgroundColor: "white",
   width: "100%",
@@ -28,12 +30,9 @@ const StyledCard = styled(YStack, {
 
 const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
   const router = useRouter();
-  const { id, roastHouse, name, degreeOfGrinding, isFavorit } = data;
+  const { id, roastery, name, degreeOfGrinding, isFavorit } = data;
 
-  const imagePath =
-    id % 2 === 1
-      ? require("./img/coffee-cup.png")
-      : require("./img/coffee-cup-v1.png");
+  const imagePath = require("@/assets/images/coffee-cup.png");
 
   return (
     <StyledCard>
@@ -44,13 +43,13 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
         />
       </View>
       <YStack ml="$4" justifyContent="center" flex={1}>
-        <Pressable onPress={() => router.navigate("/details")}>
+        <Pressable onPress={() => router.navigate(`/bean/details/${id}`)}>
           <Text
             c="$primary"
             fontSize={16}
             fontFamily="DarkerGrotesque_500Medium"
           >
-            {roastHouse}
+            {roastery}
           </Text>
           <Text fontSize={24} fontFamily="BlackMango-Regular">
             {name}
@@ -58,17 +57,27 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
         </Pressable>
 
         <Pressable onPress={() => router.navigate("/(edit)/degree")}>
-          <View flex={1} alignItems="flex-start" justifyContent="flex-end" flexDirection="column">
-            <Text fontSize={10} mt="$2">
+          <View
+            flex={1}
+            alignItems="flex-start"
+            justifyContent="flex-end"
+            flexDirection="column"
+          >
+            <ThemedText fw={300} fontSize={10} mt="$2">
               Mahlgrad
-            </Text>
-            <Text fontSize="$9" lineHeight="$9" c="$primary" fontFamily="BlackMango-Regular">
+            </ThemedText>
+            <Text
+              fontSize="$9"
+              lineHeight="$9"
+              c="$primary"
+              fontFamily="BlackMango-Regular"
+            >
               {degreeOfGrinding}
             </Text>
           </View>
         </Pressable>
       </YStack>
-      <FavoriteButton isFavorite={isFavorit} />
+      <FavoriteButton isFavorite={isFavorit ?? false} />
     </StyledCard>
   );
 };

@@ -1,40 +1,24 @@
 import { FC } from "react";
-import { Pressable } from "react-native";
 import { Text, View } from "tamagui";
 import { Image } from "expo-image";
-import { LinearGradient } from "tamagui/linear-gradient";
-import { useRouter } from "expo-router";
 import ThemedText from "@/components/ui/ThemedText";
 import Badge from "@/components/ui/Badge/Badge";
+import ActionButton from "@/components/ui/ActionButton/ActionButton";
+import EditIcon from "@/components/ui/Icons/Edit";
+import { useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 
-const Details: FC = () => {
+const DetailsPage: FC = () => {
   const router = useRouter();
+  const { id } = useLocalSearchParams();
 
-  const handleBackButtonPress = () => router.back();
+  const handleEditPress = () => router.navigate(`/bean/edit/${id}`);
 
   return (
     <View flex={1}>
-      <LinearGradient
-        height="$20"
-        colors={["#FFDAAB", "#E89E3F"]}
-        borderBottomLeftRadius="$12"
-        borderBottomRightRadius="$12"
-        start={[0, 1]}
-        end={[0, 0]}
-      >
-        <Pressable
-          style={{ position: "absolute", top: 80, left: 32 }}
-          onPress={handleBackButtonPress}
-        >
-          <Image
-            source={require("../assets/icons/back.png")}
-            style={{ width: 24, height: 24 }}
-          />
-        </Pressable>
-      </LinearGradient>
       <View flex={0}>
         <Image
-          source={require("../assets/images/coffee-cup.png")}
+          source={require("@/assets/images/coffee-cup.png")}
           style={{
             position: "absolute",
             zIndex: 1,
@@ -84,7 +68,13 @@ const Details: FC = () => {
           </View>
         </View>
       </View>
+
+      <ActionButton
+        bgC="$primary"
+        onPress={handleEditPress}
+        icon={<EditIcon />}
+      />
     </View>
   );
 };
-export default Details;
+export default DetailsPage;

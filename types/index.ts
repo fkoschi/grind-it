@@ -11,8 +11,8 @@ export interface Filter {
 export interface CoffeeBean {
   id: number;
   name: string;
-  roastHouse: string;
-  degreeOfGrinding: number;
-  isFavorit: boolean;
+  roastery: string;
+  degreeOfGrinding?: number;
+  isFavorit?: boolean;
   taste?: Array<Taste>;
 }
