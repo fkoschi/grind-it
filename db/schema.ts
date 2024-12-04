@@ -1,4 +1,4 @@
-import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { int, real, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const roasteryTable = sqliteTable("roastery_table", {
   id: int().primaryKey({ autoIncrement: true }),
@@ -16,6 +16,7 @@ export const beanTable = sqliteTable("bean_table", {
   robustaAmount: int(),
   arabicaAmount: int(),
   roastery: int().references(() => roasteryTable.id),
+  degreeOfGrinding: real(),
   isFavorit: integer({ mode: "boolean" }),
 });
 

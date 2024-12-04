@@ -7,6 +7,7 @@ import { createInsertSchema } from "drizzle-zod";
 import { Button, Input, Text, View, XStack } from "tamagui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import AddIcon from "@/components/ui/Icons/Add";
 
 interface AddRoasteryFormInput {
   name: string;
@@ -35,14 +36,12 @@ const AddRoasteryForm: FC<Props> = ({ onFormSubmit }) => {
     reset();
   };
 
-  console.log(errors);
-
   return (
     <View flex={1} p="$8">
       <Text fontSize="$8" mb="$4">
         Rösterei anlegen
       </Text>
-      <XStack gap="$2">
+      <XStack gap="$2" alignItems="center">
         <View flex={1}>
           <Controller
             name="name"
@@ -62,11 +61,15 @@ const AddRoasteryForm: FC<Props> = ({ onFormSubmit }) => {
         <View>
           <Button
             circular
-            bgC="$primaryGreen"
+            bgC="$secondary"
+            height={32}
+            minHeight={32}
+            width={32}
+            minWidth={32}
             onPress={handleSubmit(onSubmit)}
-            pressStyle={{ bgC: "$primaryGreen" }}
+            pressStyle={{ bgC: "$secondaryHover" }}
           >
-            <SaveIcon />
+            <AddIcon />
           </Button>
         </View>
       </XStack>

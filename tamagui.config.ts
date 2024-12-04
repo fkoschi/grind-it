@@ -12,6 +12,7 @@ const tokens = createTokens({
     screenBackground: "#F7F7F7",
     primaryGreen: "#7AA996",
     white: "#fff",
+    favorite: "#CD5B5B",
   },
 });
 

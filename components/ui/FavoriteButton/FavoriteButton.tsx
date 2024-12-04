@@ -1,18 +1,18 @@
 import { FC } from "react";
 import { Pressable } from "react-native";
-import { Image } from "expo-image";
+import HeartIcon from "../Icons/Heart";
 
 interface Props {
   isFavorite: boolean;
+  onPress: () => void;
 }
-const FavoriteButton: FC<Props> = ({ isFavorite }) => {
-  const imageSource = isFavorite
-    ? require("./img/heart-filled.png")
-    : require("./img/heart-outlined.png");
-
+const FavoriteButton: FC<Props> = ({ isFavorite, onPress }) => {
   return (
-    <Pressable style={{ position: "absolute", right: 24, top: 24 }}>
-      <Image source={imageSource} style={{ width: 16, height: 16 }} />
+    <Pressable
+      style={{ position: "absolute", right: 24, top: 24 }}
+      onPress={onPress}
+    >
+      <HeartIcon size={12} fill={isFavorite ? "#CD5B5B" : "transparent"} />
     </Pressable>
   );
 };

@@ -3,9 +3,9 @@ import Svg, { Path } from "react-native-svg";
 import { getTokenValue } from "tamagui";
 
 interface Props {
-  active: boolean;
+  active?: boolean;
 }
-const HomeIcon: FC<Props> = ({ active }) => {
+const HomeIcon: FC<Props> = ({ active = false }) => {
   const color = active ? getTokenValue("$primary") : "#A2A2A2";
   return (
     <Svg width="21" height="20" viewBox="0 0 21 20" fill={color}>

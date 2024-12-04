@@ -184,7 +184,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             }
           }
         },
@@ -389,6 +391,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -587,7 +591,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             }
           }
         },
@@ -773,7 +779,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "defaultProps": {
               "tag": "span",
@@ -1022,6 +1030,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -1252,6 +1262,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -1456,7 +1468,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -1774,7 +1788,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "defaultProps": {
               "tag": "span",
@@ -1987,7 +2003,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -2193,7 +2211,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             }
           }
         },
@@ -2404,6 +2424,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -2719,7 +2741,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             }
           }
         },
@@ -2907,7 +2931,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -3228,7 +3254,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -3440,7 +3468,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -3651,7 +3681,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -3956,7 +3988,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -4311,7 +4345,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -4695,6 +4731,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -4904,7 +4942,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -5217,7 +5257,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -5527,7 +5569,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -5841,7 +5885,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -6154,7 +6200,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -6468,7 +6516,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -6817,7 +6867,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -7164,7 +7216,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -7469,7 +7523,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "componentName": "DialogClose",
             "isReactNative": false,
@@ -7665,7 +7721,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -8015,6 +8073,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -8221,7 +8281,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -8540,7 +8602,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -8858,7 +8922,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -9111,6 +9177,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -9314,7 +9382,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "componentName": "DialogTrigger",
             "isReactNative": false,
@@ -9507,7 +9577,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "componentName": "Form",
             "isReactNative": false,
@@ -9700,7 +9772,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "componentName": "Form",
             "isReactNative": false,
@@ -9889,7 +9963,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "componentName": "FormTrigger",
             "isReactNative": false,
@@ -10083,7 +10159,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -10392,7 +10470,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -10699,7 +10779,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -11008,7 +11090,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -11317,7 +11401,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "componentName": "Article",
             "isReactNative": false,
@@ -11509,7 +11595,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "componentName": "Aside",
             "isReactNative": false,
@@ -11701,7 +11789,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "componentName": "Footer",
             "isReactNative": false,
@@ -11894,7 +11984,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "componentName": "Header",
             "isReactNative": false,
@@ -12086,7 +12178,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "componentName": "Main",
             "isReactNative": false,
@@ -12278,7 +12372,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "componentName": "Nav",
             "isReactNative": false,
@@ -12471,7 +12567,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "componentName": "Section",
             "isReactNative": false,
@@ -12714,6 +12812,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -12962,6 +13062,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -13170,7 +13272,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -13505,7 +13609,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -13873,6 +13979,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -14112,6 +14220,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -14351,6 +14461,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -14555,7 +14667,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -14775,7 +14889,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -15088,7 +15204,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -15297,7 +15415,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -15517,7 +15637,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -15829,7 +15951,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -16142,7 +16266,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -16453,7 +16579,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -16763,7 +16891,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -17070,7 +17200,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -17379,7 +17511,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -17687,7 +17821,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -17998,7 +18134,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -18375,7 +18513,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -18584,7 +18724,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -18799,7 +18941,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "vertical": {
@@ -19011,7 +19155,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "vertical": {
@@ -19218,7 +19364,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -19522,7 +19670,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -19824,7 +19974,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -20046,7 +20198,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -20280,7 +20434,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -20600,7 +20756,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -20834,7 +20992,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -21154,7 +21314,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -21366,7 +21528,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -21682,7 +21846,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -21896,7 +22062,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -22121,7 +22289,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -22327,7 +22497,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -22534,7 +22706,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -22742,7 +22916,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -22996,7 +23172,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -23295,7 +23473,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -23530,7 +23710,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -23761,7 +23943,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -24075,7 +24259,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true
+              "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true
             },
             "variants": {
               "fullscreen": {
@@ -24360,6 +24546,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -24600,6 +24788,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -24839,6 +25029,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -25078,6 +25270,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -25317,6 +25511,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -25556,6 +25752,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -25795,6 +25993,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -26034,6 +26234,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -26273,6 +26475,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -26521,6 +26725,8 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
+              "boxShadow": true,
+              "filter": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -26929,23 +27135,60 @@
       "Text": "Function",
       "isReactNative": true,
       "animations": {
-        "fast": {
-          "type": "spring",
+        "75ms": {
+          "type": "timing",
+          "duration": 75
+        },
+        "100ms": {
+          "type": "timing",
+          "duration": 100
+        },
+        "200ms": {
+          "type": "timing",
+          "duration": 200
+        },
+        "superBouncy": {
+          "damping": 5,
+          "mass": 0.7,
+          "stiffness": 200
+        },
+        "bouncy": {
+          "damping": 9,
+          "mass": 0.9,
+          "stiffness": 150
+        },
+        "medium": {
+          "damping": 15,
+          "stiffness": 120,
+          "mass": 1
+        },
+        "lazy": {
+          "damping": 18,
+          "stiffness": 50
+        },
+        "slow": {
+          "damping": 15,
+          "stiffness": 40
+        },
+        "quick": {
           "damping": 20,
           "mass": 1.2,
           "stiffness": 250
         },
-        "medium": {
-          "type": "spring",
+        "tooltip": {
           "damping": 10,
           "mass": 0.9,
           "stiffness": 100
         },
-        "slow": {
-          "type": "spring",
+        "quicker": {
+          "damping": 20,
+          "mass": 0.7,
+          "stiffness": 250
+        },
+        "quickest": {
           "damping": 5,
-          "mass": 0.1,
-          "stiffness": 10
+          "mass": 0.2,
+          "stiffness": 300
         }
       },
       "usePresence": "Function",
@@ -37316,10 +37559,24 @@
           "val": "#E89E3F",
           "variable": ""
         },
+        "primaryHover": {
+          "isVar": true,
+          "key": "$primaryHover",
+          "name": "c-primaryHover",
+          "val": "#E89E3F",
+          "variable": ""
+        },
         "secondary": {
           "isVar": true,
           "key": "$secondary",
           "name": "c-secondary",
+          "val": "#664F3F",
+          "variable": ""
+        },
+        "secondaryHover": {
+          "isVar": true,
+          "key": "$secondaryHover",
+          "name": "c-secondaryHover",
           "val": "#664F3F",
           "variable": ""
         },
@@ -37342,6 +37599,13 @@
           "key": "$white",
           "name": "c-white",
           "val": "#fff",
+          "variable": ""
+        },
+        "favorite": {
+          "isVar": true,
+          "key": "$favorite",
+          "name": "c-favorite",
+          "val": "#CD5B5B",
           "variable": ""
         }
       },
@@ -38143,10 +38407,24 @@
         "val": "#E89E3F",
         "variable": ""
       },
+      "$color.primaryHover": {
+        "isVar": true,
+        "key": "$primaryHover",
+        "name": "c-primaryHover",
+        "val": "#E89E3F",
+        "variable": ""
+      },
       "$color.secondary": {
         "isVar": true,
         "key": "$secondary",
         "name": "c-secondary",
+        "val": "#664F3F",
+        "variable": ""
+      },
+      "$color.secondaryHover": {
+        "isVar": true,
+        "key": "$secondaryHover",
+        "name": "c-secondaryHover",
         "val": "#664F3F",
         "variable": ""
       },
@@ -38169,6 +38447,13 @@
         "key": "$white",
         "name": "c-white",
         "val": "#fff",
+        "variable": ""
+      },
+      "$color.favorite": {
+        "isVar": true,
+        "key": "$favorite",
+        "name": "c-favorite",
+        "val": "#CD5B5B",
         "variable": ""
       },
       "$radius.0": {

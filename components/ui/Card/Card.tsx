@@ -6,6 +6,10 @@ import { Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import ThemedText from "../ThemedText";
+import { db } from "@/services/db-service";
+import { beanTable } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 
 interface CoffeeCardProps {
   data: CoffeeBean;
@@ -30,9 +34,16 @@ const StyledCard = styled(YStack, {
 
 const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
   const router = useRouter();
-  const { id, roastery, name, degreeOfGrinding, isFavorit } = data;
+  const { id, roastery, name, isFavorite, degreeOfGrinding = 0.0 } = data;
 
   const imagePath = require("@/assets/images/coffee-cup.png");
+
+  const handlePress = async () => {
+    await db
+      .update(beanTable)
+      .set({ isFavorit: !isFavorite })
+      .where(eq(beanTable.id, Number(id)));
+  };
 
   return (
     <StyledCard>
@@ -56,7 +67,7 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
           </Text>
         </Pressable>
 
-        <Pressable onPress={() => router.navigate("/(edit)/degree")}>
+        <Pressable onPress={() => router.navigate(`/bean/edit/degree/${id}`)}>
           <View
             flex={1}
             alignItems="flex-start"
@@ -77,7 +88,10 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
           </View>
         </Pressable>
       </YStack>
-      <FavoriteButton isFavorite={isFavorit ?? false} />
+      <FavoriteButton
+        isFavorite={isFavorite ?? false}
+        onPress={handlePress}
+      />
     </StyledCard>
   );
 };

@@ -14,8 +14,11 @@ export default function RootLayout() {
           options={{ headerShown: false, animation: "none" }}
         />
         <Stack.Screen
-          name="(edit)/degree"
-          options={{ headerShown: false, presentation: "card" }}
+          name="edit/roasteries"
+          options={{
+            headerShown: false,
+            presentation: "card",
+          }}
         />
       </Stack>
     </App>

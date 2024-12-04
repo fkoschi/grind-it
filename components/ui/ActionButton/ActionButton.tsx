@@ -11,7 +11,7 @@ const ActionButton: FC<Props> = ({ onPress, icon, ...props }) => {
   const left = width / 2 - 52 / 2;
 
   return (
-    <View position="absolute" bottom={52} left={left} zIndex={99999}>
+    <View position="absolute" bottom={40} left={left} zIndex={100_000}>
       <Button circular width={52} height={52} onPress={onPress} {...props}>
         {icon}
       </Button>

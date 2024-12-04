@@ -1,0 +1,1 @@
+ALTER TABLE `bean_table` ADD `degreeOfGrinding` real;

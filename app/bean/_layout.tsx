@@ -1,6 +1,6 @@
 import { Slot, useNavigation, useRouter } from "expo-router";
 import { Pressable } from "react-native";
-import { Button, View, Text, PortalProvider } from "tamagui";
+import { Button, View, Text, YStack } from "tamagui";
 import { Image } from "expo-image";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { useEffect } from "react";
@@ -11,8 +11,8 @@ import { db } from "@/services/db-service";
 import { beanTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import ThemedText from "@/components/ui/ThemedText";
-import BottomSheet from "@/components/ui/Sheet/Sheet";
-import Bean from "./Bean";
+import EditBean from "./EditBean";
+import { PATH_NAME as EDIT_DEGREE_PATH_NAME } from "./edit/degree/[id]";
 
 const BeanLayout = () => {
   const router = useRouter();
@@ -21,6 +21,7 @@ const BeanLayout = () => {
   const { id: beanId } = useLocalSearchParams();
 
   const isEditRoute = routerInfo.pathname.includes("edit");
+  const isEditDegreeRoute = routerInfo.pathname.includes(EDIT_DEGREE_PATH_NAME);
   const isAddRoute = routerInfo.pathname.includes("add");
 
   const handleDeleteBeanPress = async () => {
@@ -33,10 +34,10 @@ const BeanLayout = () => {
   }, [navigation]);
 
   return (
-    <Bean>
+    <EditBean>
       <View flex={1}>
         <LinearGradient
-          height="$20"
+          height={"$18"}
           colors={["#FFDAAB", "#E89E3F"]}
           borderBottomLeftRadius="$12"
           borderBottomRightRadius="$12"
@@ -44,7 +45,7 @@ const BeanLayout = () => {
           end={[0, 0]}
         >
           <Pressable
-            style={{ position: "absolute", top: 80, left: 32 }}
+            style={{ position: "sticky", top: 80, left: 32 }}
             onPress={() => router.back()}
           >
             <Image
@@ -52,7 +53,24 @@ const BeanLayout = () => {
               style={{ width: 24, height: 24 }}
             />
           </Pressable>
-
+          {isEditDegreeRoute && (
+            <View
+              flex={0}
+              position="absolute"
+              bottom={40}
+              alignItems="center"
+              width="100%"
+            >
+              <YStack flex={0} alignItems="center">
+                <Text fontSize="$10" fontFamily="BlackMango-Regular">
+                  Toskana
+                </Text>
+                <ThemedText fontSize="$5" fw={500}>
+                  Mahlgrad anpassen
+                </ThemedText>
+              </YStack>
+            </View>
+          )}
           {isAddRoute && (
             <View
               flex={1}
@@ -67,7 +85,6 @@ const BeanLayout = () => {
               </ThemedText>
             </View>
           )}
-
           {isEditRoute && (
             <View position="absolute" right={32} top={72}>
               <Alert
@@ -90,9 +107,11 @@ const BeanLayout = () => {
             </View>
           )}
         </LinearGradient>
-        <Slot />
+        <View flex={1} position="relative" height={"100%"}>
+          <Slot />
+        </View>
       </View>
-    </Bean>
+    </EditBean>
   );
 };
 

@@ -3,23 +3,43 @@ import AddIcon from "@/components/ui/Icons/Add";
 import CheckIcon from "@/components/ui/Icons/Check";
 import PercentageIcon from "@/components/ui/Icons/Percentage";
 import InputWithIcon from "@/components/ui/Input/InputWithIcon";
-import { beanTable, roasteryTable } from "@/db/schema";
+import {
+  beanTable,
+  beanTasteAssociationTable,
+  beanTasteTable,
+  roasteryTable,
+} from "@/db/schema";
 import { db } from "@/services/db-service";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import { Text, Input, View, XStack, Button } from "tamagui";
 import { useBeanStore } from "@/store/bean-store";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { Image } from "expo-image";
+import { useNavigation, useRouter } from "expo-router";
+import Badge from "@/components/ui/Badge/Badge";
+import ThemedSelect from "@/components/ui/Select/Select";
 
 interface FormInput {
   name: string;
+  roastery: number;
   arabicaAmount: number;
   robustaAmount: number;
 }
 
 const AddBeanPage: FC = () => {
+  const router = useRouter();
+  const navigation = useNavigation();
+  const beanTaste = useBeanStore((state) => state.taste);
+  const resetBeanState = useBeanStore((state) => state.clearBeanTaste);
+  const removeBeanTaste = useBeanStore((state) => state.removeBeanTaste);
   const updateEditRoastery = useBeanStore((state) => state.updateEditRoastery);
+  const updateEditBeanTaste = useBeanStore(
+    (state) => state.updateEditBeanTaste
+  );
+
+  const { data: roasteries } = useLiveQuery(db.select().from(roasteryTable));
 
   const {
     handleSubmit,
@@ -34,19 +54,47 @@ const AddBeanPage: FC = () => {
   });
 
   const onSubmit = async (data: FormInput) => {
-    console.log("Form Submitted: ", data);
+    const beanId = await db
+      .insert(beanTable)
+      .values({
+        name: data.name,
+        robustaAmount: data.robustaAmount,
+        arabicaAmount: data.arabicaAmount,
+        roastery: data.roastery,
+      })
+      .returning({ id: beanTable.id });
 
-    await db.insert(beanTable).values({
-      name: data.name,
-      robustaAmount: data.robustaAmount,
-      arabicaAmount: data.arabicaAmount,
-      roastery: 1,
-    });
+    const insertTasteValues = beanTaste.map((taste: string) => ({
+      flavor: taste,
+    }));
+    const tasteIds = await db
+      .insert(beanTasteTable)
+      .values(insertTasteValues)
+      .returning({ id: beanTasteTable.id });
+
+    const insertAssociationValues = tasteIds.map((taste) => ({
+      beanId: beanId[0].id,
+      tasteId: taste.id,
+    }));
+
+    await db.insert(beanTasteAssociationTable).values(insertAssociationValues);
+
+    router.navigate("/");
   };
 
-  const { data: roasteryData } = useLiveQuery(db.select().from(roasteryTable));
+  useEffect(() => {
+    const beforeRemove = navigation.addListener("beforeRemove", (e) => {
+      e.preventDefault();
 
-  console.log(roasteryData);
+      // If all has been cleaned up ...
+      navigation.dispatch(e.data.action);
+    });
+    return beforeRemove;
+  }, [navigation]);
+
+  useEffect(() => {
+    resetBeanState();
+  }, []);
 
   return (
     <View flex={1}>
@@ -109,9 +157,21 @@ const AddBeanPage: FC = () => {
           width="100%"
           justifyContent="center"
           alignItems="center"
+          gap="$4"
         >
           <View flex={1}>
-            <Text>Placeholder</Text>
+            <Controller
+              name="roastery"
+              control={control}
+              render={({ field, ...props }) => (
+                <ThemedSelect
+                  label="Rösterei"
+                  items={roasteries}
+                  onChange={field.onChange}
+                  {...props}
+                />
+              )}
+            />
           </View>
           <View>
             <Button
@@ -131,19 +191,57 @@ const AddBeanPage: FC = () => {
           </View>
         </XStack>
 
-        {/* <View mt="$2">
-          <ThemedSelect
-            placeholder="Rösterei"
-            items={[{ name: "Fausto" }, { name: "Supremo" }]}
-          />
-        </View> */}
+        <View flex={0} mt="$4">
+          <Text fontSize="$6">Geschmack</Text>
+          {beanTaste && (
+            <View
+              flex={0}
+              flexDirection="row"
+              gap="$2"
+              pt="$3"
+              flexWrap="wrap"
+              mb="$4"
+            >
+              {beanTaste.map((taste, index) => (
+                <Badge
+                  key={`bean-badge-${taste}-${index}`}
+                  title={taste}
+                  onPress={() => removeBeanTaste(taste)}
+                  withButton
+                />
+              ))}
+            </View>
+          )}
+          {!beanTaste.length && (
+            <XStack flex={0} height="$8" justifyContent="center">
+              <Image
+                source={require("@/assets/images/latte-art.png")}
+                style={{ width: 80, height: 80 }}
+              />
+            </XStack>
+          )}
+          <View flex={1}>
+            <Button
+              mt="$2"
+              bgC="$secondary"
+              color="white"
+              size="$3"
+              onPress={() => updateEditBeanTaste(true)}
+              pressStyle={{
+                backgroundColor: "$secondary",
+              }}
+            >
+              Neuen Geschmack hinzufügen
+            </Button>
+          </View>
+        </View>
+        <ActionButton
+          bgC="#7AA996"
+          onPress={handleSubmit(onSubmit)}
+          icon={<CheckIcon />}
+          pressStyle={{ bgC: "$primaryGreen" }}
+        />
       </View>
-
-      <ActionButton
-        bgC="#7AA996"
-        onPress={handleSubmit(onSubmit)}
-        icon={<CheckIcon />}
-      />
     </View>
   );
 };

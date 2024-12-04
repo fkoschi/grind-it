@@ -3,6 +3,8 @@ import { useLocalSearchParams } from "expo-router";
 import { FC } from "react";
 import { View, Text } from "tamagui";
 
+export const PATH_NAME = '/bean/edit';
+
 const EditBeanPage: FC = () => {
   const { id: beanId } = useLocalSearchParams();
 

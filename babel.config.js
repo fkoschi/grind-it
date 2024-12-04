@@ -13,9 +13,8 @@ module.exports = function (api) {
         },
       ],
       ["inline-import", { extensions: [".sql"] }],
-
       // NOTE: this is only necessary if you are using reanimated for animations
-      "react-native-reanimated/plugin",
+      "react-native-reanimated/plugin", // NOTE: this is only necessary if you are using reanimated for animations
     ],
   };
 };

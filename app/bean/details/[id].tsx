@@ -7,10 +7,63 @@ import ActionButton from "@/components/ui/ActionButton/ActionButton";
 import EditIcon from "@/components/ui/Icons/Edit";
 import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { db } from "@/services/db-service";
+import {
+  beanTable,
+  beanTasteAssociationTable,
+  beanTasteTable,
+  roasteryTable,
+} from "@/db/schema";
+import { eq, inArray } from "drizzle-orm";
 
 const DetailsPage: FC = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
+
+  const { data } = useLiveQuery(
+    db
+      .select({
+        roastery: roasteryTable.name,
+        beanName: beanTable.name,
+        degreeOfGrinding: beanTable.degreeOfGrinding,
+      })
+      .from(beanTable)
+      .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
+      .where(eq(beanTable.id, Number(id)))
+  );
+
+  const fetchTasteByBeanId = async () => {
+    const tasteIdData = await db
+      .select({
+        tasteId: beanTasteAssociationTable.tasteId,
+      })
+      .from(beanTasteAssociationTable)
+      .where(eq(beanTasteAssociationTable.beanId, Number(id)));
+
+    const tasteIds = tasteIdData.map((taste) => taste.tasteId);
+
+    const tasteData = await db
+      .select({ flavor: beanTasteTable.flavor })
+      .from(beanTasteTable)
+      .where(inArray(beanTasteTable.id, tasteIds));
+
+    return tasteData;
+  };
+
+  if (!data.length) {
+    return null;
+  }
+
+  const { roastery, beanName, degreeOfGrinding } = data[0];
+
+  const renderTaste = async () => {
+    const tastes = await fetchTasteByBeanId();
+
+    return tastes.map((taste, index) => (
+      <Badge key={`bean-details-flavor-${index}`} title={taste.flavor} />
+    ));
+  };
 
   const handleEditPress = () => router.navigate(`/bean/edit/${id}`);
 
@@ -31,13 +84,13 @@ const DetailsPage: FC = () => {
       </View>
       <View flex={1} p="$6">
         <ThemedText fontSize="$6" color="$primary" fw={500}>
-          Supremo
+          {roastery}
         </ThemedText>
         <Text fontSize="$10" fontFamily="BlackMango-Regular">
-          Toskana
+          {beanName}
         </Text>
 
-        <View>
+        <View flex={1} mt="$4">
           <View>
             <ThemedText fw={800} mb="$2">
               Geschmack
@@ -49,8 +102,7 @@ const DetailsPage: FC = () => {
               gap={4}
               rowGap={6}
             >
-              <Badge title="schokig" />
-              <Badge title="nussig" />
+              {renderTaste()}
             </View>
           </View>
           <View mt="$4">
@@ -63,7 +115,7 @@ const DetailsPage: FC = () => {
               color="$primary"
               fontFamily="BlackMango-Regular"
             >
-              7.1
+              {degreeOfGrinding}
             </Text>
           </View>
         </View>

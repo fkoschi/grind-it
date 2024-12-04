@@ -1,10 +1,12 @@
 import { FC, useState } from "react";
-import { Button, Input, styled, View, XStack } from "tamagui";
+import { Button, styled, View, XStack } from "tamagui";
 import { Image } from "expo-image";
 import { LinearGradient } from "tamagui/linear-gradient";
-import SearchFilter from "./SearchFilter";
-import { taste } from "@/db/__mock__/taste";
-import Search from "./Search";
+import SearchFilter from "../../SearchFilter";
+import Search from "../../Search";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { db } from "@/services/db-service";
+import { beanTasteTable } from "@/db/schema";
 
 const StyledFilterButton = styled(Button, {
   bgC: "#664F3F",
@@ -22,19 +24,20 @@ const StyledFilterButton = styled(Button, {
 });
 
 interface Props {
-  disabled: boolean;
+  onChangeText: (text: string) => void;
 }
-const Header: FC<Props> = ({ disabled }) => {
-  const mockedFilterData = taste;
+const DashboardHeader: FC<Props> = ({ onChangeText }) => {
   const [showFilter, setShowFilter] = useState<boolean>(false);
+
+  const { data: tasteFilters } = useLiveQuery(db.select().from(beanTasteTable));
 
   return (
     <>
       <LinearGradient
-        flex={0}
+        flex={1}
         animation="slow"
         justifyContent="flex-end"
-        height="$14"
+        maxHeight={showFilter ? 187 : 140}
         borderBottomLeftRadius="$8"
         borderBottomRightRadius="$8"
         colors={["#FFDAAB", "#E89E3F"]}
@@ -44,17 +47,16 @@ const Header: FC<Props> = ({ disabled }) => {
         pb="$2"
       >
         <XStack mb="$3" columnGap="$2" alignItems="center">
-          <Search disabled={disabled} />
+          <Search onChangeText={onChangeText} />
           <View flex={0} justifyContent="flex-end">
             <StyledFilterButton
               circular
-              disabled={disabled}
               onPress={() => setShowFilter(!showFilter)}
               icon={
                 <View flex={1} alignItems="center">
                   <Image
                     contentFit="contain"
-                    source={require("../assets/icons/filter.png")}
+                    source={require("@/assets/icons/filter.png")}
                     style={{ flex: 1, height: 24, width: 24 }}
                   />
                 </View>
@@ -62,10 +64,10 @@ const Header: FC<Props> = ({ disabled }) => {
             />
           </View>
         </XStack>
-        <SearchFilter filters={mockedFilterData} isVisible={showFilter} />
+        {showFilter && <SearchFilter filters={tasteFilters} />}
       </LinearGradient>
     </>
   );
 };
 
-export default Header;
+export default DashboardHeader;

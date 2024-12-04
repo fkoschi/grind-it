@@ -1,18 +1,18 @@
 export interface Taste {
   id: number;
-  name: string;
+  flavor: string;
 }
 
-export interface Filter {
-  taste: Taste;
-  active?: boolean;
+export interface TasteFilter {
+  id: number;
+  flavor: string;
 }
 
 export interface CoffeeBean {
-  id: number;
-  name: string;
-  roastery: string;
-  degreeOfGrinding?: number;
-  isFavorit?: boolean;
+  id: number | null;
+  name: string | null;
+  roastery?: string | null;
+  degreeOfGrinding?: number | null;
+  isFavorite?: boolean | null;
   taste?: Array<Taste>;
 }
