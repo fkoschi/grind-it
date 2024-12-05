@@ -13,6 +13,7 @@ const tokens = createTokens({
     primaryGreen: "#7AA996",
     white: "#fff",
     favorite: "#CD5B5B",
+    error: '#CD5B5B',
   },
 });
 

@@ -5,8 +5,8 @@ import { LinearGradient } from "tamagui/linear-gradient";
 import SearchFilter from "../../SearchFilter";
 import Search from "../../Search";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { db } from "@/services/db-service";
 import { beanTasteTable } from "@/db/schema";
+import { useDatabase } from "@/provider/DatabaseProvider";
 
 const StyledFilterButton = styled(Button, {
   bgC: "#664F3F",
@@ -27,6 +27,7 @@ interface Props {
   onChangeText: (text: string) => void;
 }
 const DashboardHeader: FC<Props> = ({ onChangeText }) => {
+  const { db } = useDatabase();
   const [showFilter, setShowFilter] = useState<boolean>(false);
 
   const { data: tasteFilters } = useLiveQuery(db.select().from(beanTasteTable));

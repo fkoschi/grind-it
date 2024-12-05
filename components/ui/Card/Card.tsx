@@ -6,10 +6,9 @@ import { Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import ThemedText from "../ThemedText";
-import { db } from "@/services/db-service";
 import { beanTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useDatabase } from "@/provider/DatabaseProvider";
 
 interface CoffeeCardProps {
   data: CoffeeBean;
@@ -34,6 +33,7 @@ const StyledCard = styled(YStack, {
 
 const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
   const router = useRouter();
+  const { db } = useDatabase();
   const { id, roastery, name, isFavorite, degreeOfGrinding = 0.0 } = data;
 
   const imagePath = require("@/assets/images/coffee-cup.png");
@@ -88,10 +88,7 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
           </View>
         </Pressable>
       </YStack>
-      <FavoriteButton
-        isFavorite={isFavorite ?? false}
-        onPress={handlePress}
-      />
+      <FavoriteButton isFavorite={isFavorite ?? false} onPress={handlePress} />
     </StyledCard>
   );
 };

@@ -9,7 +9,6 @@ import {
   beanTasteTable,
   roasteryTable,
 } from "@/db/schema";
-import { db } from "@/services/db-service";
 import { FC, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 
@@ -20,6 +19,9 @@ import { Image } from "expo-image";
 import { useNavigation, useRouter } from "expo-router";
 import Badge from "@/components/ui/Badge/Badge";
 import ThemedSelect from "@/components/ui/Select/Select";
+import { createInsertSchema } from "drizzle-zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useDatabase } from "@/provider/DatabaseProvider";
 
 interface FormInput {
   name: string;
@@ -30,6 +32,7 @@ interface FormInput {
 
 const AddBeanPage: FC = () => {
   const router = useRouter();
+  const { db } = useDatabase();
   const navigation = useNavigation();
   const beanTaste = useBeanStore((state) => state.taste);
   const resetBeanState = useBeanStore((state) => state.clearBeanTaste);
@@ -41,19 +44,24 @@ const AddBeanPage: FC = () => {
 
   const { data: roasteries } = useLiveQuery(db.select().from(roasteryTable));
 
+  const insertSchema = createInsertSchema(beanTable);
+
   const {
     handleSubmit,
     control,
+    reset: resetForm,
     formState: { errors },
-  } = useForm<FormInput>({
-    defaultValues: {
-      name: "",
-      arabicaAmount: 0,
-      robustaAmount: 0,
-    },
-  });
+  } = useForm<FormInput>({ resolver: zodResolver(insertSchema) });
 
   const onSubmit = async (data: FormInput) => {
+    const beanId = await insertBean(data);
+    if (beanTaste.length > 0) {
+      await insertTaste(beanId.id);
+    }
+    router.dismissTo("/");
+  };
+
+  const insertBean = async (data: FormInput) => {
     const beanId = await db
       .insert(beanTable)
       .values({
@@ -64,6 +72,10 @@ const AddBeanPage: FC = () => {
       })
       .returning({ id: beanTable.id });
 
+    return beanId[0];
+  };
+
+  const insertTaste = async (beanId: number) => {
     const insertTasteValues = beanTaste.map((taste: string) => ({
       flavor: taste,
     }));
@@ -73,26 +85,15 @@ const AddBeanPage: FC = () => {
       .returning({ id: beanTasteTable.id });
 
     const insertAssociationValues = tasteIds.map((taste) => ({
-      beanId: beanId[0].id,
+      beanId,
       tasteId: taste.id,
     }));
 
     await db.insert(beanTasteAssociationTable).values(insertAssociationValues);
-
-    router.navigate("/");
   };
 
   useEffect(() => {
-    const beforeRemove = navigation.addListener("beforeRemove", (e) => {
-      e.preventDefault();
-
-      // If all has been cleaned up ...
-      navigation.dispatch(e.data.action);
-    });
-    return beforeRemove;
-  }, [navigation]);
-
-  useEffect(() => {
+    resetForm();
     resetBeanState();
   }, []);
 
@@ -108,7 +109,7 @@ const AddBeanPage: FC = () => {
                 id="arabicaAmount"
                 onChangeText={(text: string) => onChange(Number(text))}
                 keyboardType="decimal-pad"
-                value={value.toString()}
+                value={value?.toString()}
                 suffix={<PercentageIcon />}
                 label="Arabica"
                 style={{ maxWidth: 80 }}

@@ -1,15 +1,16 @@
 import { FC } from "react";
 import { roasteryTable } from "@/db/schema";
-import { db } from "@/services/db-service";
 import { ChevronLeft } from "@tamagui/lucide-icons";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, ListItem, ScrollView, Text, View, YGroup } from "tamagui";
 import { useRouter } from "expo-router";
 import { eq } from "drizzle-orm";
+import { useDatabase } from "@/provider/DatabaseProvider";
 
 const EditRoasteries: FC = () => {
   const router = useRouter();
+  const { db } = useDatabase();
   const { data } = useLiveQuery(db.select().from(roasteryTable));
 
   const handleItemPress = async (id: number) => {

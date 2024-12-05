@@ -1,4 +1,4 @@
-import { db } from "@/services/db-service";
+import { ExpoSQLiteDatabase } from "drizzle-orm/expo-sqlite";
 import {
   beanTable,
   beanTasteAssociationTable,
@@ -7,10 +7,14 @@ import {
 } from "./schema";
 import { eq, sql, and, inArray, ne, notInArray } from "drizzle-orm";
 
-const selectTastes = db.select().from(beanTasteTable).prepare();
+const selectTastes = (db: ExpoSQLiteDatabase) =>
+  db.select().from(beanTasteTable).prepare();
 
-const selectTasteNotInArray = (filterBy: Array<number>) => {
-  const activeFilter = filterBy.length > 0;
+const selectTasteNotInArray = (
+  db: ExpoSQLiteDatabase,
+  filterBy: Array<number>
+) => {
+  const activeFilter = filterBy?.length > 0;
 
   return db
     .select()
@@ -19,31 +23,40 @@ const selectTasteNotInArray = (filterBy: Array<number>) => {
     .prepare();
 };
 
-const selectTasteInArray = (filterBy: Array<number>) => {
-  const activeFilter = filterBy.length > 0;
+const selectTasteInArray = (
+  db: ExpoSQLiteDatabase,
+  filterBy: Array<number>
+) => {
+  const activeFilter = filterBy?.length > 0;
 
   return db
     .select()
     .from(beanTasteTable)
-    /* .where(activeFilter ? inArray(beanTasteTable.id, filterBy) : sql`TRUE`) */
+    .where(activeFilter ? inArray(beanTasteTable.id, filterBy) : sql`TRUE`)
     .prepare();
 };
 
-const selectRoasteries = db.select().from(roasteryTable).prepare();
+const selectRoasteries = (db: ExpoSQLiteDatabase) =>
+  db.select().from(roasteryTable).prepare();
 
-const selectBeansBySearch = db
-  .selectDistinct({
-    id: beanTable.id,
-    name: beanTable.name,
-    roastery: roasteryTable.name,
-    isFavorite: beanTable.isFavorit,
-  })
-  .from(beanTable)
-  .innerJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
-  .where(sql`${beanTable.name} like ${sql.placeholder("search")}`)
-  .prepare();
+const selectBeansBySearch = (db: ExpoSQLiteDatabase) =>
+  db
+    .selectDistinct({
+      id: beanTable.id,
+      name: beanTable.name,
+      roastery: roasteryTable.name,
+      degreeOfGrinding: beanTable.degreeOfGrinding,
+      isFavorite: beanTable.isFavorit,
+    })
+    .from(beanTable)
+    .innerJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
+    .where(sql`${beanTable.name} like ${sql.placeholder("search")}`)
+    .prepare();
 
-const selectBeansBySearchAndFilter = (beanTasteFilter: Array<number>) => {
+const selectBeansBySearchAndFilter = (
+  db: ExpoSQLiteDatabase,
+  beanTasteFilter: Array<number>
+) => {
   const tasteFilter = beanTasteFilter?.filter((filter) => filter !== 0);
   const favoriteFilter = beanTasteFilter?.includes(0);
 
@@ -52,6 +65,7 @@ const selectBeansBySearchAndFilter = (beanTasteFilter: Array<number>) => {
       id: beanTable.id,
       name: beanTable.name,
       roastery: roasteryTable.name,
+      degreeOfGrinding: beanTable.degreeOfGrinding,
       isFavorite: beanTable.isFavorit,
     })
     .from(beanTable)

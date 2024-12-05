@@ -9,19 +9,41 @@ import {
   selectBeansBySearch,
   selectBeansBySearchAndFilter,
 } from "@/db/queries";
+import { useDatabase } from "@/provider/DatabaseProvider";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { beanTable, roasteryTable } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 const HomePage: FC = () => {
+  const { db } = useDatabase();
   const beanTasteFilter = useBeanStore((store) => store.tasteFilter);
   const [search, setSearch] = useState<string>("");
   const [beansData, setBeansData] = useState<Array<CoffeeBean>>();
 
+  const { data: liveData } = useLiveQuery(
+    db
+      .selectDistinct({
+        id: beanTable.id,
+        name: beanTable.name,
+        roastery: roasteryTable.name,
+        degreeOfGrinding: beanTable.degreeOfGrinding,
+        isFavorite: beanTable.isFavorit,
+      })
+      .from(beanTable)
+      .innerJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
+  );
+
+  useEffect(() => {
+    setBeansData(liveData);
+  }, [liveData]);
+
   const fetchDataBySearch = () => {
-    const data = selectBeansBySearch.all({ search: `%${search}%` });
+    const data = selectBeansBySearch(db).all({ search: `%${search}%` });
     setBeansData(data);
   };
 
   const fetchDataBySearchAndFilter = () => {
-    const data = selectBeansBySearchAndFilter(beanTasteFilter).all({
+    const data = selectBeansBySearchAndFilter(db, beanTasteFilter).all({
       search: `%${search}%`,
     });
     setBeansData(data);

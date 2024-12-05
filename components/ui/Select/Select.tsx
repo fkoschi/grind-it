@@ -30,7 +30,7 @@ const ThemedSelect: FC<Props> = ({ label, onChange, placeholder, items }) => {
 
   return (
     <Select onValueChange={handleValueChange}>
-      <Select.Trigger iconAfter={ChevronDown}>
+      <Select.Trigger iconAfter={ChevronDown} disabled={!items?.length}>
         <Select.Value placeholder={placeholder ? placeholder : "Select..."} />
       </Select.Trigger>
 

@@ -19,7 +19,7 @@ const EditBean: FC<Props> = ({ children }) => {
         sheetProps={{
           open: editRoastery,
           modal: false,
-          zIndex: 100_000,
+          zIndex: 200_000_000,
           snapPointsMode: "percent",
           animation: "medium",
           onOpenChange: () => hideRoasterySheet(false),
@@ -32,7 +32,7 @@ const EditBean: FC<Props> = ({ children }) => {
         sheetProps={{
           open: editTaste,
           modal: false,
-          zIndex: 100_000,
+          zIndex: 200_000_000,
           snapPointsMode: "percent",
           animation: "medium",
           onOpenChange: () => hideTasteSheet(false),

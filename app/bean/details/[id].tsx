@@ -8,7 +8,6 @@ import EditIcon from "@/components/ui/Icons/Edit";
 import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { db } from "@/services/db-service";
 import {
   beanTable,
   beanTasteAssociationTable,
@@ -16,9 +15,11 @@ import {
   roasteryTable,
 } from "@/db/schema";
 import { eq, inArray } from "drizzle-orm";
+import { useDatabase } from "@/provider/DatabaseProvider";
 
 const DetailsPage: FC = () => {
   const router = useRouter();
+  const { db } = useDatabase();
   const { id } = useLocalSearchParams();
 
   const { data } = useLiveQuery(
@@ -115,7 +116,7 @@ const DetailsPage: FC = () => {
               color="$primary"
               fontFamily="BlackMango-Regular"
             >
-              {degreeOfGrinding}
+              {degreeOfGrinding ?? 0}
             </Text>
           </View>
         </View>

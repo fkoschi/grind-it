@@ -37607,6 +37607,13 @@
           "name": "c-favorite",
           "val": "#CD5B5B",
           "variable": ""
+        },
+        "error": {
+          "isVar": true,
+          "key": "$error",
+          "name": "c-error",
+          "val": "#CD5B5B",
+          "variable": ""
         }
       },
       "radius": {
@@ -38453,6 +38460,13 @@
         "isVar": true,
         "key": "$favorite",
         "name": "c-favorite",
+        "val": "#CD5B5B",
+        "variable": ""
+      },
+      "$color.error": {
+        "isVar": true,
+        "key": "$error",
+        "name": "c-error",
         "val": "#CD5B5B",
         "variable": ""
       },

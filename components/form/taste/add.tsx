@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   KeyboardAvoidingView,
@@ -12,16 +12,17 @@ import { useBeanStore } from "@/store/bean-store";
 import AddBeanFormTaste from "./ui/taste";
 import AddBeanFormSuggestions from "./ui/suggestions";
 import { selectTasteInArray, selectTasteNotInArray } from "@/db/queries";
+import { useDatabase } from "@/provider/DatabaseProvider";
 
 interface AddTasteFormInput {
   name: string;
 }
-
-interface Props {}
-const AddTasteForm: FC<Props> = () => {
+const AddTasteForm: FC = () => {
+  const { db } = useDatabase();
   const [value, setValue] = useState<string>("");
   const beanTastes = useBeanStore((state) => state.taste);
   const addBeanTaste = useBeanStore((state) => state.addBeanTaste);
+  const removeBeanTaste = useBeanStore((state) => state.removeBeanTaste);
   const showTasteSheet = useBeanStore((state) => state.updateEditBeanTaste);
   const [activeSuggestions, setActiveSuggestions] = useState<Array<number>>([]);
   const { control, reset } = useForm<AddTasteFormInput>();
@@ -41,16 +42,15 @@ const AddTasteForm: FC<Props> = () => {
     reset({ name: "" });
   };
 
-  console.log({ activeSuggestions });
-
   // Select all available taste entries from DB
-  const suggestionData = selectTasteNotInArray(activeSuggestions).all();
-  const selectedSuggestionData = selectTasteInArray(activeSuggestions).all();
-
-  console.log({ suggestionData, selectedSuggestionData });
+  const suggestionData = selectTasteNotInArray(db, activeSuggestions).all();
+  const selectedSuggestionData = selectTasteInArray(
+    db,
+    activeSuggestions
+  ).all();
 
   const handleSuggestionPress = (id: number) => {
-    const isSet = activeSuggestions.includes(id);
+    const isSet = activeSuggestions?.includes(id);
 
     if (isSet) {
       const updatedSuggestions = activeSuggestions.filter(
@@ -58,7 +58,9 @@ const AddTasteForm: FC<Props> = () => {
       );
       setActiveSuggestions(updatedSuggestions);
     } else {
-      setActiveSuggestions((prev) => [...prev, id]);
+      setActiveSuggestions((prev) => {
+        return [...prev, id];
+      });
     }
   };
 
@@ -72,7 +74,7 @@ const AddTasteForm: FC<Props> = () => {
         <AddBeanFormTaste
           data={beanTastes}
           suggestionData={
-            activeSuggestions.length > 0 ? selectedSuggestionData : []
+            activeSuggestions?.length > 0 ? selectedSuggestionData : []
           }
           onSuggestionPress={handleSuggestionPress}
         />

@@ -7,15 +7,16 @@ import { useEffect } from "react";
 import DeleteOutlinedIcon from "@/components/ui/Icons/DeleteOutlined";
 import { useLocalSearchParams, useRouteInfo } from "expo-router/build/hooks";
 import Alert from "@/components/ui/Alert/Alert";
-import { db } from "@/services/db-service";
 import { beanTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import ThemedText from "@/components/ui/ThemedText";
 import EditBean from "./EditBean";
 import { PATH_NAME as EDIT_DEGREE_PATH_NAME } from "./edit/degree/[id]";
+import { useDatabase } from "@/provider/DatabaseProvider";
 
 const BeanLayout = () => {
   const router = useRouter();
+  const { db } = useDatabase();
   const routerInfo = useRouteInfo();
   const navigation = useNavigation();
   const { id: beanId } = useLocalSearchParams();
