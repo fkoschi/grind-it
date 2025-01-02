@@ -1,9 +1,10 @@
 import AddRoasteryForm from "@/components/form/roastery/add";
-import AddTasteForm from "@/components/form/taste/add";
+import AddTasteSheet from "@/components/form/taste/AddTasteSheet";
+import EditTasteSheet from "@/components/form/taste/EditTasteSheet";
 import BottomSheet from "@/components/ui/Sheet/Sheet";
 import { useBeanStore } from "@/store/bean-store";
-import { FC, PropsWithChildren, useState } from "react";
-import { View, Text } from "tamagui";
+import { FC, PropsWithChildren } from "react";
+import { View } from "tamagui";
 
 interface Props extends PropsWithChildren {}
 const EditBean: FC<Props> = ({ children }) => {
@@ -21,6 +22,7 @@ const EditBean: FC<Props> = ({ children }) => {
           modal: false,
           zIndex: 200_000_000,
           snapPointsMode: "percent",
+          dismissOnSnapToBottom: true,
           animation: "medium",
           onOpenChange: () => hideRoasterySheet(false),
         }}
@@ -30,14 +32,19 @@ const EditBean: FC<Props> = ({ children }) => {
       />
       <BottomSheet
         sheetProps={{
-          open: editTaste,
+          open: editTaste.showSheet,
           modal: false,
           zIndex: 200_000_000,
           snapPointsMode: "percent",
+          dismissOnSnapToBottom: true,
           animation: "medium",
-          onOpenChange: () => hideTasteSheet(false),
+          snapPoints: [editTaste.type === "edit" ? 70 : 90],
+          onOpenChange: () =>
+            hideTasteSheet({ showSheet: false, type: "edit" }),
         }}
-        frame={<AddTasteForm />}
+        frame={
+          editTaste.type === "add" ? <AddTasteSheet /> : <EditTasteSheet />
+        }
       />
     </View>
   );

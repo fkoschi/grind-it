@@ -16,6 +16,9 @@ import {
 } from "@/db/schema";
 import { eq, inArray } from "drizzle-orm";
 import { useDatabase } from "@/provider/DatabaseProvider";
+import { Pressable } from "react-native";
+
+export const PATH_NAME = "/bean/details";
 
 const DetailsPage: FC = () => {
   const router = useRouter();
@@ -27,6 +30,8 @@ const DetailsPage: FC = () => {
       .select({
         roastery: roasteryTable.name,
         beanName: beanTable.name,
+        robustaAmount: beanTable.robustaAmount,
+        arabicaAmount: beanTable.arabicaAmount,
         degreeOfGrinding: beanTable.degreeOfGrinding,
       })
       .from(beanTable)
@@ -56,7 +61,8 @@ const DetailsPage: FC = () => {
     return null;
   }
 
-  const { roastery, beanName, degreeOfGrinding } = data[0];
+  const { roastery, beanName, robustaAmount, arabicaAmount, degreeOfGrinding } =
+    data[0];
 
   const renderTaste = async () => {
     const tastes = await fetchTasteByBeanId();
@@ -67,6 +73,16 @@ const DetailsPage: FC = () => {
   };
 
   const handleEditPress = () => router.navigate(`/bean/edit/${id}`);
+  const handleDegreePress = () => router.navigate(`/bean/edit/degree/${id}`);
+
+  const formattedBeanComposition = (): number | string => {
+    if (arabicaAmount === 100) {
+      return arabicaAmount;
+    } else if (robustaAmount === 100) {
+      return robustaAmount;
+    }
+    return `${arabicaAmount} / ${robustaAmount}`;
+  };
 
   return (
     <View flex={1}>
@@ -90,6 +106,16 @@ const DetailsPage: FC = () => {
         <Text fontSize="$10" fontFamily="BlackMango-Regular">
           {beanName}
         </Text>
+        <View flex={0} mt="$2">
+          <View flex={0} justifyContent="center">
+            <Image
+              source={require("@/assets/images/coffee-beans.png")}
+              contentFit="fill"
+              style={{ flex: 0, width: 35, height: 20 }}
+            />
+            <ThemedText fw={600}>{formattedBeanComposition()}</ThemedText>
+          </View>
+        </View>
 
         <View flex={1} mt="$4">
           <View>
@@ -110,14 +136,16 @@ const DetailsPage: FC = () => {
             <ThemedText fw={800} mb="$2">
               Mahlgrad
             </ThemedText>
-            <Text
-              fontSize="$16"
-              lineHeight="$16"
-              color="$primary"
-              fontFamily="BlackMango-Regular"
-            >
-              {degreeOfGrinding ?? 0}
-            </Text>
+            <Pressable onPress={handleDegreePress}>
+              <Text
+                fontSize="$16"
+                lineHeight="$16"
+                color="$primary"
+                fontFamily="BlackMango-Regular"
+              >
+                {degreeOfGrinding ?? 0}
+              </Text>
+            </Pressable>
           </View>
         </View>
       </View>
@@ -125,6 +153,9 @@ const DetailsPage: FC = () => {
       <ActionButton
         bgC="$primary"
         onPress={handleEditPress}
+        pressStyle={{
+          bgC: "$primaryHover"
+        }}
         icon={<EditIcon />}
       />
     </View>

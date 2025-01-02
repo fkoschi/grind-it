@@ -17,7 +17,7 @@ const selectTasteNotInArray = (
   const activeFilter = filterBy?.length > 0;
 
   return db
-    .select()
+    .selectDistinct()
     .from(beanTasteTable)
     .where(activeFilter ? notInArray(beanTasteTable.id, filterBy) : sql`TRUE`)
     .prepare();
@@ -30,7 +30,7 @@ const selectTasteInArray = (
   const activeFilter = filterBy?.length > 0;
 
   return db
-    .select()
+    .selectDistinct()
     .from(beanTasteTable)
     .where(activeFilter ? inArray(beanTasteTable.id, filterBy) : sql`TRUE`)
     .prepare();
@@ -69,7 +69,7 @@ const selectBeansBySearchAndFilter = (
       isFavorite: beanTable.isFavorit,
     })
     .from(beanTable)
-    .innerJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
+    .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
     .fullJoin(
       beanTasteAssociationTable,
       eq(beanTable.id, beanTasteAssociationTable.beanId)

@@ -10,7 +10,7 @@ const InputWithIcon: FC<Props> = ({ label, suffix, ...other }) => {
   return (
     <View flex={1}>
       <XStack
-        flex={0}
+        flex={1}
         justifyContent="flex-start"
         alignItems="center"
         bgC="white"
@@ -19,7 +19,6 @@ const InputWithIcon: FC<Props> = ({ label, suffix, ...other }) => {
       >
         <View flex={1}>
           <Input
-            id={`input-${label}`}
             flex={1}
             bgC="white"
             borderWidth={0}
@@ -38,9 +37,11 @@ const InputWithIcon: FC<Props> = ({ label, suffix, ...other }) => {
           </View>
         </View>
       </XStack>
-      <View mt="$2" flex={0} alignItems="flex-start">
-        <Text fontSize="$2">{label}</Text>
-      </View>
+      {label && (
+        <View mt="$2" flex={0} alignItems="flex-start">
+          <Text fontSize="$2">{label}</Text>
+        </View>
+      )}
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   KeyboardAvoidingView,
@@ -11,20 +11,20 @@ import { Input, Text, View, XStack } from "tamagui";
 import { useBeanStore } from "@/store/bean-store";
 import AddBeanFormTaste from "./ui/taste";
 import AddBeanFormSuggestions from "./ui/suggestions";
-import { selectTasteInArray, selectTasteNotInArray } from "@/db/queries";
+import { selectTasteNotInArray } from "@/db/queries";
 import { useDatabase } from "@/provider/DatabaseProvider";
+import { Taste } from "@/types";
 
 interface AddTasteFormInput {
   name: string;
 }
-const AddTasteForm: FC = () => {
+const AddTasteSheet: FC = () => {
   const { db } = useDatabase();
   const [value, setValue] = useState<string>("");
-  const beanTastes = useBeanStore((state) => state.taste);
+  const beanTaste = useBeanStore((state) => state.taste);
   const addBeanTaste = useBeanStore((state) => state.addBeanTaste);
-  const removeBeanTaste = useBeanStore((state) => state.removeBeanTaste);
   const showTasteSheet = useBeanStore((state) => state.updateEditBeanTaste);
-  const [activeSuggestions, setActiveSuggestions] = useState<Array<number>>([]);
+
   const { control, reset } = useForm<AddTasteFormInput>();
 
   const handleSubmit = async (
@@ -33,7 +33,7 @@ const AddTasteForm: FC = () => {
     e.preventDefault();
 
     // TODO: Don't allow duplicate entries to be stored!
-    addBeanTaste(value);
+    addBeanTaste({ id: -1, flavor: value.trim() });
     clear();
   };
 
@@ -43,25 +43,18 @@ const AddTasteForm: FC = () => {
   };
 
   // Select all available taste entries from DB
-  const suggestionData = selectTasteNotInArray(db, activeSuggestions).all();
-  const selectedSuggestionData = selectTasteInArray(
+  const suggestionData = selectTasteNotInArray(
     db,
-    activeSuggestions
+    beanTaste.map((taste) => {
+      if (taste.id !== -1) {
+        return taste.id;
+      }
+      return 0;
+    })
   ).all();
 
-  const handleSuggestionPress = (id: number) => {
-    const isSet = activeSuggestions?.includes(id);
-
-    if (isSet) {
-      const updatedSuggestions = activeSuggestions.filter(
-        (suggestion) => suggestion !== id
-      );
-      setActiveSuggestions(updatedSuggestions);
-    } else {
-      setActiveSuggestions((prev) => {
-        return [...prev, id];
-      });
-    }
+  const handleSuggestionPress = ({ id, flavor }: Taste) => {
+    addBeanTaste({ id, flavor });
   };
 
   return (
@@ -71,15 +64,9 @@ const AddTasteForm: FC = () => {
       keyboardVerticalOffset={16}
     >
       <View flex={1} p="$4" bgC="$screenBackground">
-        <AddBeanFormTaste
-          data={beanTastes}
-          suggestionData={
-            activeSuggestions?.length > 0 ? selectedSuggestionData : []
-          }
-          onSuggestionPress={handleSuggestionPress}
-        />
+        <AddBeanFormTaste tasteData={beanTaste} />
         <AddBeanFormSuggestions
-          data={suggestionData}
+          tasteData={suggestionData}
           onPress={handleSuggestionPress}
         />
       </View>
@@ -109,7 +96,9 @@ const AddTasteForm: FC = () => {
           />
         </View>
         <View flex={0} ml="$3" height={48} justifyContent="center">
-          <Pressable onPress={() => showTasteSheet(false)}>
+          <Pressable
+            onPress={() => showTasteSheet({ showSheet: false, type: "add" })}
+          >
             <Text>Abbrechen</Text>
           </Pressable>
         </View>
@@ -117,4 +106,4 @@ const AddTasteForm: FC = () => {
     </KeyboardAvoidingView>
   );
 };
-export default AddTasteForm;
+export default AddTasteSheet;

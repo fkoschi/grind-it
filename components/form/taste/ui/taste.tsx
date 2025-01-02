@@ -4,6 +4,7 @@ import { getFontSize, View } from "tamagui";
 import { Image } from "expo-image";
 import Badge from "@/components/ui/Badge/Badge";
 import { useBeanStore } from "@/store/bean-store";
+import { Taste } from "@/types";
 
 const NoData = () => (
   <View flex={1}>
@@ -25,39 +26,37 @@ const NoData = () => (
 );
 
 interface Props {
-  data: Array<string>;
-  suggestionData?: Array<{ id: number; flavor: string }>;
-  onSuggestionPress: (id: number) => void;
+  tasteData: Array<Taste>;
 }
-const AddBeanFormTaste: FC<Props> = ({
-  data,
-  suggestionData,
-  onSuggestionPress,
-}) => {
+const AddBeanFormTaste: FC<Props> = ({ tasteData }) => {
   const removeBeanTaste = useBeanStore((state) => state.removeBeanTaste);
 
-  if (!data.length && !suggestionData?.length) {
+  if (!tasteData.length) {
     return <NoData />;
   }
 
   return (
-    <View flex={1} flexDirection="row" gap="$2" pt="$3" flexWrap="wrap" mb="$4">
-      {suggestionData?.map(({ id, flavor }) => (
-        <Badge
-          key={`bean-badge-${id}`}
-          title={flavor}
-          onPress={() => onSuggestionPress(id)}
-          withButton
-        />
-      ))}
-      {data.map((taste: string, index: number) => (
-        <Badge
-          key={`bean-badge-${taste}-${index}`}
-          title={taste}
-          onPress={() => removeBeanTaste(taste)}
-          withButton
-        />
-      ))}
+    <View flex={1}>
+      <ThemedText fw={400} fontSize={16}>
+        Gespeicherte Auswahl:
+      </ThemedText>
+      <View
+        flex={1}
+        flexDirection="row"
+        gap="$2"
+        pt="$3"
+        flexWrap="wrap"
+        mb="$4"
+      >
+        {tasteData.map((taste: Taste, index: number) => (
+          <Badge
+            key={`bean-badge-${taste}-${index}`}
+            title={taste.flavor}
+            onPress={() => removeBeanTaste(taste)}
+            withButton
+          />
+        ))}
+      </View>
     </View>
   );
 };

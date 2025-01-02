@@ -9,19 +9,20 @@ import {
   beanTasteTable,
   roasteryTable,
 } from "@/db/schema";
-import { FC, useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 
-import { Text, Input, View, XStack, Button } from "tamagui";
+import { Text, Input, View, XStack, Button, ScrollView } from "tamagui";
 import { useBeanStore } from "@/store/bean-store";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Image } from "expo-image";
-import { useNavigation, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import Badge from "@/components/ui/Badge/Badge";
 import ThemedSelect from "@/components/ui/Select/Select";
 import { createInsertSchema } from "drizzle-zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDatabase } from "@/provider/DatabaseProvider";
+import { Taste } from "@/types";
 
 interface FormInput {
   name: string;
@@ -33,7 +34,6 @@ interface FormInput {
 const AddBeanPage: FC = () => {
   const router = useRouter();
   const { db } = useDatabase();
-  const navigation = useNavigation();
   const beanTaste = useBeanStore((state) => state.taste);
   const resetBeanState = useBeanStore((state) => state.clearBeanTaste);
   const removeBeanTaste = useBeanStore((state) => state.removeBeanTaste);
@@ -55,8 +55,19 @@ const AddBeanPage: FC = () => {
 
   const onSubmit = async (data: FormInput) => {
     const beanId = await insertBean(data);
+
     if (beanTaste.length > 0) {
-      await insertTaste(beanId.id);
+      const tasteForBeanTable = beanTaste
+        .filter((taste) => taste.id === -1)
+        .map((taste) => ({ flavor: taste.flavor }));
+      const beanTasteAssociationValueIds = beanTaste
+        .filter((taste) => taste.id !== -1)
+        .map((taste) => ({ id: taste.id }));
+      await insertTaste(
+        beanId.id,
+        tasteForBeanTable,
+        beanTasteAssociationValueIds
+      );
     }
     router.dismissTo("/");
   };
@@ -75,16 +86,20 @@ const AddBeanPage: FC = () => {
     return beanId[0];
   };
 
-  const insertTaste = async (beanId: number) => {
-    const insertTasteValues = beanTaste.map((taste: string) => ({
-      flavor: taste,
-    }));
+  const insertTaste = async (
+    beanId: number,
+    beanTasteValues: Array<Pick<Taste, "flavor">>,
+    beanTasteAssociationValueIds: Array<Pick<Taste, "id">>
+  ) => {
     const tasteIds = await db
       .insert(beanTasteTable)
-      .values(insertTasteValues)
+      .values(beanTasteValues)
       .returning({ id: beanTasteTable.id });
 
-    const insertAssociationValues = tasteIds.map((taste) => ({
+    const insertAssociationValues = [
+      ...tasteIds,
+      ...beanTasteAssociationValueIds,
+    ].map((taste) => ({
       beanId,
       tasteId: taste.id,
     }));
@@ -98,8 +113,8 @@ const AddBeanPage: FC = () => {
   }, []);
 
   return (
-    <View flex={1}>
-      <View flex={1} padding="$6">
+    <>
+      <ScrollView flex={1} padding="$6">
         <XStack gap="$8" mb="$3">
           <Controller
             name="arabicaAmount"
@@ -203,10 +218,10 @@ const AddBeanPage: FC = () => {
               flexWrap="wrap"
               mb="$4"
             >
-              {beanTaste.map((taste, index) => (
+              {beanTaste.map((taste: Taste, index) => (
                 <Badge
                   key={`bean-badge-${taste}-${index}`}
-                  title={taste}
+                  title={taste.flavor}
                   onPress={() => removeBeanTaste(taste)}
                   withButton
                 />
@@ -227,23 +242,25 @@ const AddBeanPage: FC = () => {
               bgC="$secondary"
               color="white"
               size="$3"
-              onPress={() => updateEditBeanTaste(true)}
+              onPress={() =>
+                updateEditBeanTaste({ showSheet: true, type: "add" })
+              }
               pressStyle={{
                 backgroundColor: "$secondary",
               }}
             >
-              Neuen Geschmack hinzufügen
+              Geschmack bearbeiten
             </Button>
           </View>
         </View>
-        <ActionButton
-          bgC="#7AA996"
-          onPress={handleSubmit(onSubmit)}
-          icon={<CheckIcon />}
-          pressStyle={{ bgC: "$primaryGreen" }}
-        />
-      </View>
-    </View>
+      </ScrollView>
+      <ActionButton
+        bgC="#7AA996"
+        onPress={handleSubmit(onSubmit)}
+        icon={<CheckIcon />}
+        pressStyle={{ bgC: "$primaryGreen" }}
+      />
+    </>
   );
 };
 

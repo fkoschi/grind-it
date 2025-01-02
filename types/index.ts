@@ -3,11 +3,6 @@ export interface Taste {
   flavor: string;
 }
 
-export interface TasteFilter {
-  id: number;
-  flavor: string;
-}
-
 export interface CoffeeBean {
   id: number | null;
   name: string | null;

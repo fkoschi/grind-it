@@ -1,9 +1,9 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import { Button, styled, View, XStack } from "tamagui";
 import { Image } from "expo-image";
 import { LinearGradient } from "tamagui/linear-gradient";
-import SearchFilter from "../../SearchFilter";
-import Search from "../../Search";
+import SearchFilter from "../SearchFilter";
+import Search from "../Search";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { beanTasteTable } from "@/db/schema";
 import { useDatabase } from "@/provider/DatabaseProvider";

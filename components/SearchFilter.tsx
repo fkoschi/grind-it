@@ -1,4 +1,4 @@
-import { TasteFilter } from "@/types";
+import { Taste } from "@/types";
 import { FC, useEffect, useState } from "react";
 import { View, Text, ScrollView } from "tamagui";
 import FilterChip from "./ui/FilterChip/FilterChip";
@@ -9,7 +9,7 @@ interface Props {
   filters: Array<typeof beanTasteTable.$inferSelect>;
 }
 const SearchFilter: FC<Props> = ({ filters }) => {
-  const [filterData, setFilterData] = useState<Array<TasteFilter>>();
+  const [filterData, setFilterData] = useState<Array<Taste>>();
 
   const beanTasteFilter = useBeanStore((store) => store.tasteFilter);
   const addBeanTasteFilter = useBeanStore((store) => store.addBeanTasteFilter);

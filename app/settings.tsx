@@ -1,9 +1,10 @@
 import TabBar from "@/components/navigation/TabBar";
 import { FC } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Avatar, Circle, ListItem, styled, View, YGroup } from "tamagui";
+import { Avatar, Text, Circle, ListItem, styled, View, YGroup, Separator } from "tamagui";
 import { ChevronRight } from "@tamagui/lucide-icons";
 import { useRouter } from "expo-router";
+import ThemedText from "@/components/ui/ThemedText";
 
 const SettingsPage: FC = () => {
   const router = useRouter();
@@ -14,20 +15,32 @@ const SettingsPage: FC = () => {
         <Avatar circular size="$10">
           <Avatar.Image
             accessibilityLabel="Cam"
-            src="https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
+            src={require("@/assets/images/icon.png")}
           />
-          <Avatar.Fallback backgroundColor="$blue10" />
         </Avatar>
+        <Text fontSize={24} fontFamily="BlackMango-Regular">Grind It</Text>
+        <ThemedText fw={400}>v.0.1</ThemedText>
       </View>
-      <YGroup mt="$8" p="$4" bordered>
+      <YGroup mt="$4" p="$4" bordered>
         <YGroup.Item>
           <ListItem
             pressTheme
             bgC="#F7F7F7"
             iconAfter={ChevronRight}
-            onPress={() => router.navigate("/edit/roasteries")}
+            onPress={() => router.navigate("/roasteries/edit")}
           >
             Röstereien
+          </ListItem>
+        </YGroup.Item>
+        <Separator />
+        <YGroup.Item>
+          <ListItem
+            pressTheme
+            bgC="#F7F7F7"
+            iconAfter={ChevronRight}
+            onPress={() => router.navigate("/taste/edit")}
+          >
+            Geschmack
           </ListItem>
         </YGroup.Item>
       </YGroup>

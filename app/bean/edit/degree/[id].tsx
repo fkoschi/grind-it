@@ -1,15 +1,19 @@
 import { beanTable } from "@/db/schema";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { eq } from "drizzle-orm";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 import { FC, useEffect, useState } from "react";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 import { Circle, Slider, Text, View } from "tamagui";
+import * as Haptics from 'expo-haptics';
 
 export const PATH_NAME = "/bean/edit/degree";
 
 const EditDegree: FC = () => {
-  const router = useRouter();
   const { db } = useDatabase();
   const navigation = useNavigation();
   const { id } = useLocalSearchParams();
@@ -18,11 +22,26 @@ const EditDegree: FC = () => {
 
   const parsedValue = degreeValue ? degreeValue[0] / 10 : 0;
 
+  const sv = useSharedValue(0);
+
+  const animatedStyles = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${sv.value}deg` }],
+  }));
+
   const handleValueChange = (value: number[]) => {
+    const prev = degreeValue?.[0];
+    const curr = value[0];
+
+    if (prev !== undefined && prev !== curr) {
+      sv.value = withSpring(sv.value + (curr - prev) * 9);
+      Haptics.selectionAsync();
+    }
+
     setDegreeValue(value);
   };
 
   useEffect(() => {
+    sv.value = 0;
     const fetchInitialData = async () => {
       const dbResult = await db
         .select({ degreeOfGrinding: beanTable.degreeOfGrinding })
@@ -64,8 +83,8 @@ const EditDegree: FC = () => {
         </Text>
       </View>
 
-      <View flex={1} alignItems="center" overflow="hidden" mt="$12">
-        <Circle flex={1} justifyContent="flex-start" size={600} bgC="#E8E8E8">
+      <View flex={1} alignItems="center" mt="$12">
+        <Circle flex={1} justifyContent="flex-start" size={550} bgC="#E8E8E8">
           <Slider
             size="$2"
             width="$16"
@@ -86,6 +105,19 @@ const EditDegree: FC = () => {
               index={0}
             />
           </Slider>
+          <Animated.Image
+            source={require("@/assets/images/cogwheel-layer.png")}
+            style={[
+              {
+                position: "absolute",
+                bottom: 20,
+                zIndex: -1,
+                width: 550,
+                height: 550,
+              },
+              animatedStyles,
+            ]}
+          />
         </Circle>
       </View>
     </View>

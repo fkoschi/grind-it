@@ -36,8 +36,6 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
   const { db } = useDatabase();
   const { id, roastery, name, isFavorite, degreeOfGrinding = 0.0 } = data;
 
-  const imagePath = require("@/assets/images/coffee-cup.png");
-
   const handlePress = async () => {
     await db
       .update(beanTable)
@@ -49,7 +47,7 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
     <StyledCard>
       <View flex={0} justifyContent="center">
         <Image
-          source={imagePath}
+          source={require("@/assets/images/coffee-cup.png")}
           style={{ marginLeft: -24, width: 80, height: 80 }}
         />
       </View>

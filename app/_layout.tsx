@@ -1,4 +1,5 @@
 import App from "./App";
+import React from "react";
 import { Stack } from "expo-router";
 
 export default function RootLayout() {
@@ -14,10 +15,17 @@ export default function RootLayout() {
           options={{ headerShown: false, animation: "none" }}
         />
         <Stack.Screen
-          name="edit/roasteries"
+          name="roasteries/edit"
           options={{
-            headerShown: false,
-            presentation: "card",
+            title: "Röstereien",
+            headerBackTitle: "Zurück",
+          }}
+        />
+        <Stack.Screen
+          name="taste/edit"
+          options={{
+            title: "Geschmack",
+            headerBackTitle: "Zurück",
           }}
         />
       </Stack>

@@ -1,18 +1,16 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { View } from "tamagui";
 import TabBar from "@/components/navigation/TabBar";
-import DashboardCards from "@/components/pages/Dashboard/DasboardCards";
-import DashboardHeader from "@/components/pages/Dashboard/DashboardHeader";
+import DashboardCards from "@/components/Dashboard/DasboardCards";
+import DashboardHeader from "@/components/Dashboard/DashboardHeader";
 import { CoffeeBean } from "@/types";
 import { useBeanStore } from "@/store/bean-store";
-import {
-  selectBeansBySearch,
-  selectBeansBySearchAndFilter,
-} from "@/db/queries";
+import { selectBeansBySearchAndFilter } from "@/db/queries";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { beanTable, roasteryTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import DashboardEmpty from "@/components/Dashboard/DashboardEmpty";
 
 const HomePage: FC = () => {
   const { db } = useDatabase();
@@ -20,7 +18,7 @@ const HomePage: FC = () => {
   const [search, setSearch] = useState<string>("");
   const [beansData, setBeansData] = useState<Array<CoffeeBean>>();
 
-  const { data: liveData } = useLiveQuery(
+  const { data: initialData } = useLiveQuery(
     db
       .selectDistinct({
         id: beanTable.id,
@@ -30,40 +28,34 @@ const HomePage: FC = () => {
         isFavorite: beanTable.isFavorit,
       })
       .from(beanTable)
-      .innerJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
+      .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
   );
 
   useEffect(() => {
-    setBeansData(liveData);
-  }, [liveData]);
+    setBeansData(initialData);
+  }, [initialData]);
 
-  const fetchDataBySearch = () => {
-    const data = selectBeansBySearch(db).all({ search: `%${search}%` });
-    setBeansData(data);
-  };
-
-  const fetchDataBySearchAndFilter = () => {
+  const handleChangeText = (search: string) => {
     const data = selectBeansBySearchAndFilter(db, beanTasteFilter).all({
       search: `%${search}%`,
     });
+
     setBeansData(data);
+    setSearch(search);
   };
 
-  useEffect(() => {
-    if (beanTasteFilter?.length > 0) {
-      fetchDataBySearchAndFilter();
-    } else {
-      fetchDataBySearch();
-    }
-  }, [search, beanTasteFilter]);
-
-  const handleChangeText = (search: string) => setSearch(search);
-  const activeFilter = search.length > 0 || beanTasteFilter.length > 0;
+  const hasActiveFilter = beanTasteFilter?.length > 0 || search.length > 0;
+  const hasNoBeanData =
+    beansData?.length === 0 && initialData?.length === 0 && !hasActiveFilter;
 
   return (
     <View flex={1} bgC="$screenBackground">
       <DashboardHeader onChangeText={handleChangeText} />
-      <DashboardCards beansData={beansData} isFilterActive={activeFilter} />
+      {hasNoBeanData ? (
+        <DashboardEmpty />
+      ) : (
+        <DashboardCards beansData={beansData} />
+      )}
       <TabBar />
     </View>
   );

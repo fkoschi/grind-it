@@ -2,7 +2,7 @@ import { getFontSize, Text, View, YStack } from "tamagui";
 import { Image } from "expo-image";
 
 const DashboardNoData = () => (
-  <YStack flex={1} alignItems="center">
+  <YStack flex={1} alignItems="center" paddingHorizontal="$8">
     <View mt="$6" mb="$6">
       <Image
         source={require("@/assets/images/coffe-bag.png")}
@@ -11,15 +11,16 @@ const DashboardNoData = () => (
       />
     </View>
     <Text fontSize="$8" fontFamily="BlackMango-Regular">
-      Kein Treffer!
+      Leider kein Treffer!
     </Text>
-    <View py="$4">
+    <View py="$4" mt="$2">
       <Text
         textAlign="center"
         fontSize="$6"
+        lineHeight={getFontSize("$6")}
         fontFamily="DarkerGrotesque_400Regular"
       >
-        Für deine Suche konnte keine Bohne gefunden werden.
+        Für deine Suche konnte keine Bohne gefunden werden. Probier doch mal eine andere Suche.
       </Text>
     </View>
   </YStack>

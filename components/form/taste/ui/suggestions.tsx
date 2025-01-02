@@ -1,19 +1,15 @@
 import FilterChip from "@/components/ui/FilterChip/FilterChip";
 import ThemedText from "@/components/ui/ThemedText";
+import { Taste } from "@/types";
 import { FC } from "react";
 import { View } from "tamagui";
 
-type Flavor = {
-  id: number;
-  flavor: string;
-};
-
 interface Props {
-  data: Array<Flavor>;
-  onPress: (id: number) => void;
+  tasteData: Array<Taste>;
+  onPress: (taste: Taste) => void;
 }
-const AddBeanFormSuggestions: FC<Props> = ({ data, onPress }) => {
-  if (!data.length) {
+const AddBeanFormSuggestions: FC<Props> = ({ tasteData, onPress }) => {
+  if (!tasteData?.length) {
     return null;
   }
 
@@ -23,12 +19,12 @@ const AddBeanFormSuggestions: FC<Props> = ({ data, onPress }) => {
         Vorschläge:
       </ThemedText>
       <View mt="$2" flex={1} flexDirection="row" gap="$2" flexWrap="wrap">
-        {data.map((taste: Flavor) => (
+        {tasteData.map((taste: Taste) => (
           <FilterChip
             key={taste.id}
             id={taste.id}
             name={taste.flavor}
-            onPress={() => onPress(taste.id)}
+            onPress={() => onPress(taste)}
           />
         ))}
       </View>

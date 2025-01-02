@@ -1,14 +1,23 @@
 import { ChevronDown } from "@tamagui/lucide-icons";
 import { FC } from "react";
-import { Adapt, Select, Sheet } from "tamagui";
+import { Adapt, Select, SelectProps } from "tamagui";
 
 interface Props {
   label: string;
   placeholder?: string;
   items?: Array<{ id: number; name: string }>;
+  SelectProps?: SelectProps;
   onChange?: (value: number) => void;
+  onOpenChange?: (value: number) => void;
 }
-const ThemedSelect: FC<Props> = ({ label, onChange, placeholder, items }) => {
+const ThemedSelect: FC<Props> = ({
+  label,
+  onChange,
+  placeholder,
+  items,
+  SelectProps,
+}) => {
+
   const renderItems = () =>
     items?.map((item, i) => (
       <Select.Item
@@ -29,7 +38,10 @@ const ThemedSelect: FC<Props> = ({ label, onChange, placeholder, items }) => {
   };
 
   return (
-    <Select onValueChange={handleValueChange}>
+    <Select
+      onValueChange={handleValueChange}
+      {...SelectProps}
+    >
       <Select.Trigger iconAfter={ChevronDown} disabled={!items?.length}>
         <Select.Value placeholder={placeholder ? placeholder : "Select..."} />
       </Select.Trigger>
@@ -40,7 +52,7 @@ const ThemedSelect: FC<Props> = ({ label, onChange, placeholder, items }) => {
         </Select.Sheet>
       </Adapt>
 
-      <Select.Content zIndex={100_000_000}>
+      <Select.Content zIndex={200_000_000}>
         <Select.Viewport minWidth={200}>
           <Select.Group>
             <Select.Label>{label}</Select.Label>

@@ -7,6 +7,7 @@ import TabBarIcon from "./TabBarIcon";
 import { useIsRouteActive } from "@/hooks/useIsRouteActive";
 import HomeIcon from "../ui/Icons/Home";
 import ProfileIcon from "../ui/Icons/Profile";
+import AddIcon from "../ui/Icons/Add";
 
 const TabBar: FC = () => {
   const router = useRouter();
@@ -38,10 +39,7 @@ const TabBar: FC = () => {
           style={{ backgroundColor: "#664F3F", flex: 1 }}
           onPress={() => router.navigate("/bean/add")}
         >
-          <Image
-            source={require("@/assets/icons/add.png")}
-            style={{ height: 24, width: 24 }}
-          />
+          <AddIcon />
         </Button>
       </View>
       <ImageBackground
