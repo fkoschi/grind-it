@@ -1,7 +1,6 @@
 import { Dimensions, ImageBackground } from "react-native";
 import { FC } from "react";
 import { Button, View } from "tamagui";
-import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import TabBarIcon from "./TabBarIcon";
 import { useIsRouteActive } from "@/hooks/useIsRouteActive";
@@ -20,23 +19,22 @@ const TabBar: FC = () => {
       position="absolute"
       height={92}
       bottom={0}
-      zIndex={999}
+      zIndex={1_000}
     >
       <View
-        style={{
-          position: "absolute",
-          height: 92,
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          zIndex: 999999,
-          bottom: 40,
-          width: screenWidth,
-        }}
+        position="absolute"
+        height={92}
+        flex={1}
+        alignItems="center"
+        justifyContent="center"
+        zIndex={100_000}
+        bottom={40}
+        width={screenWidth}
       >
         <Button
           circular
-          style={{ backgroundColor: "#664F3F", flex: 1 }}
+          bgC={"#664F3F"}
+          flex={1}
           onPress={() => router.navigate("/bean/add")}
         >
           <AddIcon />

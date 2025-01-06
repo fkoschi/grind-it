@@ -6,7 +6,6 @@ import {
   DarkerGrotesque_700Bold,
   DarkerGrotesque_800ExtraBold,
   DarkerGrotesque_900Black,
-  useFonts,
 } from "@expo-google-fonts/darker-grotesque";
 
 export const darkerGrotesqueFonts = {

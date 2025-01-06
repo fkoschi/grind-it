@@ -1,5 +1,6 @@
 import { getFontSize, Text, View, YStack } from "tamagui";
 import { Image } from "expo-image";
+import ThemedText from "../ui/ThemedText";
 
 const DashboardNoData = () => (
   <YStack flex={1} alignItems="center" paddingHorizontal="$8">
@@ -10,18 +11,14 @@ const DashboardNoData = () => (
         style={{ flex: 0, height: 120, width: 120 }}
       />
     </View>
-    <Text fontSize="$8" fontFamily="BlackMango-Regular">
+    <Text fontSize="$8" fontFamily="TBJSodabery-LightOriginal">
       Leider kein Treffer!
     </Text>
     <View py="$4" mt="$2">
-      <Text
-        textAlign="center"
-        fontSize="$6"
-        lineHeight={getFontSize("$6")}
-        fontFamily="DarkerGrotesque_400Regular"
-      >
-        Für deine Suche konnte keine Bohne gefunden werden. Probier doch mal eine andere Suche.
-      </Text>
+      <ThemedText textAlign="center" fontSize={16} fw={400}>
+        Für deine Suche konnte keine Bohne gefunden werden. Probier doch mal
+        eine andere Suche.
+      </ThemedText>
     </View>
   </YStack>
 );

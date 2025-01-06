@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { CoffeeBean } from "@/types";
-import { View, Text, YStack, styled } from "tamagui";
+import { View, Text, YStack, styled, getFontSize } from "tamagui";
 import { Image } from "expo-image";
 import { Pressable } from "react-native";
 import { useRouter } from "expo-router";
@@ -55,12 +55,16 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
         <Pressable onPress={() => router.navigate(`/bean/details/${id}`)}>
           <Text
             c="$primary"
-            fontSize={16}
+            fontSize={12}
             fontFamily="DarkerGrotesque_500Medium"
           >
             {roastery}
           </Text>
-          <Text fontSize={24} fontFamily="BlackMango-Regular">
+          <Text
+            fontSize={28}
+            fontFamily="TBJSodabery-LightOriginal"
+            mt="$2"
+          >
             {name}
           </Text>
         </Pressable>
@@ -72,14 +76,14 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
             justifyContent="flex-end"
             flexDirection="column"
           >
-            <ThemedText fw={300} fontSize={10} mt="$2">
+            <ThemedText fw={300} fontSize={12} mt="$1">
               Mahlgrad
             </ThemedText>
             <Text
-              fontSize="$9"
-              lineHeight="$9"
+              mt="$1"
               c="$primary"
-              fontFamily="BlackMango-Regular"
+              fontSize={32}
+              fontFamily="TBJSodabery-LightOriginal"
             >
               {degreeOfGrinding}
             </Text>

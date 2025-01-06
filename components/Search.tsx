@@ -49,7 +49,7 @@ const Search: FC<Props> = ({ disabled = false, onChangeText }) => {
         disabled={disabled}
         value={search}
         onChangeText={handleChangeText}
-        placeholder="Search..."
+        placeholder="Suche..."
       />
       {showClear && (
         <View position="absolute" right={0}>

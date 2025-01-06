@@ -208,7 +208,9 @@ const AddBeanPage: FC = () => {
         </XStack>
 
         <View flex={0} mt="$4">
-          <Text fontSize="$6">Geschmack</Text>
+          <Text fontSize="$6">
+            Geschmack
+          </Text>
           {beanTaste && (
             <View
               flex={0}

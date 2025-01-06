@@ -18,7 +18,7 @@ const NoData = () => (
     <View flex={1} justifyContent="center">
       <Image
         source={require("@/assets/images/latte-art.png")}
-        style={{ flex: 1, maxHeight: 100 }}
+        style={{ flex: 1, maxHeight: 100, height: 100 }}
         contentFit="contain"
       />
     </View>

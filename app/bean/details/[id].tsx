@@ -103,7 +103,7 @@ const DetailsPage: FC = () => {
         <ThemedText fontSize="$6" color="$primary" fw={500}>
           {roastery}
         </ThemedText>
-        <Text fontSize="$10" fontFamily="BlackMango-Regular">
+        <Text fontSize="$11" mt="$2" fontFamily="TBJSodabery-LightOriginal">
           {beanName}
         </Text>
         <View flex={0} mt="$2">
@@ -141,7 +141,7 @@ const DetailsPage: FC = () => {
                 fontSize="$16"
                 lineHeight="$16"
                 color="$primary"
-                fontFamily="BlackMango-Regular"
+                fontFamily="TBJSodabery-LightOriginal"
               >
                 {degreeOfGrinding ?? 0}
               </Text>

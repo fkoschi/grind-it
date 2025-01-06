@@ -15,17 +15,15 @@ export default function RootLayout() {
           options={{ headerShown: false, animation: "none" }}
         />
         <Stack.Screen
-          name="roasteries/edit"
+          name="roasteries/EditRoasteryPage"
           options={{
-            title: "Röstereien",
-            headerBackTitle: "Zurück",
+            headerShown: false,
           }}
         />
         <Stack.Screen
-          name="taste/edit"
+          name="taste/EditTasteComponent"
           options={{
-            title: "Geschmack",
-            headerBackTitle: "Zurück",
+            headerShown: false,
           }}
         />
       </Stack>

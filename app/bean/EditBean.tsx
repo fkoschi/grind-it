@@ -1,6 +1,6 @@
-import AddRoasteryForm from "@/components/form/roastery/add";
-import AddTasteSheet from "@/components/form/taste/AddTasteSheet";
-import EditTasteSheet from "@/components/form/taste/EditTasteSheet";
+import AddRoasteryForm from "@/app/bean/components/roastery/AddRoasteryForm";
+import AddTasteSheet from "@/app/bean/components/taste/AddTasteSheet";
+import EditTasteSheet from "@/app/bean/components/taste/EditTasteSheet";
 import BottomSheet from "@/components/ui/Sheet/Sheet";
 import { useBeanStore } from "@/store/bean-store";
 import { FC, PropsWithChildren } from "react";
@@ -38,7 +38,7 @@ const EditBean: FC<Props> = ({ children }) => {
           snapPointsMode: "percent",
           dismissOnSnapToBottom: true,
           animation: "medium",
-          snapPoints: [editTaste.type === "edit" ? 70 : 90],
+          snapPoints: [90],
           onOpenChange: () =>
             hideTasteSheet({ showSheet: false, type: "edit" }),
         }}

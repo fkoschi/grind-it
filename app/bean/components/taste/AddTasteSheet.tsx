@@ -7,10 +7,10 @@ import {
   Pressable,
   TextInputSubmitEditingEventData,
 } from "react-native";
-import { Input, Text, View, XStack } from "tamagui";
+import { Input, ScrollView, Text, View, XStack } from "tamagui";
 import { useBeanStore } from "@/store/bean-store";
-import AddBeanFormTaste from "./ui/taste";
-import AddBeanFormSuggestions from "./ui/suggestions";
+import AddBeanFormTaste from "./AddBeanFormTaste";
+import AddBeanFormSuggestions from "./AddBeanFormSuggestions";
 import { selectTasteNotInArray } from "@/db/queries";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { Taste } from "@/types";
@@ -31,6 +31,10 @@ const AddTasteSheet: FC = () => {
     e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
   ) => {
     e.preventDefault();
+
+    if (value.trim().length === 0) {
+      return;
+    }
 
     // TODO: Don't allow duplicate entries to be stored!
     addBeanTaste({ id: -1, flavor: value.trim() });
@@ -61,48 +65,43 @@ const AddTasteSheet: FC = () => {
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={16}
+      keyboardVerticalOffset={100}
     >
-      <View flex={1} p="$4" bgC="$screenBackground">
-        <AddBeanFormTaste tasteData={beanTaste} />
-        <AddBeanFormSuggestions
-          tasteData={suggestionData}
-          onPress={handleSuggestionPress}
-        />
-      </View>
-      <XStack
-        flex={1}
-        py="$4"
-        pt="$2"
-        pb="$0"
-        alignContent="center"
-        bottom={0}
-        width="100%"
-      >
-        <View flex={1} height={48} justifyContent="center">
-          <Controller
-            name="name"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                onSubmitEditing={handleSubmit}
-                returnKeyType="done"
-                onChangeText={(text) => setValue(text)}
-                returnKeyLabel="Fertig"
-                blurOnSubmit={false}
-              />
-            )}
+      <View flex={1} bgC="$screenBackground">
+        <ScrollView flex={1} p="$4">
+          <AddBeanFormTaste tasteData={beanTaste} />
+          <AddBeanFormSuggestions
+            tasteData={suggestionData}
+            onPress={handleSuggestionPress}
           />
-        </View>
-        <View flex={0} ml="$3" height={48} justifyContent="center">
-          <Pressable
-            onPress={() => showTasteSheet({ showSheet: false, type: "add" })}
-          >
-            <Text>Abbrechen</Text>
-          </Pressable>
-        </View>
-      </XStack>
+        </ScrollView>
+        <XStack flex={0} py="$4" px="$4" bgC={"$white"}>
+          <View flex={1} justifyContent="center">
+            <Controller
+              name="name"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  onSubmitEditing={handleSubmit}
+                  returnKeyType="done"
+                  autoFocus
+                  onChangeText={(text) => setValue(text)}
+                  returnKeyLabel="Fertig"
+                  blurOnSubmit={false}
+                />
+              )}
+            />
+          </View>
+          <View flex={0} ml="$3" justifyContent="center">
+            <Pressable
+              onPress={() => showTasteSheet({ showSheet: false, type: "add" })}
+            >
+              <Text>Abbrechen</Text>
+            </Pressable>
+          </View>
+        </XStack>
+      </View>
     </KeyboardAvoidingView>
   );
 };

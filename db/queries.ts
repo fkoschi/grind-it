@@ -39,7 +39,7 @@ const selectTasteInArray = (
 const selectRoasteries = (db: ExpoSQLiteDatabase) =>
   db.select().from(roasteryTable).prepare();
 
-const selectBeansBySearch = (db: ExpoSQLiteDatabase) =>
+/* const selectBeansBySearch = (db: ExpoSQLiteDatabase) =>
   db
     .selectDistinct({
       id: beanTable.id,
@@ -51,16 +51,16 @@ const selectBeansBySearch = (db: ExpoSQLiteDatabase) =>
     .from(beanTable)
     .innerJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
     .where(sql`${beanTable.name} like ${sql.placeholder("search")}`)
-    .prepare();
+    .prepare(); */
 
 const selectBeansBySearchAndFilter = (
   db: ExpoSQLiteDatabase,
   beanTasteFilter: Array<number>
 ) => {
   const tasteFilter = beanTasteFilter?.filter((filter) => filter !== 0);
-  const favoriteFilter = beanTasteFilter?.includes(0);
+  const hasFavoriteFilter = beanTasteFilter?.includes(0);
 
-  return db
+  const preparedQuery = db
     .selectDistinct({
       id: beanTable.id,
       name: beanTable.name,
@@ -77,18 +77,20 @@ const selectBeansBySearchAndFilter = (
     .where(
       and(
         sql`${beanTable.name} like ${sql.placeholder("search")}`,
-        favoriteFilter ? beanTable.isFavorit : sql`True`,
+        hasFavoriteFilter ? beanTable.isFavorit : sql`True`,
         tasteFilter.length > 0
           ? inArray(beanTasteAssociationTable.tasteId, tasteFilter)
           : sql`TRUE`
       )
     )
     .prepare();
+
+  return preparedQuery;
 };
 
 export {
   selectTastes,
-  selectBeansBySearch,
+  /* selectBeansBySearch, */
   selectTasteInArray,
   selectTasteNotInArray,
   selectBeansBySearchAndFilter,

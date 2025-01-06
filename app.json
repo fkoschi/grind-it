@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "grind-it",
+    "name": "Grind It",
     "slug": "grind-it",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,7 +9,7 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.fkoschi.grind-it"
     },
     "android": {
@@ -40,7 +40,7 @@
         "expo-font",
         {
           "fonts": [
-            "./assets/fonts/BlackMango-Regular.ttf"
+            "./assets/fonts/TBJSodabery-Light.otf"
           ]
         }
       ],

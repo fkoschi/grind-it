@@ -5,7 +5,7 @@ import { darkerGrotesqueFonts } from "@/constants/fonts";
 import { View } from "react-native";
 import { PortalProvider, TamaguiProvider } from "tamagui";
 import * as SplashScreen from "expo-splash-screen";
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { DatabaseProvider } from "@/provider/DatabaseProvider";
 

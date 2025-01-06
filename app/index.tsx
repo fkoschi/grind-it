@@ -1,5 +1,5 @@
-import { FC, useEffect, useMemo, useState } from "react";
-import { View } from "tamagui";
+import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { Text, View } from "tamagui";
 import TabBar from "@/components/navigation/TabBar";
 import DashboardCards from "@/components/Dashboard/DasboardCards";
 import DashboardHeader from "@/components/Dashboard/DashboardHeader";
@@ -10,13 +10,13 @@ import { useDatabase } from "@/provider/DatabaseProvider";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { beanTable, roasteryTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import DashboardEmpty from "@/components/Dashboard/DashboardEmpty";
+import NoData from "@/components/NoData";
 
-const HomePage: FC = () => {
+const HomePageComponent: FC = () => {
   const { db } = useDatabase();
-  const beanTasteFilter = useBeanStore((store) => store.tasteFilter);
   const [search, setSearch] = useState<string>("");
-  const [beansData, setBeansData] = useState<Array<CoffeeBean>>();
+  const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
+  const beanTasteFilter = useBeanStore((store) => store.tasteFilter);
 
   const { data: initialData } = useLiveQuery(
     db
@@ -31,34 +31,67 @@ const HomePage: FC = () => {
       .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
   );
 
+  const [beansData, setBeansData] = useState<Array<CoffeeBean> | undefined>();
+
+  const updateBeansData = useCallback(
+    (searchText?: string) => {
+      setIsLoadingData(true);
+      const beansData = selectBeansBySearchAndFilter(db, beanTasteFilter).all({
+        search: `%${searchText}%`,
+      });
+      setBeansData(beansData);
+      setIsLoadingData(false);
+    },
+    [beanTasteFilter]
+  );
+
+  const handleChangeText = (searchText: string) => {
+    updateBeansData(searchText);
+    setSearch(searchText);
+  };
+
+  useEffect(() => {
+    updateBeansData(search);
+  }, [beanTasteFilter]);
+
   useEffect(() => {
     setBeansData(initialData);
   }, [initialData]);
 
-  const handleChangeText = (search: string) => {
-    const data = selectBeansBySearchAndFilter(db, beanTasteFilter).all({
-      search: `%${search}%`,
-    });
-
-    setBeansData(data);
-    setSearch(search);
-  };
-
   const hasActiveFilter = beanTasteFilter?.length > 0 || search.length > 0;
-  const hasNoBeanData =
-    beansData?.length === 0 && initialData?.length === 0 && !hasActiveFilter;
 
   return (
     <View flex={1} bgC="$screenBackground">
       <DashboardHeader onChangeText={handleChangeText} />
-      {hasNoBeanData ? (
-        <DashboardEmpty />
-      ) : (
-        <DashboardCards beansData={beansData} />
-      )}
+      <HomePage
+        data={beansData}
+        isLoading={isLoadingData}
+        isFiltered={hasActiveFilter}
+      />
       <TabBar />
     </View>
   );
 };
 
-export default HomePage;
+interface HomePageProps {
+  isFiltered: boolean;
+  isLoading?: boolean;
+  data?: CoffeeBean[];
+}
+const HomePage: FC<HomePageProps> = ({ isLoading, isFiltered, data }) => {
+  const isEmpty = useMemo(() => data?.length === 0, [data]);
+
+  if (isEmpty && !isFiltered && !isLoading) {
+    return (
+      <NoData
+        variant={1}
+        headline="Keine Bohnen gefunden"
+        copy="Erstelle deine erste Bohne."
+      />
+    );
+  }
+
+  return <DashboardCards beansData={data} />;
+};
+
+export default HomePageComponent;

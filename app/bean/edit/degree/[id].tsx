@@ -1,7 +1,7 @@
 import { beanTable } from "@/db/schema";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { eq } from "drizzle-orm";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { FC, useEffect, useState } from "react";
 import Animated, {
   useAnimatedStyle,
@@ -9,17 +9,15 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { Circle, Slider, Text, View } from "tamagui";
-import * as Haptics from 'expo-haptics';
+import * as Haptics from "expo-haptics";
 
 export const PATH_NAME = "/bean/edit/degree";
 
 const EditDegree: FC = () => {
   const { db } = useDatabase();
-  const navigation = useNavigation();
   const { id } = useLocalSearchParams();
 
   const [degreeValue, setDegreeValue] = useState<number[] | undefined>();
-
   const parsedValue = degreeValue ? degreeValue[0] / 10 : 0;
 
   const sv = useSharedValue(0);
@@ -28,7 +26,7 @@ const EditDegree: FC = () => {
     transform: [{ rotate: `${sv.value}deg` }],
   }));
 
-  const handleValueChange = (value: number[]) => {
+  const handleValueChange = async (value: number[]) => {
     const prev = degreeValue?.[0];
     const curr = value[0];
 
@@ -36,6 +34,11 @@ const EditDegree: FC = () => {
       sv.value = withSpring(sv.value + (curr - prev) * 9);
       Haptics.selectionAsync();
     }
+
+    await db
+      .update(beanTable)
+      .set({ degreeOfGrinding: parsedValue })
+      .where(eq(beanTable.id, Number(id)));
 
     setDegreeValue(value);
   };
@@ -57,28 +60,14 @@ const EditDegree: FC = () => {
     fetchInitialData();
   }, []);
 
-  useEffect(() => {
-    const beforeRemove = navigation.addListener("beforeRemove", async (e) => {
-      e.preventDefault();
-
-      try {
-        await db
-          .update(beanTable)
-          .set({ degreeOfGrinding: parsedValue })
-          .where(eq(beanTable.id, Number(id)));
-
-        navigation.dispatch(e.data.action);
-      } catch (error) {
-        console.error(error);
-      }
-    });
-    return beforeRemove;
-  }, [navigation, degreeValue]);
-
   return (
     <View flex={1}>
       <View flex={0} alignItems="center" mt="$10">
-        <Text fontSize="$14" color="$primary" fontFamily="BlackMango-Regular">
+        <Text
+          fontSize={140}
+          color="$primary"
+          fontFamily="TBJSodabery-LightOriginal"
+        >
           {parsedValue}
         </Text>
       </View>

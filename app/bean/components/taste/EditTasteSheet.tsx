@@ -59,7 +59,8 @@ const EditTasteSheet: FC = () => {
     setBeanTasteData(beanTasteData);
 
     const beanTasteFilter = beanTasteData.map((taste) => taste.id);
-    const beanTasteSuggestionData = fetchBeanSuggestionTasteData(beanTasteFilter);
+    const beanTasteSuggestionData =
+      fetchBeanSuggestionTasteData(beanTasteFilter);
     setBeanSuggestionTasteData(beanTasteSuggestionData);
   };
 
@@ -117,53 +118,54 @@ const EditTasteSheet: FC = () => {
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={180}
+      keyboardVerticalOffset={100}
     >
-      <ScrollView flex={1} padding="$4">
-        <View>
-          <Text>Auswahl:</Text>
-          <XStack gap="$2" flexWrap="wrap" mt="$3">
-            {!beanTasteData?.length && (
-              <XStack flex={1} height="$8" justifyContent="center">
-                <Image
-                  source={require("@/assets/images/latte-art.png")}
-                  style={{ width: 80, height: 80 }}
+      <View flex={1} bgC="$screenBackground">
+        <ScrollView flex={1} padding="$4">
+          <View>
+            <Text>Auswahl:</Text>
+            <XStack gap="$2" flexWrap="wrap" mt="$3">
+              {!beanTasteData?.length && (
+                <XStack flex={1} height="$8" justifyContent="center">
+                  <Image
+                    source={require("@/assets/images/latte-art.png")}
+                    style={{ width: 80, height: 80 }}
+                  />
+                </XStack>
+              )}
+              {beanTasteData?.map(({ id: tasteId, flavor }, index) => (
+                <Badge
+                  key={index}
+                  title={flavor ?? ""}
+                  withButton
+                  onPress={() => handleRemovePress(tasteId)}
                 />
-              </XStack>
-            )}
-            {beanTasteData?.map(({ id: tasteId, flavor }, index) => (
-              <Badge
-                key={index}
-                title={flavor ?? ""}
-                withButton
-                onPress={() => handleRemovePress(tasteId)}
-              />
-            ))}
-          </XStack>
-        </View>
-        <View mt="$4">
-          <Text>Vorschläge:</Text>
-          <XStack gap="$2" flexWrap="wrap" mt="$3">
-            {beanSuggestionTasteData?.map(({ id: tasteId, flavor }, index) => (
-              <FilterChip
-                key={index}
-                id={tasteId}
-                name={flavor ?? ""}
-                onPress={() => handleSuggestionPress(tasteId)}
-              />
-            ))}
-          </XStack>
-        </View>
-      </ScrollView>
+              ))}
+            </XStack>
+          </View>
+          <View mt="$4">
+            <Text>Vorschläge:</Text>
+            <XStack gap="$2" flexWrap="wrap" mt="$3">
+              {beanSuggestionTasteData?.map(
+                ({ id: tasteId, flavor }, index) => (
+                  <FilterChip
+                    key={index}
+                    id={tasteId}
+                    name={flavor ?? ""}
+                    onPress={() => handleSuggestionPress(tasteId)}
+                  />
+                )
+              )}
+            </XStack>
+          </View>
+        </ScrollView>
+      </View>
 
       <XStack
-        flex={1}
+        flex={0}
         py="$4"
-        pt="$2"
-        pb="$0"
-        alignContent="center"
-        bottom={0}
-        width="100%"
+        px="$4"
+        bgC={"$white"}
       >
         <View flex={1} height={48} justifyContent="center">
           <Controller
