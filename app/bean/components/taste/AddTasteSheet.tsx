@@ -85,7 +85,6 @@ const AddTasteSheet: FC = () => {
                   {...field}
                   onSubmitEditing={handleSubmit}
                   returnKeyType="done"
-                  autoFocus
                   onChangeText={(text) => setValue(text)}
                   returnKeyLabel="Fertig"
                   blurOnSubmit={false}

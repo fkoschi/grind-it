@@ -36,6 +36,7 @@ const TabBar: FC = () => {
           bgC={"#664F3F"}
           flex={1}
           onPress={() => router.navigate("/bean/add")}
+          pressStyle={{ bgC: "$secondaryHover" }}
         >
           <AddIcon />
         </Button>
