@@ -2504,9 +2504,9 @@
               }
             },
             "defaultProps": {
-              "unstyled": false,
               "multiline": true,
-              "whiteSpace": "pre-wrap"
+              "whiteSpace": "pre-wrap",
+              "unstyled": false
             },
             "defaultVariants": {
               "unstyled": false
@@ -2561,9 +2561,9 @@
               }
             },
             "defaultProps": {
-              "unstyled": false,
               "multiline": true,
-              "whiteSpace": "pre-wrap"
+              "whiteSpace": "pre-wrap",
+              "unstyled": false
             },
             "defaultVariants": {
               "unstyled": false
@@ -9003,7 +9003,6 @@
             "isText": true,
             "defaultProps": {
               "suppressHighlighting": true,
-              "unstyled": false,
               "userSelect": "auto",
               "color": "$color",
               "whiteSpace": "normal",
@@ -9011,7 +9010,8 @@
               "fontFamily": "$heading",
               "size": "$8",
               "margin": 0,
-              "tag": "h2"
+              "tag": "h2",
+              "unstyled": false
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -12652,8 +12652,8 @@
             "defaultProps": {
               "suppressHighlighting": true,
               "fontFamily": "$body",
-              "unstyled": false,
-              "tag": "label"
+              "tag": "label",
+              "unstyled": false
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -12904,8 +12904,8 @@
             "defaultProps": {
               "suppressHighlighting": true,
               "fontFamily": "$body",
-              "unstyled": false,
-              "tag": "label"
+              "tag": "label",
+              "unstyled": false
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -24925,7 +24925,6 @@
             "isText": true,
             "defaultProps": {
               "suppressHighlighting": true,
-              "unstyled": false,
               "userSelect": "auto",
               "color": "$color",
               "whiteSpace": "normal",
@@ -24933,7 +24932,8 @@
               "fontFamily": "$heading",
               "size": "$8",
               "margin": 0,
-              "tag": "h1"
+              "tag": "h1",
+              "unstyled": false
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -25157,6 +25157,9 @@
               "selectable": true,
               "verticalAlign": true
             },
+            "defaultVariants": {
+              "unstyled": false
+            },
             "componentName": "H1",
             "isReactNative": false,
             "isStyledHOC": false
@@ -25168,7 +25171,6 @@
             "isText": true,
             "defaultProps": {
               "suppressHighlighting": true,
-              "unstyled": false,
               "userSelect": "auto",
               "color": "$color",
               "whiteSpace": "normal",
@@ -25176,7 +25178,8 @@
               "fontFamily": "$heading",
               "size": "$8",
               "margin": 0,
-              "tag": "h2"
+              "tag": "h2",
+              "unstyled": false
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -25400,6 +25403,9 @@
               "selectable": true,
               "verticalAlign": true
             },
+            "defaultVariants": {
+              "unstyled": false
+            },
             "componentName": "H2",
             "isReactNative": false,
             "isStyledHOC": false
@@ -25411,7 +25417,6 @@
             "isText": true,
             "defaultProps": {
               "suppressHighlighting": true,
-              "unstyled": false,
               "userSelect": "auto",
               "color": "$color",
               "whiteSpace": "normal",
@@ -25419,7 +25424,8 @@
               "fontFamily": "$heading",
               "size": "$8",
               "margin": 0,
-              "tag": "h3"
+              "tag": "h3",
+              "unstyled": false
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -25643,6 +25649,9 @@
               "selectable": true,
               "verticalAlign": true
             },
+            "defaultVariants": {
+              "unstyled": false
+            },
             "componentName": "H3",
             "isReactNative": false,
             "isStyledHOC": false
@@ -25654,7 +25663,6 @@
             "isText": true,
             "defaultProps": {
               "suppressHighlighting": true,
-              "unstyled": false,
               "userSelect": "auto",
               "color": "$color",
               "whiteSpace": "normal",
@@ -25662,7 +25670,8 @@
               "fontFamily": "$heading",
               "size": "$8",
               "margin": 0,
-              "tag": "h4"
+              "tag": "h4",
+              "unstyled": false
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -25886,6 +25895,9 @@
               "selectable": true,
               "verticalAlign": true
             },
+            "defaultVariants": {
+              "unstyled": false
+            },
             "componentName": "H4",
             "isReactNative": false,
             "isStyledHOC": false
@@ -25897,7 +25909,6 @@
             "isText": true,
             "defaultProps": {
               "suppressHighlighting": true,
-              "unstyled": false,
               "userSelect": "auto",
               "color": "$color",
               "whiteSpace": "normal",
@@ -25905,7 +25916,8 @@
               "fontFamily": "$heading",
               "size": "$8",
               "margin": 0,
-              "tag": "h5"
+              "tag": "h5",
+              "unstyled": false
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -26129,6 +26141,9 @@
               "selectable": true,
               "verticalAlign": true
             },
+            "defaultVariants": {
+              "unstyled": false
+            },
             "componentName": "H5",
             "isReactNative": false,
             "isStyledHOC": false
@@ -26140,7 +26155,6 @@
             "isText": true,
             "defaultProps": {
               "suppressHighlighting": true,
-              "unstyled": false,
               "userSelect": "auto",
               "color": "$color",
               "whiteSpace": "normal",
@@ -26148,7 +26162,8 @@
               "fontFamily": "$heading",
               "size": "$8",
               "margin": 0,
-              "tag": "h6"
+              "tag": "h6",
+              "unstyled": false
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -26371,6 +26386,9 @@
               "userSelect": true,
               "selectable": true,
               "verticalAlign": true
+            },
+            "defaultVariants": {
+              "unstyled": false
             },
             "componentName": "H6",
             "isReactNative": false,

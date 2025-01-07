@@ -204,7 +204,7 @@ const BeanLayout = () => {
   const height = useSharedValue(240);
   const isKeyboardVisible = useKeyboardIsVisible();
   const isBottomSheetActive = useIsBottomSheetActive();
-  console.log(isBottomSheetActive);
+
   useEffect(() => {
     if (isKeyboardVisible && !isBottomSheetActive) {
       height.value = withSpring(140, { damping: 20, stiffness: 90 });
