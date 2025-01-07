@@ -12,18 +12,19 @@ import { Circle, Slider, Text, View } from "tamagui";
 import * as Haptics from "expo-haptics";
 
 export const PATH_NAME = "/bean/edit/degree";
+const CIRCEL_SIZE = 600;
 
 const EditDegree: FC = () => {
   const { db } = useDatabase();
   const { id } = useLocalSearchParams();
 
+  const rotation = useSharedValue(0);
+  
   const [degreeValue, setDegreeValue] = useState<number[] | undefined>();
   const parsedValue = degreeValue ? degreeValue[0] / 10 : 0;
 
-  const sv = useSharedValue(0);
-
   const animatedStyles = useAnimatedStyle(() => ({
-    transform: [{ rotate: `${sv.value}deg` }],
+    transform: [{ rotate: `${rotation.value}deg` }],
   }));
 
   const handleValueChange = async (value: number[]) => {
@@ -31,7 +32,7 @@ const EditDegree: FC = () => {
     const curr = value[0];
 
     if (prev !== undefined && prev !== curr) {
-      sv.value = withSpring(sv.value + (curr - prev) * 9);
+      rotation.value = withSpring(rotation.value + (curr - prev) * 9);
       Haptics.selectionAsync();
     }
 
@@ -43,8 +44,9 @@ const EditDegree: FC = () => {
     setDegreeValue(value);
   };
 
+  const resetRotationValue = () => rotation.value = 0;
+
   useEffect(() => {
-    sv.value = 0;
     const fetchInitialData = async () => {
       const dbResult = await db
         .select({ degreeOfGrinding: beanTable.degreeOfGrinding })
@@ -57,12 +59,13 @@ const EditDegree: FC = () => {
         setDegreeValue([parsedValue]);
       }
     };
+    resetRotationValue();
     fetchInitialData();
   }, []);
 
   return (
     <View flex={1}>
-      <View flex={0} alignItems="center" mt="$10">
+      <View flex={1} alignItems="center" mt="$10">
         <Text
           fontSize={140}
           color="$primary"
@@ -72,8 +75,8 @@ const EditDegree: FC = () => {
         </Text>
       </View>
 
-      <View flex={1} alignItems="center" mt="$12">
-        <Circle flex={1} justifyContent="flex-start" size={550} bgC="#E8E8E8">
+      <View flex={1} alignItems="center" overflow="hidden" pt="$4">
+        <Circle flex={1} justifyContent="flex-start" size={CIRCEL_SIZE} bgC="#E8E8E8">
           <Slider
             size="$2"
             width="$16"
@@ -101,8 +104,8 @@ const EditDegree: FC = () => {
                 position: "absolute",
                 bottom: 20,
                 zIndex: -1,
-                width: 550,
-                height: 550,
+                width: CIRCEL_SIZE,
+                height: CIRCEL_SIZE,
               },
               animatedStyles,
             ]}
