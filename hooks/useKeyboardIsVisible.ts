@@ -7,17 +7,17 @@ export const useKeyboardIsVisible = (): boolean => {
   useEffect(() => {
     // Needed for Android
     const keyboardDidShow = Keyboard.addListener("keyboardDidShow", () =>
-      setIsVisible(true)
+      setIsVisible(true),
     );
     const keyboardWillShow = Keyboard.addListener("keyboardWillShow", () =>
-      setIsVisible(true)
+      setIsVisible(true),
     );
-    // Needed for Android 
+    // Needed for Android
     const keyboardDidHide = Keyboard.addListener("keyboardDidHide", () =>
-      setIsVisible(false)
+      setIsVisible(false),
     );
     const keyboardWillHide = Keyboard.addListener("keyboardWillHide", () =>
-      setIsVisible(false)
+      setIsVisible(false),
     );
 
     return () => {
@@ -30,4 +30,3 @@ export const useKeyboardIsVisible = (): boolean => {
 
   return isVisible;
 };
-

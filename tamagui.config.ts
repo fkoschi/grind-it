@@ -1,5 +1,5 @@
 import { config } from "@tamagui/config/v3";
-import { createFont, createTamagui, createTokens } from "tamagui";
+import { createTamagui, createTokens } from "tamagui";
 import { createAnimations } from "@tamagui/animations-moti";
 
 const tokens = createTokens({
@@ -10,17 +10,16 @@ const tokens = createTokens({
     secondary: "#664F3F",
     secondaryHover: "#664F3F",
     screenBackground: "#F7F7F7",
+    copyText: "#838179",
     primaryGreen: "#7AA996",
     white: "#fff",
     favorite: "#CD5B5B",
-    error: '#CD5B5B',
+    error: "#CD5B5B",
   },
 });
 
-/**
- * Somehow this does not work!!!
- */
-const darkerGrotesqueFont = createFont({
+// FIXME!
+/* const darkerGrotesqueFont = createFont({
   family: "DarkerGrotesque_400Regular",
   size: {
     1: 12,
@@ -42,7 +41,7 @@ const darkerGrotesqueFont = createFont({
     400: { normal: "DarkerGrotesque_400Regular" },
     500: { normal: "DarkerGrotesque_500Medium" },
   },
-});
+}); */
 
 export const animationsReanimated = createAnimations({
   "75ms": {
@@ -130,5 +129,6 @@ export default tamaguiConfig;
 export type AppConf = typeof tamaguiConfig;
 
 declare module "tamagui" {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface TamaguiCustomConfig extends AppConf {}
 }

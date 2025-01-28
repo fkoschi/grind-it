@@ -49,12 +49,8 @@
           "name": "bean_table_roastery_roastery_table_id_fk",
           "tableFrom": "bean_table",
           "tableTo": "roastery_table",
-          "columnsFrom": [
-            "roastery"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["roastery"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }

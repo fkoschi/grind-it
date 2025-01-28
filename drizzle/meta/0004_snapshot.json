@@ -63,12 +63,8 @@
           "name": "bean_table_roastery_roastery_table_id_fk",
           "tableFrom": "bean_table",
           "tableTo": "roastery_table",
-          "columnsFrom": [
-            "roastery"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["roastery"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -108,12 +104,8 @@
           "name": "bean_taste_association_beanId_bean_table_id_fk",
           "tableFrom": "bean_taste_association",
           "tableTo": "bean_table",
-          "columnsFrom": [
-            "beanId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["beanId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -121,12 +113,8 @@
           "name": "bean_taste_association_tasteId_bean_taste_table_id_fk",
           "tableFrom": "bean_taste_association",
           "tableTo": "bean_taste_table",
-          "columnsFrom": [
-            "tasteId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["tasteId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }

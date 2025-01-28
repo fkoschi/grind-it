@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import Svg, { Path } from "react-native-svg";
-import { getTokenValue, useCurrentColor } from "tamagui";
+import { getTokenValue } from "tamagui";
 
 interface Props {
   active: boolean;

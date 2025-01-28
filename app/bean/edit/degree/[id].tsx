@@ -2,7 +2,7 @@ import { beanTable } from "@/db/schema";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { eq } from "drizzle-orm";
 import { useLocalSearchParams } from "expo-router";
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -19,7 +19,7 @@ const EditDegree: FC = () => {
   const { id } = useLocalSearchParams();
 
   const rotation = useSharedValue(0);
-  
+
   const [degreeValue, setDegreeValue] = useState<number[] | undefined>();
   const parsedValue = degreeValue ? degreeValue[0] / 10 : 0;
 
@@ -44,7 +44,10 @@ const EditDegree: FC = () => {
     setDegreeValue(value);
   };
 
-  const resetRotationValue = () => rotation.value = 0;
+  const resetRotationValue = useCallback(
+    () => (rotation.value = 0),
+    [rotation],
+  );
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -61,7 +64,7 @@ const EditDegree: FC = () => {
     };
     resetRotationValue();
     fetchInitialData();
-  }, []);
+  }, [db, id, resetRotationValue]);
 
   return (
     <View flex={1}>
@@ -76,7 +79,12 @@ const EditDegree: FC = () => {
       </View>
 
       <View flex={1} alignItems="center" overflow="hidden" pt="$4">
-        <Circle flex={1} justifyContent="flex-start" size={CIRCEL_SIZE} bgC="#E8E8E8">
+        <Circle
+          flex={1}
+          justifyContent="flex-start"
+          size={CIRCEL_SIZE}
+          bgC="#E8E8E8"
+        >
           <Slider
             size="$2"
             width="$16"

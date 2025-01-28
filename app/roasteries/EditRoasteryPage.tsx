@@ -8,18 +8,21 @@ import { useDatabase } from "@/provider/DatabaseProvider";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { Pressable } from "react-native";
 import { useRouter } from "expo-router";
-import NoData from "@/components/NoData";
+import NoData from "@/components/NoData/NoData";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
-import ActionButton from "@/components/ui/ActionButton/ActionButton";
-import AddIcon from "@/components/ui/Icons/Add";
+import {
+  ActionButton,
+  AddIcon,
+  DeleteOutlinedIcon,
+  Sheet as BottomSheet,
+} from "@/components/ui";
 import Reanimated, {
   SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { HapticTab } from "@/components/HapticTab";
-import DeleteOutlinedIcon from "@/components/ui/Icons/DeleteOutlined";
-import BottomSheet from "@/components/ui/Sheet/Sheet";
-import AddRoasteryForm from "../bean/components/roastery/AddRoasteryForm";
+import { HapticTab } from "@/components/ui/HapticTab/HapticTab";
+
+import { AddRoasteryFrame } from "@/components";
 
 const EditRoasteries: FC = () => {
   const router = useRouter();
@@ -136,7 +139,12 @@ const EditRoasteries: FC = () => {
           onOpenChange: (open: boolean) => setOpenSheet(open),
           dismissOnSnapToBottom: true,
         }}
-        frame={<AddRoasteryForm onFormSubmit={() => setOpenSheet(false)} />}
+        frame={
+          <AddRoasteryFrame
+            open={openSheet}
+            onFormSubmit={() => setOpenSheet(false)}
+          />
+        }
       />
     </View>
   );

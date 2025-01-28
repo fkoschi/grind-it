@@ -1,9 +1,8 @@
 import { FC } from "react";
 import { getFontSize, styled, View } from "tamagui";
-import ThemedText from "../ThemedText";
+import ThemedText from "../Text/ThemedText";
 import { Pressable } from "react-native";
 import HeartIcon from "../Icons/Heart";
-import { tokens } from "@tamagui/config/v3";
 
 const StyledFilterChip = styled(View, {
   flex: 0,

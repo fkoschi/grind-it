@@ -1,6 +1,6 @@
 import { FC, ReactElement } from "react";
 import { View } from "tamagui";
-import { HapticTab } from "../HapticTab";
+import { HapticTab } from "../ui/HapticTab/HapticTab";
 
 interface Props {
   onPress: () => void;
@@ -16,7 +16,7 @@ const TabBarIcon: FC<Props> = ({ onPress, icon }) => {
           maxHeight: 60,
           width: 80,
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
         onPress={onPress}
       >

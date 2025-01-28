@@ -1,6 +1,6 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
-import { Text, View } from "tamagui";
-import TabBar from "@/components/navigation/TabBar";
+import React, { FC, useCallback, useEffect, useState } from "react";
+import { View } from "tamagui";
+import TabBar from "@/components/Navigation/TabBar";
 import DashboardCards from "@/components/Dashboard/DasboardCards";
 import DashboardHeader from "@/components/Dashboard/DashboardHeader";
 import { CoffeeBean } from "@/types";
@@ -10,15 +10,14 @@ import { useDatabase } from "@/provider/DatabaseProvider";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { beanTable, roasteryTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import NoData from "@/components/NoData";
+import NoData from "@/components/NoData/NoData";
 
 const HomePageComponent: FC = () => {
   const { db } = useDatabase();
   const [search, setSearch] = useState<string>("");
-  const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
   const beanTasteFilter = useBeanStore((store) => store.tasteFilter);
 
-  const { data: initialData } = useLiveQuery(
+  const { data } = useLiveQuery(
     db
       .selectDistinct({
         id: beanTable.id,
@@ -28,60 +27,58 @@ const HomePageComponent: FC = () => {
         isFavorite: beanTable.isFavorit,
       })
       .from(beanTable)
-      .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
-  );
-
-  const [beansData, setBeansData] = useState<Array<CoffeeBean> | undefined>();
-
-  const updateBeansData = useCallback(
-    (searchText?: string) => {
-      setIsLoadingData(true);
-      const beansData = selectBeansBySearchAndFilter(db, beanTasteFilter).all({
-        search: `%${searchText}%`,
-      });
-      setBeansData(beansData);
-      setIsLoadingData(false);
-    },
-    [beanTasteFilter]
+      .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id)),
   );
 
   const handleChangeText = (searchText: string) => {
-    updateBeansData(searchText);
     setSearch(searchText);
   };
-
-  useEffect(() => {
-    updateBeansData(search);
-  }, [beanTasteFilter]);
-
-  useEffect(() => {
-    setBeansData(initialData);
-  }, [initialData]);
-
-  const hasActiveFilter = beanTasteFilter?.length > 0 || search.length > 0;
 
   return (
     <View flex={1} bgC="$screenBackground">
       <DashboardHeader onChangeText={handleChangeText} />
-      <HomePage
-        data={beansData}
-        isLoading={isLoadingData}
-        isFiltered={hasActiveFilter}
-      />
+      <HomePage data={data} search={search} filter={beanTasteFilter} />
       <TabBar />
     </View>
   );
 };
 
 interface HomePageProps {
-  isFiltered: boolean;
-  isLoading?: boolean;
   data?: CoffeeBean[];
+  search: string;
+  filter: number[];
 }
-const HomePage: FC<HomePageProps> = ({ isLoading, isFiltered, data }) => {
-  const isEmpty = useMemo(() => data?.length === 0, [data]);
+const HomePage: FC<HomePageProps> = ({ data: initialData, search, filter }) => {
+  const { db } = useDatabase();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [beansData, setBeansData] = useState<CoffeeBean[] | undefined>(
+    initialData,
+  );
 
-  if (isEmpty && !isFiltered && !isLoading) {
+  const updateBeansData = useCallback(() => {
+    const updatedBeansData = selectBeansBySearchAndFilter(db, filter).all({
+      search: `%${search}%`,
+    });
+    setBeansData(updatedBeansData);
+  }, [db, filter, search]);
+
+  useEffect(() => {
+    updateBeansData();
+  }, [initialData, updateBeansData]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const debounceTimer = setTimeout(() => {
+      setIsLoading(false);
+    }, 200);
+
+    return () => clearTimeout(debounceTimer);
+  }, [search, filter]);
+
+  const isEmpty = beansData?.length === 0;
+  const isFiltered = search?.length > 0 || filter?.length > 0;
+
+  if (isEmpty && !isFiltered) {
     return (
       <NoData
         variant={1}
@@ -91,7 +88,7 @@ const HomePage: FC<HomePageProps> = ({ isLoading, isFiltered, data }) => {
     );
   }
 
-  return <DashboardCards beansData={data} />;
+  return <DashboardCards beansData={beansData} loading={isLoading} />;
 };
 
 export default HomePageComponent;

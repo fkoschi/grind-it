@@ -5,7 +5,7 @@ import { Adapt, Select, SelectProps } from "tamagui";
 interface Props {
   label: string;
   placeholder?: string;
-  items?: Array<{ id: number; name: string }>;
+  items?: { id: number; name: string }[];
   SelectProps?: SelectProps;
   onChange?: (value: number) => void;
   onOpenChange?: (value: number) => void;
@@ -17,7 +17,6 @@ const ThemedSelect: FC<Props> = ({
   items,
   SelectProps,
 }) => {
-
   const renderItems = () =>
     items?.map((item, i) => (
       <Select.Item
@@ -38,10 +37,7 @@ const ThemedSelect: FC<Props> = ({
   };
 
   return (
-    <Select
-      onValueChange={handleValueChange}
-      {...SelectProps}
-    >
+    <Select onValueChange={handleValueChange} {...SelectProps}>
       <Select.Trigger iconAfter={ChevronDown} disabled={!items?.length}>
         <Select.Value placeholder={placeholder ? placeholder : "Select..."} />
       </Select.Trigger>

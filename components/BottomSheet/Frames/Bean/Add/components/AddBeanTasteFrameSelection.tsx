@@ -1,8 +1,7 @@
-import ThemedText from "@/components/ui/ThemedText";
 import { FC } from "react";
-import { getFontSize, View } from "tamagui";
+import { getFontSize, Text, View } from "tamagui";
 import { Image } from "expo-image";
-import Badge from "@/components/ui/Badge/Badge";
+import { Badge, ThemedText } from "@/components/ui";
 import { useBeanStore } from "@/store/bean-store";
 import { Taste } from "@/types";
 
@@ -10,11 +9,16 @@ const NoData = () => (
   <View flex={1}>
     <ThemedText
       fw={500}
-      fontSize={getFontSize("$7")}
-      lineHeight={getFontSize("$7")}
+      mt={"$2"}
+      color={"$primary"}
+      fontSize={getFontSize("$8")}
+      lineHeight={getFontSize("$8")}
     >
-      Geschmack wählen:
+      Aktuelle Auswahl:
     </ThemedText>
+    <Text mt="$2" color={"$copyText"}>
+      Über das Eingabefeld können Sie neue Einträge erstellen.
+    </Text>
     <View flex={1} justifyContent="center">
       <Image
         source={require("@/assets/images/latte-art.png")}
@@ -25,10 +29,12 @@ const NoData = () => (
   </View>
 );
 
-interface Props {
-  tasteData: Array<Taste>;
+interface AddBeanTasteFrameSelectionProps {
+  tasteData: Taste[];
 }
-const AddBeanFormTaste: FC<Props> = ({ tasteData }) => {
+const AddBeanTasteFrameSelection: FC<AddBeanTasteFrameSelectionProps> = ({
+  tasteData,
+}) => {
   const removeBeanTaste = useBeanStore((state) => state.removeBeanTaste);
 
   if (!tasteData.length) {
@@ -37,8 +43,14 @@ const AddBeanFormTaste: FC<Props> = ({ tasteData }) => {
 
   return (
     <View flex={1}>
-      <ThemedText fw={400} fontSize={16}>
-        Gespeicherte Auswahl:
+      <ThemedText
+        fw={500}
+        mt={"$2"}
+        color={"$primary"}
+        fontSize={getFontSize("$8")}
+        lineHeight={getFontSize("$8")}
+      >
+        Aktuelle Auswahl:
       </ThemedText>
       <View
         flex={1}
@@ -60,4 +72,4 @@ const AddBeanFormTaste: FC<Props> = ({ tasteData }) => {
     </View>
   );
 };
-export default AddBeanFormTaste;
+export default AddBeanTasteFrameSelection;

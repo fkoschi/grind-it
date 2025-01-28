@@ -1,1 +1,1 @@
-export * from './InputWithIcon';
+export { default as InputWithIcon } from "./InputWithIcon";

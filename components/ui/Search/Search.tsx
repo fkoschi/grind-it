@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { Input, View } from "tamagui";
 import { Image } from "expo-image";
 import { Pressable } from "react-native";
-import ClearIcon from "./ui/Icons/Clear";
+import ClearIcon from "../Icons/Clear";
 
 interface Props {
   disabled?: boolean;

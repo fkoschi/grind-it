@@ -1,6 +1,6 @@
-import { getFontSize, Text, View, YStack } from "tamagui";
+import { Text, View, YStack } from "tamagui";
 import { Image } from "expo-image";
-import ThemedText from "../ui/ThemedText";
+import ThemedText from "../ui/Text/ThemedText";
 
 const DashboardNoData = () => (
   <YStack flex={1} alignItems="center" paddingHorizontal="$8">

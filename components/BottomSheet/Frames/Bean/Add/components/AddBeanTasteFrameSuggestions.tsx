@@ -1,15 +1,19 @@
-import FilterChip from "@/components/ui/FilterChip/FilterChip";
-import ThemedText from "@/components/ui/ThemedText";
-import { Taste } from "@/types";
 import { FC } from "react";
+import { ThemedText, FilterChip } from "@/components/ui";
+import { Taste } from "@/types";
 import { View } from "tamagui";
 
-interface Props {
-  tasteData: Array<Taste>;
+interface AddBeanTasteFrameSuggestionsProps {
+  tasteData: Taste[];
   onPress: (taste: Taste) => void;
 }
-const AddBeanFormSuggestions: FC<Props> = ({ tasteData, onPress }) => {
-  if (!tasteData?.length) {
+const AddBeanTasteFrameSuggestions: FC<AddBeanTasteFrameSuggestionsProps> = ({
+  tasteData,
+  onPress,
+}) => {
+  const noData = tasteData?.length === 0;
+
+  if (noData) {
     return null;
   }
 
@@ -31,4 +35,4 @@ const AddBeanFormSuggestions: FC<Props> = ({ tasteData, onPress }) => {
     </View>
   );
 };
-export default AddBeanFormSuggestions;
+export default AddBeanTasteFrameSuggestions;

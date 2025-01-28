@@ -1,10 +1,7 @@
 import { FC } from "react";
 import { Text, View } from "tamagui";
 import { Image } from "expo-image";
-import ThemedText from "@/components/ui/ThemedText";
-import Badge from "@/components/ui/Badge/Badge";
-import ActionButton from "@/components/ui/ActionButton/ActionButton";
-import EditIcon from "@/components/ui/Icons/Edit";
+import { ThemedText, Badge, ActionButton, EditIcon } from "@/components/ui";
 import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
@@ -36,7 +33,7 @@ const DetailsPage: FC = () => {
       })
       .from(beanTable)
       .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
-      .where(eq(beanTable.id, Number(id)))
+      .where(eq(beanTable.id, Number(id))),
   );
 
   const fetchTasteByBeanId = async () => {
@@ -154,7 +151,7 @@ const DetailsPage: FC = () => {
         bgC="$primary"
         onPress={handleEditPress}
         pressStyle={{
-          bgC: "$primaryHover"
+          bgC: "$primaryHover",
         }}
         icon={<EditIcon />}
       />

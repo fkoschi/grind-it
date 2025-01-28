@@ -1,6 +1,6 @@
 import { FC, ReactElement } from "react";
 import { TextInputProps } from "react-native";
-import { Text, Input, Label, View, XStack, YStack } from "tamagui";
+import { Text, Input, View, XStack } from "tamagui";
 
 interface Props extends TextInputProps {
   label?: string;
@@ -18,13 +18,7 @@ const InputWithIcon: FC<Props> = ({ label, suffix, ...other }) => {
         overflow="hidden"
       >
         <View flex={1}>
-          <Input
-            flex={1}
-            bgC="white"
-            borderWidth={0}
-            height={40}
-            {...other}
-          />
+          <Input flex={1} bgC="white" borderWidth={0} height={40} {...other} />
         </View>
         <View
           height={40}

@@ -1,4 +1,4 @@
-import { ComponentProps, FC, PropsWithChildren } from "react";
+import { ComponentProps, FC } from "react";
 import { Text } from "tamagui";
 
 interface Props extends ComponentProps<typeof Text> {

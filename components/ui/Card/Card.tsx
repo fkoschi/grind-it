@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { CoffeeBean } from "@/types";
-import { View, Text, YStack, styled, getFontSize } from "tamagui";
+import { View, Text, YStack, styled } from "tamagui";
 import { Image } from "expo-image";
 import { Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
-import ThemedText from "../ThemedText";
+import ThemedText from "../Text/ThemedText";
 import { beanTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { useDatabase } from "@/provider/DatabaseProvider";
@@ -60,11 +60,7 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
           >
             {roastery}
           </Text>
-          <Text
-            fontSize={28}
-            fontFamily="TBJSodabery-LightOriginal"
-            mt="$2"
-          >
+          <Text fontSize={28} fontFamily="TBJSodabery-LightOriginal" mt="$2">
             {name}
           </Text>
         </Pressable>

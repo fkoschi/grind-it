@@ -2,30 +2,26 @@ import { beanTasteAssociationTable, beanTasteTable } from "@/db/schema";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { Image } from "expo-image";
 import React, { FC, useState } from "react";
-import {
-  ListItem,
-  Text,
-  ScrollView,
-  View,
-  YGroup,
-} from "tamagui";
+import { ListItem, Text, ScrollView, View, YGroup } from "tamagui";
 import Reanimated, {
   SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
-import DeleteOutlinedIcon from "@/components/ui/Icons/DeleteOutlined";
-import ActionButton from "@/components/ui/ActionButton/ActionButton";
-import AddIcon from "@/components/ui/Icons/Add";
+import {
+  AddIcon,
+  ActionButton,
+  DeleteOutlinedIcon,
+  Sheet as BottomSheet,
+} from "@/components/ui";
 import { eq } from "drizzle-orm";
-import BottomSheet from "@/components/ui/Sheet/Sheet";
-import { HapticTab } from "@/components/HapticTab";
+import { HapticTab } from "@/components/ui/HapticTab/HapticTab";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { Pressable } from "react-native";
 import { useRouter } from "expo-router";
-import NoData from "@/components/NoData";
+import NoData from "@/components/NoData/NoData";
 import { Taste } from "@/types";
-import AddTasteSheet from "@/components/BottomSheet/AddTasteBottomSheet";
+import { AddTasteFrame } from "@/components";
 
 interface EditTastePageProps {
   data: Taste[];
@@ -47,7 +43,7 @@ const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
     prog: SharedValue<number>,
     drag: SharedValue<number>,
     tasteId: number,
-    index: number
+    index: number,
   ) => {
     const styleAnimation = useAnimatedStyle(() => {
       return {
@@ -152,8 +148,8 @@ const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
           dismissOnSnapToBottom: true,
         }}
         frame={
-          <AddTasteSheet
-            autoFocus={openSheet}
+          <AddTasteFrame
+            open={openSheet}
             onSave={() => setOpenSheet(false)}
             onCancel={() => setOpenSheet(false)}
           />

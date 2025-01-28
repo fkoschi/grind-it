@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   KeyboardAvoidingView,
@@ -7,19 +7,26 @@ import {
   Pressable,
   TextInputSubmitEditingEventData,
 } from "react-native";
-import { Input, ScrollView, Text, View, XStack } from "tamagui";
+import { Input, Text, View, XStack } from "tamagui";
 import { useBeanStore } from "@/store/bean-store";
-import AddBeanFormTaste from "./AddBeanFormTaste";
-import AddBeanFormSuggestions from "./AddBeanFormSuggestions";
 import { selectTasteNotInArray } from "@/db/queries";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { Taste } from "@/types";
+import { useAutoFocus } from "@/hooks/useAutoFocus";
+import {
+  AddBeanTasteFrameSelection,
+  AddBeanTasteFrameSuggestions,
+} from "./components";
 
 interface AddTasteFormInput {
   name: string;
 }
-const AddTasteSheet: FC = () => {
+interface AddBeanTasteFrameProps {
+  open: boolean;
+}
+const AddBeanTasteFrame: FC<AddBeanTasteFrameProps> = ({ open }) => {
   const { db } = useDatabase();
+  const inputRef = useRef<Input>(null);
   const [value, setValue] = useState<string>("");
   const beanTaste = useBeanStore((state) => state.taste);
   const addBeanTaste = useBeanStore((state) => state.addBeanTaste);
@@ -28,7 +35,7 @@ const AddTasteSheet: FC = () => {
   const { control, reset } = useForm<AddTasteFormInput>();
 
   const handleSubmit = async (
-    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
+    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
   ) => {
     e.preventDefault();
 
@@ -46,7 +53,6 @@ const AddTasteSheet: FC = () => {
     reset({ name: "" });
   };
 
-  // Select all available taste entries from DB
   const suggestionData = selectTasteNotInArray(
     db,
     beanTaste.map((taste) => {
@@ -54,12 +60,14 @@ const AddTasteSheet: FC = () => {
         return taste.id;
       }
       return 0;
-    })
+    }),
   ).all();
 
   const handleSuggestionPress = ({ id, flavor }: Taste) => {
     addBeanTaste({ id, flavor });
   };
+
+  useAutoFocus(inputRef, open);
 
   return (
     <KeyboardAvoidingView
@@ -68,26 +76,27 @@ const AddTasteSheet: FC = () => {
       keyboardVerticalOffset={100}
     >
       <View flex={1} bgC="$screenBackground">
-        <ScrollView flex={1} p="$4">
-          <AddBeanFormTaste tasteData={beanTaste} />
-          <AddBeanFormSuggestions
+        <View flex={1} p={"$4"}>
+          <AddBeanTasteFrameSelection tasteData={beanTaste} />
+          <AddBeanTasteFrameSuggestions
             tasteData={suggestionData}
             onPress={handleSuggestionPress}
           />
-        </ScrollView>
+        </View>
         <XStack flex={0} py="$4" px="$4" bgC={"$white"}>
           <View flex={1} justifyContent="center">
             <Controller
               name="name"
               control={control}
-              render={({ field }) => (
+              render={({ field: { onBlur } }) => (
                 <Input
-                  {...field}
-                  onSubmitEditing={handleSubmit}
+                  ref={inputRef}
+                  onBlur={onBlur}
                   returnKeyType="done"
-                  onChangeText={(text) => setValue(text)}
                   returnKeyLabel="Fertig"
-                  blurOnSubmit={false}
+                  submitBehavior="submit"
+                  onSubmitEditing={handleSubmit}
+                  onChangeText={(text) => setValue(text)}
                 />
               )}
             />
@@ -104,4 +113,4 @@ const AddTasteSheet: FC = () => {
     </KeyboardAvoidingView>
   );
 };
-export default AddTasteSheet;
+export default AddBeanTasteFrame;

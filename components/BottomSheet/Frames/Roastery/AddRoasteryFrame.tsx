@@ -1,23 +1,28 @@
 import { roasteryTable } from "@/db/schema";
-import { FC } from "react";
+import { FC, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { createInsertSchema } from "drizzle-zod";
 import { Button, Input, Text, View, XStack } from "tamagui";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import AddIcon from "@/components/ui/Icons/Add";
+import { AddIcon } from "@/components/ui/Icons";
 import { useDatabase } from "@/provider/DatabaseProvider";
+import { useAutoFocus } from "@/hooks/useAutoFocus";
 
 interface AddRoasteryFormInput {
   name: string;
 }
 
-interface Props {
+interface AddRoasteryFrameProps {
+  open: boolean;
   onFormSubmit: () => void;
 }
-const AddRoasteryForm: FC<Props> = ({ onFormSubmit }) => {
+const AddRoasteryFrame: FC<AddRoasteryFrameProps> = ({
+  open,
+  onFormSubmit,
+}) => {
   const { db } = useDatabase();
   const insertSchema = createInsertSchema(roasteryTable);
+  const inputRef = useRef<Input>(null);
 
   const {
     control,
@@ -25,8 +30,6 @@ const AddRoasteryForm: FC<Props> = ({ onFormSubmit }) => {
     reset,
     formState: { errors },
   } = useForm<AddRoasteryFormInput>({ resolver: zodResolver(insertSchema) });
-
-  const { data: roasteryData } = useLiveQuery(db.select().from(roasteryTable));
 
   const onSubmit = async (data: AddRoasteryFormInput) => {
     try {
@@ -41,6 +44,8 @@ const AddRoasteryForm: FC<Props> = ({ onFormSubmit }) => {
     reset();
   };
 
+  useAutoFocus(inputRef, open);
+
   const isRequiredError = errors?.name?.type === "invalid_type";
 
   return (
@@ -54,12 +59,13 @@ const AddRoasteryForm: FC<Props> = ({ onFormSubmit }) => {
             name="name"
             control={control}
             rules={{ required: true }}
-            render={({ field }) => (
+            render={({ field: { onChange, onBlur } }) => (
               <Input
+                ref={inputRef}
                 placeholder="Name"
-                onChangeText={field.onChange}
+                onChangeText={onChange}
+                onBlur={onBlur}
                 keyboardType="default"
-                {...field}
               />
             )}
           />
@@ -89,4 +95,4 @@ const AddRoasteryForm: FC<Props> = ({ onFormSubmit }) => {
   );
 };
 
-export default AddRoasteryForm;
+export default AddRoasteryFrame;

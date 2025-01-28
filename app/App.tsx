@@ -1,4 +1,4 @@
-import '../reanimatedConfig';
+import "../reanimatedConfig";
 
 import tamaguiConfig from "@/tamagui.config";
 import { FC, PropsWithChildren, useCallback, useEffect, useState } from "react";
@@ -12,7 +12,6 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DatabaseProvider } from "@/provider/DatabaseProvider";
 
 import "react-native-reanimated";
-
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

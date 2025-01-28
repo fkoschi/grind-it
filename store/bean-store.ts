@@ -3,9 +3,9 @@ import { create } from "zustand";
 
 type State = {
   // Intermediate state for creating a new Bean. Once the Bean is created, the list of tastes is going to be stored into the DB.
-  taste: Array<Taste>;
+  taste: Taste[];
   // Used on Dashboard to filter for certain taste types
-  tasteFilter: Array<number>;
+  tasteFilter: number[];
   // Used to handle the BottomSheet
   editRoastery: boolean;
   // Used to handle the BottomSheet

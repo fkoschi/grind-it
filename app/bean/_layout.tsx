@@ -1,31 +1,26 @@
 import { Slot, useNavigation, useRouter } from "expo-router";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, Pressable } from "react-native";
 import { Button, View, Text, YStack } from "tamagui";
 import { Image } from "expo-image";
 import { LinearGradient } from "tamagui/linear-gradient";
 import React, { FC, useEffect } from "react";
-import DeleteOutlinedIcon from "@/components/ui/Icons/DeleteOutlined";
 import { useLocalSearchParams, useRouteInfo } from "expo-router/build/hooks";
-import Alert from "@/components/ui/Alert/Alert";
 import { beanTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import ThemedText from "@/components/ui/ThemedText";
-import EditBean from "./EditBean";
+import { ThemedText, Alert } from "@/components/ui";
+import { HeartIcon, DeleteOutlinedIcon } from "@/components/ui/Icons";
 import { PATH_NAME as EDIT_DEGREE_PATH_NAME } from "./edit/degree/[id]";
 import { PATH_NAME as EDIT_BEAN_PATH_NAME } from "./edit/[id]";
 import { PATH_NAME as DETAILS_BEAN_PATH_NAME } from "./details/[id]";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { HapticTab } from "@/components/HapticTab";
-import HeartIcon from "@/components/ui/Icons/Heart";
+import { HapticTab } from "@/components/ui/HapticTab/HapticTab";
 import Animated, { withSpring } from "react-native-reanimated";
 import { useSharedValue } from "react-native-reanimated";
 import { useKeyboardIsVisible } from "@/hooks/useKeyboardIsVisible";
 import { useIsBottomSheetActive } from "@/hooks/useIsBottomSheetActive";
+
+import EditBean from "./EditBean";
 
 const BeanDetailsLayout = () => {
   const { db } = useDatabase();
@@ -35,7 +30,7 @@ const BeanDetailsLayout = () => {
     db
       .select()
       .from(beanTable)
-      .where(eq(beanTable.id, Number(beanId)))
+      .where(eq(beanTable.id, Number(beanId))),
   );
 
   const handleFavoriteButtonPress = async (isFavorit: boolean) => {
@@ -80,7 +75,7 @@ const BeanEditLayout: FC = () => {
     db
       .select({ name: beanTable.name })
       .from(beanTable)
-      .where(eq(beanTable.id, Number(beanId)))
+      .where(eq(beanTable.id, Number(beanId))),
   );
 
   const handleDeleteBeanPress = async () => {
@@ -99,7 +94,7 @@ const BeanEditLayout: FC = () => {
     } else {
       fontSize.value = withSpring(48, { damping: 20, stiffness: 90 });
     }
-  }, [isKeyboardVisible]);
+  }, [isKeyboardVisible, fontSize, isBottomSheetActive]);
 
   return (
     <>
@@ -144,7 +139,7 @@ const BeanAddLayout = () => {
     } else {
       fontSize.value = withSpring(32, { damping: 20, stiffness: 90 });
     }
-  }, [isKeyboardVisible, isBottomSheetActive]);
+  }, [isKeyboardVisible, fontSize, isBottomSheetActive]);
 
   return (
     <View
@@ -211,7 +206,7 @@ const BeanLayout = () => {
     } else {
       height.value = withSpring(260, { damping: 20, stiffness: 90 });
     }
-  }, [isKeyboardVisible]);
+  }, [isKeyboardVisible, height, isBottomSheetActive]);
 
   return (
     <EditBean>

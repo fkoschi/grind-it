@@ -8,13 +8,6 @@
             "acceptsClassName": true,
             "defaultProps": {},
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -215,13 +208,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -418,13 +404,6 @@
             "acceptsClassName": true,
             "defaultProps": {},
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -607,13 +586,6 @@
             "memo": true,
             "componentName": "Spacer",
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -858,13 +830,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -1092,13 +1057,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -1301,13 +1259,6 @@
               "tag": "fieldset"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -1622,13 +1573,6 @@
             "memo": true,
             "componentName": "Spacer",
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -1838,13 +1782,6 @@
               "flexDirection": "column"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -2047,13 +1984,6 @@
             "acceptsClassName": true,
             "defaultProps": {},
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -2260,13 +2190,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -2580,13 +2503,6 @@
             "acceptsClassName": true,
             "defaultProps": {},
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -2771,13 +2687,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -3059,11 +2968,9 @@
               },
               "open": {
                 "true": {
-                  "opacity": 1,
                   "pointerEvents": "auto"
                 },
                 "false": {
-                  "opacity": 0,
                   "pointerEvents": "none"
                 }
               },
@@ -3095,13 +3002,6 @@
               "zIndex": 0
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -3310,13 +3210,6 @@
               "zIndex": 0
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -3524,13 +3417,6 @@
               "overflow": "hidden"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -3832,13 +3718,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -4190,13 +4069,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -4576,13 +4448,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -4790,13 +4655,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -5106,13 +4964,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -5419,13 +5270,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -5736,13 +5580,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -6052,13 +5889,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -6369,13 +6199,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -6721,13 +6544,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -7071,13 +6887,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -7379,13 +7188,6 @@
               "tag": "button"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -7578,13 +7380,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -7930,13 +7725,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -8141,13 +7929,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -8429,11 +8210,9 @@
               },
               "open": {
                 "true": {
-                  "opacity": 1,
                   "pointerEvents": "auto"
                 },
                 "false": {
-                  "opacity": 0,
                   "pointerEvents": "none"
                 }
               },
@@ -8463,13 +8242,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -8751,11 +8523,9 @@
               },
               "open": {
                 "true": {
-                  "opacity": 1,
                   "pointerEvents": "auto"
                 },
                 "false": {
-                  "opacity": 0,
                   "pointerEvents": "none"
                 }
               },
@@ -8784,13 +8554,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -9039,13 +8802,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -9247,13 +9003,6 @@
             "acceptsClassName": true,
             "defaultProps": {},
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -9443,13 +9192,6 @@
               "tag": "form"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -9639,13 +9381,6 @@
               "tag": "form"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -9831,13 +9566,6 @@
             "acceptsClassName": true,
             "defaultProps": {},
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -10028,13 +9756,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -10340,13 +10061,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -10650,13 +10364,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -10962,13 +10669,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -11274,13 +10974,6 @@
               "flexDirection": "column"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -11469,13 +11162,6 @@
               "flexDirection": "column"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -11664,13 +11350,6 @@
               "flexDirection": "column"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -11860,13 +11539,6 @@
               "flexDirection": "column"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -12055,13 +11727,6 @@
               "flexDirection": "column"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -12250,13 +11915,6 @@
               "flexDirection": "column"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -12446,13 +12104,6 @@
               "accessibilityRole": "summary"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -12691,13 +12342,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -12943,13 +12587,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -13156,13 +12793,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -13494,13 +13124,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -13864,13 +13487,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -14107,13 +13723,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -14350,13 +13959,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -14559,13 +14161,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -14782,13 +14377,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -15098,13 +14686,6 @@
               "flexDirection": "column"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -15310,13 +14891,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -15533,13 +15107,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -15848,13 +15415,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -16164,13 +15724,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -16478,13 +16031,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -16791,13 +16337,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -17101,13 +16640,6 @@
               "flexDirection": "column"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -17413,13 +16945,6 @@
               "flexDirection": "column"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -17724,13 +17249,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -18038,13 +17556,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -18418,13 +17929,6 @@
               "width": "100%"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -18630,13 +18134,6 @@
               "children": "Component"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -18848,13 +18345,6 @@
               "y": -0.5
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -19063,13 +18553,6 @@
               "y": -0.5
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -19273,13 +18756,6 @@
               "justifyContent": "center"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -19580,13 +19056,6 @@
               "circular": true
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -19885,13 +19354,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -20110,13 +19572,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -20308,6 +19763,7 @@
               "inset": "Function",
               "open": {
                 "true": {
+                  "opacity": 1,
                   "pointerEvents": "auto"
                 },
                 "false": {
@@ -20347,13 +19803,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -20635,11 +20084,9 @@
               },
               "open": {
                 "true": {
-                  "opacity": 1,
                   "pointerEvents": "auto"
                 },
                 "false": {
-                  "opacity": 0,
                   "pointerEvents": "none"
                 }
               },
@@ -20670,13 +20117,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -20868,6 +20308,7 @@
               "inset": "Function",
               "open": {
                 "true": {
+                  "opacity": 1,
                   "pointerEvents": "auto"
                 },
                 "false": {
@@ -20907,13 +20348,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -21195,11 +20629,9 @@
               },
               "open": {
                 "true": {
-                  "opacity": 1,
                   "pointerEvents": "auto"
                 },
                 "false": {
-                  "opacity": 0,
                   "pointerEvents": "none"
                 }
               },
@@ -21230,13 +20662,6 @@
               "position": "relative"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -21445,13 +20870,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -21764,13 +21182,6 @@
               "position": "absolute"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -21981,13 +21392,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -22209,13 +21613,6 @@
               "flexDirection": "row"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -22418,13 +21815,6 @@
               "flexDirection": "column"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -22628,13 +22018,6 @@
               "position": "relative"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -22839,13 +22222,6 @@
               "flexDirection": "row"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -23096,13 +22472,6 @@
               "flexDirection": "column"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -23398,13 +22767,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -23636,13 +22998,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -23870,13 +23225,6 @@
               "unstyled": false
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -24187,13 +23535,6 @@
               "flexDirection": "row"
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -24474,13 +23815,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -24718,13 +24052,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -24961,13 +24288,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -25207,13 +24527,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -25453,13 +24766,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -25699,13 +25005,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -25945,13 +25244,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -26191,13 +25483,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -26437,13 +25722,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -26689,13 +25967,6 @@
               }
             },
             "validStyles": {
-              "enterStyle": true,
-              "exitStyle": true,
-              "hoverStyle": true,
-              "pressStyle": true,
-              "focusStyle": true,
-              "disabledStyle": true,
-              "focusWithinStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -37730,6 +37001,13 @@
           "val": "#F7F7F7",
           "variable": ""
         },
+        "copyText": {
+          "isVar": true,
+          "key": "$copyText",
+          "name": "c-copyText",
+          "val": "#838179",
+          "variable": ""
+        },
         "primaryGreen": {
           "isVar": true,
           "key": "$primaryGreen",
@@ -38583,6 +37861,13 @@
         "key": "$screenBackground",
         "name": "c-screenBackground",
         "val": "#F7F7F7",
+        "variable": ""
+      },
+      "$color.copyText": {
+        "isVar": true,
+        "key": "$copyText",
+        "name": "c-copyText",
+        "val": "#838179",
         "variable": ""
       },
       "$color.primaryGreen": {

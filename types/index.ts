@@ -9,5 +9,5 @@ export interface CoffeeBean {
   roastery?: string | null;
   degreeOfGrinding?: number | null;
   isFavorite?: boolean | null;
-  taste?: Array<Taste>;
+  taste?: Taste[];
 }

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { getFontSize, View } from "tamagui";
-import ThemedText from "../ThemedText";
+import ThemedText from "../Text/ThemedText";
 import { Pressable } from "react-native";
 import ClearIcon from "../Icons/Clear";
 

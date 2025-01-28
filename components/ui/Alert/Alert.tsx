@@ -1,5 +1,5 @@
 import { FC, ReactElement } from "react";
-import { AlertDialog, Button, View, XStack, YStack } from "tamagui";
+import { AlertDialog, Button, XStack, YStack } from "tamagui";
 
 interface Props {
   title?: string;
@@ -49,9 +49,7 @@ const Alert: FC<Props> = ({
                 <Button>{cancelTitle}</Button>
               </AlertDialog.Cancel>
               <AlertDialog.Action asChild onPress={onActionPress}>
-                <Button theme="active">
-                  {actionTitle}
-                </Button>
+                <Button theme="active">{actionTitle}</Button>
               </AlertDialog.Action>
             </XStack>
           </YStack>

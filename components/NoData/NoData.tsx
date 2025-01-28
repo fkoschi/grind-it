@@ -25,9 +25,9 @@ const NoData: FC<NoDataProps> = ({ variant, headline, copy }) => {
     translateY.value = withRepeat(
       withTiming(10, { duration: 500, easing: Easing.inOut(Easing.ease) }),
       -1,
-      true
+      true,
     );
-  }, []);
+  }, [translateY]);
 
   const getImagePath = () => {
     switch (variant) {

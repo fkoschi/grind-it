@@ -1,11 +1,10 @@
-import TabBar from "@/components/navigation/TabBar";
 import { FC } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Avatar, Text, ListItem, View, YGroup, Separator } from "tamagui";
 import { ChevronRight } from "@tamagui/lucide-icons";
 import { useRouter } from "expo-router";
-import ThemedText from "@/components/ui/ThemedText";
-
+import TabBar from "@/components/Navigation/TabBar";
+import { ThemedText } from "@/components/ui";
 
 import { version } from "../package.json";
 
@@ -18,7 +17,7 @@ const SettingsPage: FC = () => {
         <View alignItems="center" mt="$6">
           <Avatar circular size="$10">
             <Avatar.Image
-              accessibilityLabel="Cam"
+              accessibilityLabel="Grind It Logo"
               src={require("@/assets/images/icon.png")}
             />
           </Avatar>

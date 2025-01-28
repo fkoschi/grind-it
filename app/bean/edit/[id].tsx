@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import {
@@ -19,13 +19,15 @@ import {
   beanTasteTable,
   roasteryTable,
 } from "@/db/schema";
-import { eq, and } from "drizzle-orm";
-import AddIcon from "@/components/ui/Icons/Add";
-import PercentageIcon from "@/components/ui/Icons/Percentage";
-import InputWithIcon from "@/components/ui/Input/InputWithIcon";
-import LoadingScreen from "@/components/ui/Loading/LoadingScreen";
-import ThemedSelect from "@/components/ui/Select/Select";
-import Badge from "@/components/ui/Badge/Badge";
+import { eq } from "drizzle-orm";
+import {
+  AddIcon,
+  PercentageIcon,
+  Badge,
+  InputWithIcon,
+  LoadingScreen,
+  Select as ThemedSelect,
+} from "@/components/ui";
 import { useBeanStore } from "@/store/bean-store";
 import { Image } from "expo-image";
 
@@ -55,7 +57,7 @@ const EditBeanPage: FC = () => {
       })
       .from(beanTable)
       .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
-      .where(eq(beanTable.id, Number(beanId)))
+      .where(eq(beanTable.id, Number(beanId))),
   );
   const { data: roasteryData } = useLiveQuery(db.select().from(roasteryTable));
   const { data: beanTasteData } = useLiveQuery(
@@ -64,10 +66,10 @@ const EditBeanPage: FC = () => {
       .from(beanTasteTable)
       .leftJoin(
         beanTasteAssociationTable,
-        eq(beanTasteAssociationTable.tasteId, beanTasteTable.id)
+        eq(beanTasteAssociationTable.tasteId, beanTasteTable.id),
       )
       .where(eq(beanTasteAssociationTable.beanId, Number(beanId))),
-    [editTaste]
+    [editTaste],
   );
 
   const handleNameChange = async (name: string) => {

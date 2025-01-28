@@ -1,23 +1,31 @@
-import Badge from "@/components/ui/Badge/Badge";
+import { Badge, FilterChip, ThemedText } from "@/components/ui";
 import { beanTasteAssociationTable, beanTasteTable } from "@/db/schema";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { useBeanStore } from "@/store/bean-store";
 import { Taste } from "@/types";
-import { eq, notInArray } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { useLocalSearchParams } from "expo-router";
 import { Image } from "expo-image";
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { KeyboardAvoidingView, Platform, Pressable } from "react-native";
-import { Input, View, XStack, Text, ScrollView } from "tamagui";
-import FilterChip from "@/components/ui/FilterChip/FilterChip";
+import { Input, View, XStack, Text, ScrollView, getFontSize } from "tamagui";
+import {
+  selectBeanTasteById,
+  selectFilteredBeanTasteSuggestion,
+} from "@/db/queries";
+import { useAutoFocus } from "@/hooks/useAutoFocus";
 
 interface BeanTasteForm {
   flavorName: string;
 }
 
-const EditTasteSheet: FC = () => {
+interface EditBeanTasteFrameProps {
+  open: boolean;
+}
+const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
   const { db } = useDatabase();
+  const inputRef = useRef<Input>(null);
   const { id: beanId } = useLocalSearchParams();
   const [beanTasteData, setBeanTasteData] = useState<Taste[]>([]);
   const [beanSuggestionTasteData, setBeanSuggestionTasteData] = useState<
@@ -27,34 +35,18 @@ const EditTasteSheet: FC = () => {
   const { control, reset, handleSubmit } = useForm<BeanTasteForm>();
   const updateTasteSheet = useBeanStore((state) => state.updateEditBeanTaste);
 
-  const preparedBeanTasteQuery = db
-    .select({ id: beanTasteTable.id, flavor: beanTasteTable.flavor })
-    .from(beanTasteTable)
-    .innerJoin(
-      beanTasteAssociationTable,
-      eq(beanTasteAssociationTable.tasteId, beanTasteTable.id)
-    )
-    .where(eq(beanTasteAssociationTable.beanId, Number(beanId)))
-    .prepare();
+  const fetchBeanTasteData = useCallback(
+    () => selectBeanTasteById(db, beanId).all(),
+    [beanId, db],
+  );
 
-  const preparedBeanSuggestionTasteQuery = (beanTasteFilter: number[]) => {
-    console.log(beanTasteFilter);
-    return db
-      .select({ id: beanTasteTable.id, flavor: beanTasteTable.flavor })
-      .from(beanTasteTable)
-      .where(notInArray(beanTasteTable.id, beanTasteFilter))
-      .prepare();
-  };
+  const fetchBeanSuggestionTasteData = useCallback(
+    (beanTasteFilter: number[]) =>
+      selectFilteredBeanTasteSuggestion(db, beanTasteFilter).all(),
+    [db],
+  );
 
-  const fetchBeanTasteData = () => {
-    return preparedBeanTasteQuery.all();
-  };
-
-  const fetchBeanSuggestionTasteData = (beanTasteFilter: number[]) => {
-    return preparedBeanSuggestionTasteQuery(beanTasteFilter).all();
-  };
-
-  const update = () => {
+  const update = useCallback(() => {
     const beanTasteData = fetchBeanTasteData();
     setBeanTasteData(beanTasteData);
 
@@ -62,11 +54,11 @@ const EditTasteSheet: FC = () => {
     const beanTasteSuggestionData =
       fetchBeanSuggestionTasteData(beanTasteFilter);
     setBeanSuggestionTasteData(beanTasteSuggestionData);
-  };
+  }, [fetchBeanSuggestionTasteData, fetchBeanTasteData]);
 
   useEffect(() => {
     update();
-  }, []);
+  }, [update]);
 
   const handleRemovePress = async (tasteId: number | null) => {
     if (tasteId) {
@@ -92,7 +84,7 @@ const EditTasteSheet: FC = () => {
   const onSubmit = async (formData: BeanTasteForm) => {
     const flavorName = formData.flavorName.trim();
     const isFlavorStoredInDb = !!beanTasteData.find(
-      (taste: Taste) => taste.flavor.toLowerCase() === flavorName.toLowerCase()
+      (taste: Taste) => taste.flavor.toLowerCase() === flavorName.toLowerCase(),
     );
 
     if (isFlavorStoredInDb) {
@@ -114,6 +106,8 @@ const EditTasteSheet: FC = () => {
     update();
   };
 
+  useAutoFocus(inputRef, open);
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -123,7 +117,15 @@ const EditTasteSheet: FC = () => {
       <View flex={1} bgC="$screenBackground">
         <ScrollView flex={1} padding="$4">
           <View>
-            <Text>Auswahl:</Text>
+            <ThemedText
+              fw={500}
+              mt={"$2"}
+              color={"$primary"}
+              fontSize={getFontSize("$8")}
+              lineHeight={getFontSize("$8")}
+            >
+              Aktuelle Auswahl:
+            </ThemedText>
             <XStack gap="$2" flexWrap="wrap" mt="$3">
               {!beanTasteData?.length && (
                 <XStack flex={1} height="$8" justifyContent="center">
@@ -144,7 +146,9 @@ const EditTasteSheet: FC = () => {
             </XStack>
           </View>
           <View mt="$4">
-            <Text>Vorschläge:</Text>
+            <ThemedText fw={500} fontSize="$6" lineHeight="$2">
+              Vorschläge:
+            </ThemedText>
             <XStack gap="$2" flexWrap="wrap" mt="$3">
               {beanSuggestionTasteData?.map(
                 ({ id: tasteId, flavor }, index) => (
@@ -154,28 +158,23 @@ const EditTasteSheet: FC = () => {
                     name={flavor ?? ""}
                     onPress={() => handleSuggestionPress(tasteId)}
                   />
-                )
+                ),
               )}
             </XStack>
           </View>
         </ScrollView>
       </View>
 
-      <XStack
-        flex={0}
-        py="$4"
-        px="$4"
-        bgC={"$white"}
-      >
+      <XStack flex={0} py="$4" px="$4" bgC={"$white"}>
         <View flex={1} height={48} justifyContent="center">
           <Controller
             name="flavorName"
             control={control}
-            render={({ field }) => (
+            render={({ field: { onChange } }) => (
               <Input
-                {...field}
-                onChangeText={field.onChange}
+                ref={inputRef}
                 returnKeyType="done"
+                onChangeText={onChange}
                 onSubmitEditing={handleSubmit(onSubmit)}
                 returnKeyLabel="Fertig"
                 submitBehavior="submit"
@@ -194,4 +193,4 @@ const EditTasteSheet: FC = () => {
     </KeyboardAvoidingView>
   );
 };
-export default EditTasteSheet;
+export default EditBeanTasteFrame;

@@ -2,11 +2,11 @@ import { Dimensions, ImageBackground } from "react-native";
 import { FC } from "react";
 import { Button, View } from "tamagui";
 import { useRouter } from "expo-router";
-import TabBarIcon from "./TabBarIcon";
 import { useIsRouteActive } from "@/hooks/useIsRouteActive";
 import HomeIcon from "../ui/Icons/Home";
 import ProfileIcon from "../ui/Icons/Profile";
 import AddIcon from "../ui/Icons/Add";
+import TabBarIcon from "./TabBarIcon";
 
 const TabBar: FC = () => {
   const router = useRouter();

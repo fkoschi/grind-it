@@ -8,11 +8,19 @@ export default function RootLayout() {
       <Stack initialRouteName="index">
         <Stack.Screen
           name="index"
-          options={{ headerShown: false, animation: "none" }}
+          options={{
+            headerShown: false,
+            animation: "none",
+            gestureEnabled: false,
+          }}
         />
         <Stack.Screen
           name="settings"
-          options={{ headerShown: false, animation: "none" }}
+          options={{
+            headerShown: false,
+            animation: "none",
+            gestureEnabled: false,
+          }}
         />
         <Stack.Screen
           name="roasteries/EditRoasteryPage"

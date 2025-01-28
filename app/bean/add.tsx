@@ -1,8 +1,3 @@
-import ActionButton from "@/components/ui/ActionButton/ActionButton";
-import AddIcon from "@/components/ui/Icons/Add";
-import CheckIcon from "@/components/ui/Icons/Check";
-import PercentageIcon from "@/components/ui/Icons/Percentage";
-import InputWithIcon from "@/components/ui/Input/InputWithIcon";
 import {
   beanTable,
   beanTasteAssociationTable,
@@ -12,13 +7,20 @@ import {
 import React, { FC, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 
+import {
+  ActionButton,
+  AddIcon,
+  Badge,
+  CheckIcon,
+  PercentageIcon,
+  InputWithIcon,
+  Select as ThemedSelect,
+} from "@/components/ui";
 import { Text, Input, View, XStack, Button, ScrollView } from "tamagui";
 import { useBeanStore } from "@/store/bean-store";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import Badge from "@/components/ui/Badge/Badge";
-import ThemedSelect from "@/components/ui/Select/Select";
 import { createInsertSchema } from "drizzle-zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDatabase } from "@/provider/DatabaseProvider";
@@ -39,7 +41,7 @@ const AddBeanPage: FC = () => {
   const removeBeanTaste = useBeanStore((state) => state.removeBeanTaste);
   const updateEditRoastery = useBeanStore((state) => state.updateEditRoastery);
   const updateEditBeanTaste = useBeanStore(
-    (state) => state.updateEditBeanTaste
+    (state) => state.updateEditBeanTaste,
   );
 
   const { data: roasteries } = useLiveQuery(db.select().from(roasteryTable));
@@ -50,7 +52,6 @@ const AddBeanPage: FC = () => {
     handleSubmit,
     control,
     reset: resetForm,
-    formState: { errors },
   } = useForm<FormInput>({ resolver: zodResolver(insertSchema) });
 
   const onSubmit = async (data: FormInput) => {
@@ -66,7 +67,7 @@ const AddBeanPage: FC = () => {
       await insertTaste(
         beanId.id,
         tasteForBeanTable,
-        beanTasteAssociationValueIds
+        beanTasteAssociationValueIds,
       );
     }
     router.dismissTo("/");
@@ -88,8 +89,8 @@ const AddBeanPage: FC = () => {
 
   const insertTaste = async (
     beanId: number,
-    beanTasteValues: Array<Pick<Taste, "flavor">>,
-    beanTasteAssociationValueIds: Array<Pick<Taste, "id">>
+    beanTasteValues: Pick<Taste, "flavor">[],
+    beanTasteAssociationValueIds: Pick<Taste, "id">[],
   ) => {
     const tasteIds = await db
       .insert(beanTasteTable)
@@ -110,7 +111,7 @@ const AddBeanPage: FC = () => {
   useEffect(() => {
     resetForm();
     resetBeanState();
-  }, []);
+  }, [resetBeanState, resetForm]);
 
   return (
     <>
@@ -208,9 +209,7 @@ const AddBeanPage: FC = () => {
         </XStack>
 
         <View flex={0} mt="$4">
-          <Text fontSize="$6">
-            Geschmack
-          </Text>
+          <Text fontSize="$6">Geschmack</Text>
           {beanTaste && (
             <View
               flex={0}

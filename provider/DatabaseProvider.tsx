@@ -7,7 +7,7 @@ import { View, Text } from "tamagui";
 import LoadingScreen from "@/components/ui/Loading/LoadingScreen";
 
 const expo = SQLite.openDatabaseSync("grind-it.db", {
-  enableChangeListener: true, // enable useLiveQuery 
+  enableChangeListener: true, // enable useLiveQuery
 });
 
 const db = drizzle(expo);
@@ -17,7 +17,7 @@ interface DatabaseContextState {
 }
 
 const DatabaseContext = createContext<DatabaseContextState | undefined>(
-  undefined
+  undefined,
 );
 
 export const DatabaseProvider: FC<PropsWithChildren> = ({ children }) => {

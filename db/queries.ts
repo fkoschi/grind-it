@@ -5,15 +5,12 @@ import {
   beanTasteTable,
   roasteryTable,
 } from "./schema";
-import { eq, sql, and, inArray, ne, notInArray } from "drizzle-orm";
+import { eq, sql, and, inArray, notInArray } from "drizzle-orm";
 
-const selectTastes = (db: ExpoSQLiteDatabase) =>
-  db.select().from(beanTasteTable).prepare();
-
-const selectTasteNotInArray = (
-  db: ExpoSQLiteDatabase,
-  filterBy: Array<number>
-) => {
+/**
+ * List of prepared Queries
+ */
+const selectTasteNotInArray = (db: ExpoSQLiteDatabase, filterBy: number[]) => {
   const activeFilter = filterBy?.length > 0;
 
   return db
@@ -23,10 +20,7 @@ const selectTasteNotInArray = (
     .prepare();
 };
 
-const selectTasteInArray = (
-  db: ExpoSQLiteDatabase,
-  filterBy: Array<number>
-) => {
+const selectTasteInArray = (db: ExpoSQLiteDatabase, filterBy: number[]) => {
   const activeFilter = filterBy?.length > 0;
 
   return db
@@ -39,29 +33,19 @@ const selectTasteInArray = (
 const selectRoasteries = (db: ExpoSQLiteDatabase) =>
   db.select().from(roasteryTable).prepare();
 
-/* const selectBeansBySearch = (db: ExpoSQLiteDatabase) =>
-  db
-    .selectDistinct({
-      id: beanTable.id,
-      name: beanTable.name,
-      roastery: roasteryTable.name,
-      degreeOfGrinding: beanTable.degreeOfGrinding,
-      isFavorite: beanTable.isFavorit,
-    })
-    .from(beanTable)
-    .innerJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
-    .where(sql`${beanTable.name} like ${sql.placeholder("search")}`)
-    .prepare(); */
-
 const selectBeansBySearchAndFilter = (
   db: ExpoSQLiteDatabase,
-  beanTasteFilter: Array<number>
+  beanTasteFilter: number[]
 ) => {
   const tasteFilter = beanTasteFilter?.filter((filter) => filter !== 0);
   const hasFavoriteFilter = beanTasteFilter?.includes(0);
 
+  const tasteConditions = tasteFilter.map((tasteId) =>
+    eq(beanTasteAssociationTable.tasteId, tasteId)
+  );
+
   const preparedQuery = db
-    .selectDistinct({
+    .select({
       id: beanTable.id,
       name: beanTable.name,
       roastery: roasteryTable.name,
@@ -70,7 +54,7 @@ const selectBeansBySearchAndFilter = (
     })
     .from(beanTable)
     .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
-    .fullJoin(
+    .leftJoin(
       beanTasteAssociationTable,
       eq(beanTable.id, beanTasteAssociationTable.beanId)
     )
@@ -78,9 +62,7 @@ const selectBeansBySearchAndFilter = (
       and(
         sql`${beanTable.name} like ${sql.placeholder("search")}`,
         hasFavoriteFilter ? beanTable.isFavorit : sql`True`,
-        tasteFilter.length > 0
-          ? inArray(beanTasteAssociationTable.tasteId, tasteFilter)
-          : sql`TRUE`
+        ...tasteConditions
       )
     )
     .prepare();
@@ -88,10 +70,34 @@ const selectBeansBySearchAndFilter = (
   return preparedQuery;
 };
 
+const selectFilteredBeanTasteSuggestion = (
+  db: ExpoSQLiteDatabase,
+  beanTasteFilter: number[]
+) =>
+  db
+    .select({ id: beanTasteTable.id, flavor: beanTasteTable.flavor })
+    .from(beanTasteTable)
+    .where(notInArray(beanTasteTable.id, beanTasteFilter))
+    .prepare();
+
+const selectBeanTasteById = (
+  db: ExpoSQLiteDatabase,
+  beanId: string | string[]
+) =>
+  db
+    .select({ id: beanTasteTable.id, flavor: beanTasteTable.flavor })
+    .from(beanTasteTable)
+    .innerJoin(
+      beanTasteAssociationTable,
+      eq(beanTasteAssociationTable.tasteId, beanTasteTable.id)
+    )
+    .where(eq(beanTasteAssociationTable.beanId, Number(beanId)))
+    .prepare();
+
 export {
-  selectTastes,
-  /* selectBeansBySearch, */
   selectTasteInArray,
+  selectBeanTasteById,
+  selectFilteredBeanTasteSuggestion,
   selectTasteNotInArray,
   selectBeansBySearchAndFilter,
   selectRoasteries,

@@ -1,23 +1,21 @@
 import { beanTasteTable } from "@/db/schema";
+import { useAutoFocus } from "@/hooks/useAutoFocus";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FC } from "react";
+import { FC, useRef } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { Pressable } from "react-native";
 import { View, Text, XStack, Input } from "tamagui";
 import { z } from "zod";
 
-interface AddTasteBottomSheetProps {
-  autoFocus: boolean;
+interface AddTasteFrameProps {
+  open?: boolean;
   onCancel: () => void;
   onSave: () => void;
 }
-const AddTasteBottomSheet: FC<AddTasteBottomSheetProps> = ({
-  autoFocus,
-  onCancel,
-  onSave,
-}) => {
+const AddTasteFrame: FC<AddTasteFrameProps> = ({ open, onCancel, onSave }) => {
   const { db } = useDatabase();
+  const inputRef = useRef<Input>(null);
 
   const Taste = z.object({
     taste: z.string().nonempty(),
@@ -34,6 +32,8 @@ const AddTasteBottomSheet: FC<AddTasteBottomSheetProps> = ({
     reset();
   };
 
+  useAutoFocus(inputRef, open);
+
   return (
     <View flex={1} p="$6">
       <Text
@@ -43,7 +43,7 @@ const AddTasteBottomSheet: FC<AddTasteBottomSheetProps> = ({
       >
         Neuer Geschmack
       </Text>
-      <Text mt="$2" fontSize={12} color={"#838179"}>
+      <Text mt="$2" fontSize={12} color={"$copyText"}>
         Dieser Geschmack wird unabhängig von einer Bohne erstellt und kann
         später zu beliebig vielen Bohnen zugeordnet werden.
       </Text>
@@ -55,7 +55,7 @@ const AddTasteBottomSheet: FC<AddTasteBottomSheetProps> = ({
           render={({ field: { onChange, onBlur } }) => (
             <Input
               flex={1}
-              autoFocus={autoFocus}
+              ref={inputRef}
               onChangeText={onChange}
               onBlur={onBlur}
               returnKeyType="done"
@@ -73,4 +73,4 @@ const AddTasteBottomSheet: FC<AddTasteBottomSheetProps> = ({
     </View>
   );
 };
-export default AddTasteBottomSheet;
+export default AddTasteFrame;
