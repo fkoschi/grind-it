@@ -5,12 +5,13 @@
     "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "grind-it",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.fkoschi.grind-it"
+      "bundleIdentifier": "com.fkoschi.grind-it",
+      "appStoreUrl": "https://apps.apple.com/de/app/grind-it/id6740140366"
     },
     "android": {
       "adaptiveIcon": {
@@ -55,6 +56,6 @@
         "projectId": "ebe4c636-91d7-4418-b2d5-479eb08a4b41"
       }
     },
-    "owner": "funkyfelix"
+    "owner": "Felix Koschmidder"
   }
 }
