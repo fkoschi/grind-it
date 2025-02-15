@@ -1,1 +1,1 @@
-export { default as InputWithIcon } from "./InputWithIcon";
+export { default as InputWithSuffix } from "./InputWithSuffix";

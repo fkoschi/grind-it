@@ -13,7 +13,7 @@ import {
   Badge,
   CheckIcon,
   PercentageIcon,
-  InputWithIcon,
+  InputWithSuffix,
   Select as ThemedSelect,
 } from "@/components/ui";
 import { Text, Input, View, XStack, Button, ScrollView } from "tamagui";
@@ -121,7 +121,7 @@ const AddBeanPage: FC = () => {
             name="arabicaAmount"
             control={control}
             render={({ field: { onChange, value }, ...other }) => (
-              <InputWithIcon
+              <InputWithSuffix
                 id="arabicaAmount"
                 onChangeText={(text: string) => onChange(Number(text))}
                 keyboardType="decimal-pad"
@@ -138,7 +138,7 @@ const AddBeanPage: FC = () => {
             control={control}
             name="robustaAmount"
             render={({ field: { onChange, value }, ...other }) => (
-              <InputWithIcon
+              <InputWithSuffix
                 id="robustaAmount"
                 onChangeText={(text) => onChange(Number(text))}
                 keyboardType="decimal-pad"

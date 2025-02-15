@@ -106,6 +106,10 @@ const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
     update();
   };
 
+  const handleEndEditing = () => {
+    updateTasteSheet({ showSheet: false, type: "edit" });
+  };
+
   useAutoFocus(inputRef, open);
 
   return (
@@ -183,9 +187,7 @@ const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
           />
         </View>
         <View flex={0} ml="$3" height={48} justifyContent="center">
-          <Pressable
-            onPress={() => updateTasteSheet({ showSheet: false, type: "edit" })}
-          >
+          <Pressable onPress={handleEndEditing}>
             <Text>Abbrechen</Text>
           </Pressable>
         </View>

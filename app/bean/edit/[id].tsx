@@ -24,24 +24,37 @@ import {
   AddIcon,
   PercentageIcon,
   Badge,
-  InputWithIcon,
+  InputWithSuffix,
   LoadingScreen,
   Select as ThemedSelect,
+  ThemedText,
 } from "@/components/ui";
 import { useBeanStore } from "@/store/bean-store";
 import { Image } from "expo-image";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 export const PATH_NAME = "/bean/edit";
 
-interface FormState {
-  name: string;
-  roastery: number;
-  arabicaAmount: string;
-  robustaAmount: string;
-}
+const schema = z.object({
+  name: z.string().nonempty(),
+  roastery: z.number(),
+  arabicaAmount: z.number().min(0).max(100),
+  robustaAmount: z.number().min(0).max(100),
+  singleShotAmount: z.number().min(0),
+  doubleShotAmount: z.number().min(0),
+});
+
+type Schema = z.infer<typeof schema>;
+
 const EditBeanPage: FC = () => {
   const { db } = useDatabase();
-  const { control } = useForm<FormState>();
+  const {
+    control,
+    formState: { errors },
+  } = useForm<Schema>({
+    resolver: zodResolver(schema),
+  });
   const editTaste = useBeanStore((state) => state.editBeanTaste);
   const showTasteSheet = useBeanStore((state) => state.updateEditBeanTaste);
   const showRoasterySheet = useBeanStore((state) => state.updateEditRoastery);
@@ -53,11 +66,13 @@ const EditBeanPage: FC = () => {
         beanName: beanTable.name,
         arabicaAmount: beanTable.arabicaAmount,
         robustaAmount: beanTable.robustaAmount,
+        singleShotAmount: beanTable.singleShotAmount,
+        doubleShotAmount: beanTable.doubleShotAmount,
         roastery: roasteryTable.name,
       })
       .from(beanTable)
       .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
-      .where(eq(beanTable.id, Number(beanId))),
+      .where(eq(beanTable.id, Number(beanId)))
   );
   const { data: roasteryData } = useLiveQuery(db.select().from(roasteryTable));
   const { data: beanTasteData } = useLiveQuery(
@@ -66,10 +81,10 @@ const EditBeanPage: FC = () => {
       .from(beanTasteTable)
       .leftJoin(
         beanTasteAssociationTable,
-        eq(beanTasteAssociationTable.tasteId, beanTasteTable.id),
+        eq(beanTasteAssociationTable.tasteId, beanTasteTable.id)
       )
       .where(eq(beanTasteAssociationTable.beanId, Number(beanId))),
-    [editTaste],
+    [editTaste]
   );
 
   const handleNameChange = async (name: string) => {
@@ -78,16 +93,24 @@ const EditBeanPage: FC = () => {
       .set({ name: name.trim() })
       .where(eq(beanTable.id, Number(beanId)));
   };
-  const handleArabicaAmountChange = async (amount: string) => {
-    await db
+  const handleArabicaAmountChange = async (amount: number) => {
+    console.log(amount, errors);
+    /* await db
       .update(beanTable)
       .set({ arabicaAmount: Number(amount) })
-      .where(eq(beanTable.id, Number(beanId)));
+      .where(eq(beanTable.id, Number(beanId))); */
   };
-  const handleRobustaAmountChange = async (amount: string) => {
-    await db
+  const handleRobustaAmountChange = async (amount: number) => {
+    console.log(amount, typeof amount, errors);
+    /* await db
       .update(beanTable)
       .set({ robustaAmount: Number(amount) })
+      .where(eq(beanTable.id, Number(beanId))); */
+  };
+  const handleSingleShotAmountChange = async (amount: number) => {
+    await db
+      .update(beanTable)
+      .set({ singleShotAmount: Number(amount) })
       .where(eq(beanTable.id, Number(beanId)));
   };
   const handleRoasteryChange = async (value: number) => {
@@ -126,11 +149,12 @@ const EditBeanPage: FC = () => {
           name="arabicaAmount"
           control={control}
           render={({ field: { onChange, value }, ...props }) => (
-            <InputWithIcon
+            <InputWithSuffix
               {...props}
+              keyboardType="numeric"
               suffix={<PercentageIcon fillColor="#664F3F" />}
-              onEndEditing={() => handleArabicaAmountChange(value)}
-              onChangeText={onChange}
+              onBlur={() => handleArabicaAmountChange(value)}
+              onChangeText={(text: string) => onChange(parseInt(text))}
               defaultValue={beanData?.[0]?.arabicaAmount?.toString()}
             />
           )}
@@ -139,11 +163,15 @@ const EditBeanPage: FC = () => {
           name="robustaAmount"
           control={control}
           render={({ field: { onChange, value }, ...props }) => (
-            <InputWithIcon
+            <InputWithSuffix
               {...props}
+              keyboardType="numeric"
               suffix={<PercentageIcon fillColor="#664F3F" />}
-              onEndEditing={() => handleRobustaAmountChange(value)}
-              onChangeText={onChange}
+              onBlur={() => handleRobustaAmountChange(value)}
+              onChangeText={(text: string) => {
+                console.log(errors);
+                onChange(text);
+              }}
               defaultValue={beanData?.[0]?.robustaAmount?.toString()}
             />
           )}
@@ -229,6 +257,52 @@ const EditBeanPage: FC = () => {
       </>
     );
   };
+  const BeanShotAmountInput = () => (
+    <XStack gap="$4">
+      <Label>Single / Double Shot</Label>
+      <XStack flex={1} gap="$2">
+        <Controller
+          name="singleShotAmount"
+          control={control}
+          render={({ field: { onChange, value }, ...props }) => (
+            <InputWithSuffix
+              {...props}
+              keyboardType="numeric"
+              suffix={
+                <ThemedText fw={500} lineHeight={12}>
+                  g
+                </ThemedText>
+              }
+              onBlur={() => handleSingleShotAmountChange(value)}
+              onChangeText={(text: string) =>
+                onChange(parseFloat(text.replace(/,/g, ".")))
+              }
+              defaultValue={beanData?.[0]?.singleShotAmount?.toString()}
+            />
+          )}
+        />
+        <Controller
+          name="doubleShotAmount"
+          control={control}
+          render={({ field: { onChange, value }, ...props }) => (
+            <InputWithSuffix
+              {...props}
+              keyboardType="numeric"
+              suffix={
+                <ThemedText fw={500} lineHeight={12}>
+                  g
+                </ThemedText>
+              }
+              onBlur={() => handleSingleShotAmountChange(value)}
+              onChangeText={(text: string) =>
+                onChange(parseFloat(text.replace(/,/g, ".")))
+              }
+            />
+          )}
+        />
+      </XStack>
+    </XStack>
+  );
 
   if (beanData.length === 0) {
     return <LoadingScreen />;
@@ -237,9 +311,10 @@ const EditBeanPage: FC = () => {
   return (
     <ScrollView flex={1} py="$6" px="$4">
       <YStack gap="$2">
-        <BeanArabicaRobustaInput />
         <BeanNameInput />
         <BeanRoasteryInput />
+        <BeanArabicaRobustaInput />
+        <BeanShotAmountInput />
         <BeansTasteInput />
       </YStack>
     </ScrollView>

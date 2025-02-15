@@ -6,7 +6,7 @@ interface Props extends TextInputProps {
   label?: string;
   suffix?: ReactElement;
 }
-const InputWithIcon: FC<Props> = ({ label, suffix, ...other }) => {
+const InputWithSuffix: FC<Props> = ({ label, suffix, ...other }) => {
   return (
     <View flex={1}>
       <XStack
@@ -40,4 +40,4 @@ const InputWithIcon: FC<Props> = ({ label, suffix, ...other }) => {
   );
 };
 
-export default InputWithIcon;
+export default InputWithSuffix;

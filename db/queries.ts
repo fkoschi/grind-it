@@ -35,13 +35,13 @@ const selectRoasteries = (db: ExpoSQLiteDatabase) =>
 
 const selectBeansBySearchAndFilter = (
   db: ExpoSQLiteDatabase,
-  beanTasteFilter: number[]
+  beanTasteFilter: number[],
 ) => {
   const tasteFilter = beanTasteFilter?.filter((filter) => filter !== 0);
   const hasFavoriteFilter = beanTasteFilter?.includes(0);
 
   const tasteConditions = tasteFilter.map((tasteId) =>
-    eq(beanTasteAssociationTable.tasteId, tasteId)
+    eq(beanTasteAssociationTable.tasteId, tasteId),
   );
 
   const preparedQuery = db
@@ -56,14 +56,14 @@ const selectBeansBySearchAndFilter = (
     .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
     .leftJoin(
       beanTasteAssociationTable,
-      eq(beanTable.id, beanTasteAssociationTable.beanId)
+      eq(beanTable.id, beanTasteAssociationTable.beanId),
     )
     .where(
       and(
         sql`${beanTable.name} like ${sql.placeholder("search")}`,
         hasFavoriteFilter ? beanTable.isFavorit : sql`True`,
-        ...tasteConditions
-      )
+        ...tasteConditions,
+      ),
     )
     .prepare();
 
@@ -72,7 +72,7 @@ const selectBeansBySearchAndFilter = (
 
 const selectFilteredBeanTasteSuggestion = (
   db: ExpoSQLiteDatabase,
-  beanTasteFilter: number[]
+  beanTasteFilter: number[],
 ) =>
   db
     .select({ id: beanTasteTable.id, flavor: beanTasteTable.flavor })
@@ -82,14 +82,14 @@ const selectFilteredBeanTasteSuggestion = (
 
 const selectBeanTasteById = (
   db: ExpoSQLiteDatabase,
-  beanId: string | string[]
+  beanId: string | string[],
 ) =>
   db
     .select({ id: beanTasteTable.id, flavor: beanTasteTable.flavor })
     .from(beanTasteTable)
     .innerJoin(
       beanTasteAssociationTable,
-      eq(beanTasteAssociationTable.tasteId, beanTasteTable.id)
+      eq(beanTasteAssociationTable.tasteId, beanTasteTable.id),
     )
     .where(eq(beanTasteAssociationTable.beanId, Number(beanId)))
     .prepare();

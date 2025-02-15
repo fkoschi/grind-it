@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Text, View } from "tamagui";
+import { Text, View, XStack, YStack } from "tamagui";
 import { Image } from "expo-image";
 import { ThemedText, Badge, ActionButton, EditIcon } from "@/components/ui";
 import { useRouter } from "expo-router";
@@ -29,11 +29,13 @@ const DetailsPage: FC = () => {
         beanName: beanTable.name,
         robustaAmount: beanTable.robustaAmount,
         arabicaAmount: beanTable.arabicaAmount,
+        singleShotAmount: beanTable.singleShotAmount,
+        doubleShotAmount: beanTable.doubleShotAmount,
         degreeOfGrinding: beanTable.degreeOfGrinding,
       })
       .from(beanTable)
       .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
-      .where(eq(beanTable.id, Number(id))),
+      .where(eq(beanTable.id, Number(id)))
   );
 
   const fetchTasteByBeanId = async () => {
@@ -58,8 +60,15 @@ const DetailsPage: FC = () => {
     return null;
   }
 
-  const { roastery, beanName, robustaAmount, arabicaAmount, degreeOfGrinding } =
-    data[0];
+  const {
+    roastery,
+    beanName,
+    robustaAmount,
+    arabicaAmount,
+    degreeOfGrinding,
+    singleShotAmount,
+    doubleShotAmount,
+  } = data[0];
 
   const renderTaste = async () => {
     const tastes = await fetchTasteByBeanId();
@@ -71,15 +80,6 @@ const DetailsPage: FC = () => {
 
   const handleEditPress = () => router.navigate(`/bean/edit/${id}`);
   const handleDegreePress = () => router.navigate(`/bean/edit/degree/${id}`);
-
-  const formattedBeanComposition = (): number | string => {
-    if (arabicaAmount === 100) {
-      return arabicaAmount;
-    } else if (robustaAmount === 100) {
-      return robustaAmount;
-    }
-    return `${arabicaAmount} / ${robustaAmount}`;
-  };
 
   return (
     <View flex={1}>
@@ -103,16 +103,34 @@ const DetailsPage: FC = () => {
         <Text fontSize="$11" mt="$2" fontFamily="TBJSodabery-LightOriginal">
           {beanName}
         </Text>
-        <View flex={0} mt="$2">
-          <View flex={0} justifyContent="center">
-            <Image
-              source={require("@/assets/images/coffee-beans.png")}
-              contentFit="fill"
-              style={{ flex: 0, width: 35, height: 20 }}
-            />
-            <ThemedText fw={600}>{formattedBeanComposition()}</ThemedText>
-          </View>
-        </View>
+        <View flex={0} mt="$2"></View>
+
+        <XStack gap={8} flex={0} justifyContent="space-between">
+          <YStack>
+            <ThemedText fw={600} fontSize={18}>
+              {`${arabicaAmount ? arabicaAmount : 0} %`}
+            </ThemedText>
+            <ThemedText fw={400}>Arabica</ThemedText>
+          </YStack>
+          <YStack>
+            <ThemedText fw={600} fontSize={18}>
+              {`${robustaAmount ? robustaAmount : 0} %`}
+            </ThemedText>
+            <ThemedText fw={400}>Robusta</ThemedText>
+          </YStack>
+          <YStack>
+            <ThemedText fw={600} fontSize={18}>
+              {`${singleShotAmount ? singleShotAmount : "0"} g`}
+            </ThemedText>
+            <ThemedText fw={400}>Single Shot</ThemedText>
+          </YStack>
+          <YStack>
+            <ThemedText fw={600} fontSize={18}>
+            {`${doubleShotAmount ? doubleShotAmount : "0"} g`}
+            </ThemedText>
+            <ThemedText fw={400}>Double Shot</ThemedText>
+          </YStack>
+        </XStack>
 
         <View flex={1} mt="$4">
           <View>
