@@ -45,7 +45,7 @@ const selectBeansBySearchAndFilter = (
   );
 
   const preparedQuery = db
-    .select({
+    .selectDistinct({
       id: beanTable.id,
       name: beanTable.name,
       roastery: roasteryTable.name,
