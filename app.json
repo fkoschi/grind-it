@@ -2,7 +2,7 @@
   "expo": {
     "name": "Grind It",
     "slug": "grind-it",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "grind-it",
@@ -56,6 +56,6 @@
         "projectId": "ebe4c636-91d7-4418-b2d5-479eb08a4b41"
       }
     },
-    "owner": "Felix Koschmidder"
+    "owner": "funkyfelix"
   }
 }
