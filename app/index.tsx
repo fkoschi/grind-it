@@ -35,7 +35,7 @@ const HomePageComponent: FC = () => {
   };
 
   return (
-    <View flex={1} bgC="$screenBackground">
+    <View flex={1} bgC="$screenBackground" pb="$12">
       <DashboardHeader onChangeText={handleChangeText} />
       <HomePage data={data} search={search} filter={beanTasteFilter} />
       <TabBar />
