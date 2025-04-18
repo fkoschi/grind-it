@@ -1,3 +1,4 @@
+import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
 import React, { createContext, FC, PropsWithChildren, useContext } from "react";
 import * as SQLite from "expo-sqlite";
 import { drizzle, ExpoSQLiteDatabase } from "drizzle-orm/expo-sqlite";
@@ -22,7 +23,7 @@ const DatabaseContext = createContext<DatabaseContextState | undefined>(
 
 export const DatabaseProvider: FC<PropsWithChildren> = ({ children }) => {
   const { success, error } = useMigrations(db, migrations);
-
+  
   if (error) {
     return (
       <View flex={1} justifyContent="center">
@@ -30,6 +31,8 @@ export const DatabaseProvider: FC<PropsWithChildren> = ({ children }) => {
       </View>
     );
   }
+
+  useDrizzleStudio(expo);
 
   if (!success) {
     return <LoadingScreen />;

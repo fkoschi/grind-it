@@ -14,27 +14,17 @@ import {
 import { eq, inArray } from "drizzle-orm";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { Pressable } from "react-native";
+import React from "react";
+import { useBeanDetails } from "@/hooks/useBeanDetails";
 
 export const PATH_NAME = "/bean/details";
 
-const DetailsPage: FC = () => {
+const DetailsPage: FC = React.memo(() => {
   const router = useRouter();
   const { db } = useDatabase();
   const { id } = useLocalSearchParams();
 
-  const { data } = useLiveQuery(
-    db
-      .select({
-        roastery: roasteryTable.name,
-        beanName: beanTable.name,
-        robustaAmount: beanTable.robustaAmount,
-        arabicaAmount: beanTable.arabicaAmount,
-        degreeOfGrinding: beanTable.degreeOfGrinding,
-      })
-      .from(beanTable)
-      .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
-      .where(eq(beanTable.id, Number(id))),
-  );
+  const beansData = useBeanDetails();
 
   const fetchTasteByBeanId = async () => {
     const tasteIdData = await db
@@ -54,12 +44,12 @@ const DetailsPage: FC = () => {
     return tasteData;
   };
 
-  if (!data.length) {
+  if (!beansData) {
     return null;
   }
 
   const { roastery, beanName, robustaAmount, arabicaAmount, degreeOfGrinding } =
-    data[0];
+    beansData;
 
   const renderTaste = async () => {
     const tastes = await fetchTasteByBeanId();
@@ -157,5 +147,6 @@ const DetailsPage: FC = () => {
       />
     </View>
   );
-};
+});
+
 export default DetailsPage;
