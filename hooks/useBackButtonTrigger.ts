@@ -20,4 +20,4 @@ export const useBackButtonTrigger = (callback?: () => void) => {
     // Clean up the listener when the component unmounts
     return unsubscribe;
   }, [navigation, callback]);
-}; 
+};

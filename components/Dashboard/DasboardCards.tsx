@@ -3,13 +3,11 @@ import { FC } from "react";
 import { ScrollView } from "tamagui";
 import Card from "@/components/ui/Card/Card";
 import DashboardNoData from "./DashboardNoData";
-import CardSkeleton from "../ui/Card/Card.Skeleton";
 
 interface Props {
-  loading: boolean;
   beansData?: CoffeeBean[];
 }
-const DashboardCards: FC<Props> = ({ loading, beansData }) => {
+const DashboardCards: FC<Props> = ({ beansData }) => {
   const noData = !beansData?.length;
 
   if (noData) {
@@ -17,10 +15,6 @@ const DashboardCards: FC<Props> = ({ loading, beansData }) => {
   }
 
   const renderCards = () => {
-    if (loading) {
-      return <CardSkeleton />;
-    }
-
     return beansData.map((bean, i) => (
       <Card key={`dashboard-card-${i}`} data={bean} />
     ));

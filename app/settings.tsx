@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Avatar, Text, ListItem, View, YGroup, Separator } from "tamagui";
 import { ChevronRight } from "@tamagui/lucide-icons";
 import { useRouter } from "expo-router";
@@ -10,10 +10,11 @@ import { version } from "../package.json";
 
 const SettingsPage: FC = () => {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   return (
     <View bgC={"$screenBackground"} flex={1}>
-      <SafeAreaView style={{ flex: 1 }}>
+      <View flex={1} pt={insets.top}>
         <View alignItems="center" mt="$6">
           <Avatar circular size="$10">
             <Avatar.Image
@@ -49,8 +50,8 @@ const SettingsPage: FC = () => {
             </ListItem>
           </YGroup.Item>
         </YGroup>
-        <TabBar />
-      </SafeAreaView>
+      </View>
+      <TabBar />
     </View>
   );
 };

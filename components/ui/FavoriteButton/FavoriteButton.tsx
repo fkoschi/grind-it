@@ -54,14 +54,14 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: "absolute",
     zIndex: 1,
-    right: 24,
-    top: 24,
+    right: 12,
+    top: 12,
   },
   lottieContainer: {
     position: "absolute",
     zIndex: 0,
-    right: 10,
-    top: 10,
+    right: -2,
+    top: -2,
     width: 40,
     height: 40,
   },

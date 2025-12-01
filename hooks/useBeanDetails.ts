@@ -11,16 +11,19 @@ export const useBeanDetails = () => {
   const { data } = useLiveQuery(
     db
       .select({
+        id: beanTable.id,
+        name: beanTable.name,
         roastery: roasteryTable.name,
-        beanName: beanTable.name,
         robustaAmount: beanTable.robustaAmount,
         arabicaAmount: beanTable.arabicaAmount,
+        singleShotDosis: beanTable.singleShotDosis,
+        doubleShotDosis: beanTable.doubleShotDosis,
         degreeOfGrinding: beanTable.degreeOfGrinding,
       })
       .from(beanTable)
       .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
       .where(eq(beanTable.id, Number(id))),
-    [beanTable.id],
+    [beanTable.id]
   );
 
   return data?.[0];

@@ -23,7 +23,9 @@ const DatabaseContext = createContext<DatabaseContextState | undefined>(
 
 export const DatabaseProvider: FC<PropsWithChildren> = ({ children }) => {
   const { success, error } = useMigrations(db, migrations);
-  
+
+  useDrizzleStudio(expo);
+
   if (error) {
     return (
       <View flex={1} justifyContent="center">
@@ -31,8 +33,6 @@ export const DatabaseProvider: FC<PropsWithChildren> = ({ children }) => {
       </View>
     );
   }
-
-  useDrizzleStudio(expo);
 
   if (!success) {
     return <LoadingScreen />;

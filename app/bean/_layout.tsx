@@ -4,7 +4,7 @@ import { View } from "tamagui";
 import React, { useEffect } from "react";
 
 import EditBean from "./EditBean";
-import BeanHeaderLayout from "./layout/BeanHeaderLayout";
+import BeanHeaderLayout from "@/components/BeanHeaderLayout/BeanHeaderLayout";
 
 const BeanLayout = () => {
   const navigation = useNavigation();

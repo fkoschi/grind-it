@@ -33,23 +33,22 @@ const selectTasteInArray = (db: ExpoSQLiteDatabase, filterBy: number[]) => {
 const selectRoasteries = (db: ExpoSQLiteDatabase) =>
   db.select().from(roasteryTable).prepare();
 
-const selectBeansBySearchAndFilter = (
+const queryBeansBySearchAndFilter = (
   db: ExpoSQLiteDatabase,
-  beanTasteFilter: number[]
+  beanTasteFilter: number[],
+  search: string
 ) => {
   const tasteFilter = beanTasteFilter?.filter((filter) => filter !== 0);
   const hasFavoriteFilter = beanTasteFilter?.includes(0);
 
-  const tasteConditions = tasteFilter.map((tasteId) =>
-    eq(beanTasteAssociationTable.tasteId, tasteId)
-  );
-
-  const preparedQuery = db
+  return db
     .selectDistinct({
       id: beanTable.id,
       name: beanTable.name,
       roastery: roasteryTable.name,
       degreeOfGrinding: beanTable.degreeOfGrinding,
+      singleShotDosis: beanTable.singleShotDosis,
+      doubleShotDosis: beanTable.doubleShotDosis,
       isFavorite: beanTable.isFavorit,
     })
     .from(beanTable)
@@ -60,14 +59,13 @@ const selectBeansBySearchAndFilter = (
     )
     .where(
       and(
-        sql`${beanTable.name} like ${sql.placeholder("search")}`,
-        hasFavoriteFilter ? beanTable.isFavorit : sql`True`,
-        ...tasteConditions
+        sql`${beanTable.name} like ${`%${search}%`}`,
+        hasFavoriteFilter ? beanTable.isFavorit : undefined,
+        tasteFilter.length > 0
+          ? inArray(beanTasteAssociationTable.tasteId, tasteFilter)
+          : undefined
       )
-    )
-    .prepare();
-
-  return preparedQuery;
+    );
 };
 
 const selectFilteredBeanTasteSuggestion = (
@@ -99,6 +97,6 @@ export {
   selectBeanTasteById,
   selectFilteredBeanTasteSuggestion,
   selectTasteNotInArray,
-  selectBeansBySearchAndFilter,
+  queryBeansBySearchAndFilter,
   selectRoasteries,
 };

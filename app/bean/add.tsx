@@ -15,13 +15,14 @@ import {
   PercentageIcon,
   InputWithIcon,
   Select as ThemedSelect,
+  StepperInput,
 } from "@/components/ui";
 import { Text, Input, View, XStack, Button, ScrollView } from "tamagui";
 import { useBeanStore } from "@/store/bean-store";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { Taste } from "@/types";
@@ -31,7 +32,18 @@ interface FormInput {
   roastery: number;
   arabicaAmount: number;
   robustaAmount: number;
+  singleShotDosis: number;
+  doubleShotDosis: number;
 }
+
+const insertSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  roastery: z.number().int().positive().optional(),
+  arabicaAmount: z.number().int().min(0).max(100).optional(),
+  robustaAmount: z.number().int().min(0).max(100).optional(),
+  singleShotDosis: z.number().positive().optional(),
+  doubleShotDosis: z.number().positive().optional(),
+});
 
 const AddBeanPage: FC = () => {
   const router = useRouter();
@@ -41,18 +53,22 @@ const AddBeanPage: FC = () => {
   const removeBeanTaste = useBeanStore((state) => state.removeBeanTaste);
   const updateEditRoastery = useBeanStore((state) => state.updateEditRoastery);
   const updateEditBeanTaste = useBeanStore(
-    (state) => state.updateEditBeanTaste,
+    (state) => state.updateEditBeanTaste
   );
 
   const { data: roasteries } = useLiveQuery(db.select().from(roasteryTable));
-
-  const insertSchema = createInsertSchema(beanTable);
 
   const {
     handleSubmit,
     control,
     reset: resetForm,
-  } = useForm<FormInput>({ resolver: zodResolver(insertSchema) });
+  } = useForm<FormInput>({
+    resolver: zodResolver(insertSchema),
+    defaultValues: {
+      singleShotDosis: 8,
+      doubleShotDosis: 16,
+    },
+  });
 
   const onSubmit = async (data: FormInput) => {
     const beanId = await insertBean(data);
@@ -67,7 +83,7 @@ const AddBeanPage: FC = () => {
       await insertTaste(
         beanId.id,
         tasteForBeanTable,
-        beanTasteAssociationValueIds,
+        beanTasteAssociationValueIds
       );
     }
     router.dismissTo("/");
@@ -81,6 +97,8 @@ const AddBeanPage: FC = () => {
         robustaAmount: data.robustaAmount,
         arabicaAmount: data.arabicaAmount,
         roastery: data.roastery,
+        singleShotDosis: data.singleShotDosis,
+        doubleShotDosis: data.doubleShotDosis,
       })
       .returning({ id: beanTable.id });
 
@@ -90,7 +108,7 @@ const AddBeanPage: FC = () => {
   const insertTaste = async (
     beanId: number,
     beanTasteValues: Pick<Taste, "flavor">[],
-    beanTasteAssociationValueIds: Pick<Taste, "id">[],
+    beanTasteAssociationValueIds: Pick<Taste, "id">[]
   ) => {
     const tasteIds = await db
       .insert(beanTasteTable)
@@ -151,6 +169,32 @@ const AddBeanPage: FC = () => {
           />
         </XStack>
 
+        <XStack gap="$8" mb="$3">
+          <Controller
+            name="singleShotDosis"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <StepperInput
+                value={value}
+                onChange={onChange}
+                label="Single Shot"
+              />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="doubleShotDosis"
+            render={({ field: { onChange, value } }) => (
+              <StepperInput
+                value={value}
+                onChange={onChange}
+                label="Double Shot"
+              />
+            )}
+          />
+        </XStack>
+
         <View mb="$3">
           <Controller
             name="name"
@@ -185,6 +229,7 @@ const AddBeanPage: FC = () => {
                   label="Rösterei"
                   items={roasteries}
                   onChange={field.onChange}
+                  value={field.value}
                   {...props}
                 />
               )}

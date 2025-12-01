@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { CoffeeBean } from "@/types";
-import { View, Text, YStack, styled } from "tamagui";
+import { View, Text, YStack, XStack, styled } from "tamagui";
 import { Image } from "expo-image";
 import { Pressable } from "react-native";
 import { useRouter } from "expo-router";
@@ -34,7 +34,15 @@ const StyledCard = styled(YStack, {
 const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
   const router = useRouter();
   const { db } = useDatabase();
-  const { id, roastery, name, isFavorite, degreeOfGrinding = 0.0 } = data;
+  const {
+    id,
+    roastery,
+    name,
+    isFavorite,
+    degreeOfGrinding = 0.0,
+    singleShotDosis,
+    doubleShotDosis,
+  } = data;
 
   const handlePress = async () => {
     await db
@@ -51,8 +59,11 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
           style={{ marginLeft: -24, width: 80, height: 80 }}
         />
       </View>
-      <YStack ml="$4" justifyContent="center" flex={1}>
-        <Pressable onPress={() => router.navigate(`/bean/details/${id}`)}>
+      <YStack ml="$4" justifyContent="flex-start" flex={1}>
+        <Pressable
+          onPress={() => router.navigate(`/bean/details/${id}`)}
+          style={{ marginRight: 24 }}
+        >
           <Text
             c="$primary"
             fontSize={12}
@@ -60,30 +71,64 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
           >
             {roastery}
           </Text>
-          <Text fontSize={28} fontFamily="TBJSodabery-LightOriginal" mt="$2">
+          <Text
+            fontSize={28}
+            numberOfLines={1}
+            fontFamily="TBJSodabery-LightOriginal"
+            mt="$2"
+          >
             {name}
           </Text>
         </Pressable>
 
         <Pressable onPress={() => router.navigate(`/bean/edit/degree/${id}`)}>
-          <View
-            flex={1}
-            alignItems="flex-start"
-            justifyContent="flex-end"
-            flexDirection="column"
-          >
-            <ThemedText fw={300} fontSize={12} mt="$1">
-              Mahlgrad
-            </ThemedText>
-            <Text
-              mt="$1"
-              c="$primary"
-              fontSize={32}
-              fontFamily="TBJSodabery-LightOriginal"
-            >
-              {degreeOfGrinding}
-            </Text>
-          </View>
+          <XStack alignItems="flex-end" justifyContent="space-between" mt="$2">
+            <View flexDirection="column">
+              <ThemedText fw={300} fontSize={12} mt="$1">
+                Mahlgrad
+              </ThemedText>
+              <Text
+                mt="$1"
+                c="$primary"
+                fontSize={32}
+                fontFamily="TBJSodabery-LightOriginal"
+              >
+                {degreeOfGrinding}
+              </Text>
+            </View>
+            <XStack mr="$4" gap={32}>
+              {singleShotDosis && (
+                <View flexDirection="column">
+                  <ThemedText fw={300} fontSize={12} mt="$1">
+                    Single Shot
+                  </ThemedText>
+                  <Text
+                    mt="$1"
+                    c="$primary"
+                    fontSize={20}
+                    fontFamily="TBJSodabery-LightOriginal"
+                  >
+                    {singleShotDosis}g
+                  </Text>
+                </View>
+              )}
+              {doubleShotDosis && (
+                <View flexDirection="column">
+                  <ThemedText fw={300} fontSize={12} mt="$1">
+                    Double Shot
+                  </ThemedText>
+                  <Text
+                    mt="$1"
+                    c="$primary"
+                    fontSize={20}
+                    fontFamily="TBJSodabery-LightOriginal"
+                  >
+                    {doubleShotDosis}g
+                  </Text>
+                </View>
+              )}
+            </XStack>
+          </XStack>
         </Pressable>
       </YStack>
       <FavoriteButton isFavorite={isFavorite ?? false} onPress={handlePress} />

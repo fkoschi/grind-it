@@ -18,8 +18,6 @@ export const BeanHeaderLayoutEdit = () => {
 
   const beansData = useBeansData();
 
-  console.log(beansData);
-
   const handleDeleteBeanPress = async () => {
     await db.delete(beanTable).where(eq(beanTable.id, Number(beanId)));
     router.replace("/");

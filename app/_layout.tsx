@@ -1,8 +1,19 @@
 import App from "./App";
 import React from "react";
 import { Stack } from "expo-router";
+import StorybookUI from "../.storybook";
+import { ToastViewport } from "@/components/ui/Toast";
 
 export default function RootLayout() {
+  if (process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === "true") {
+    return (
+      <App>
+        <StorybookUI />
+        <ToastViewport />
+      </App>
+    );
+  }
+
   return (
     <App>
       <Stack initialRouteName="index">
@@ -35,6 +46,7 @@ export default function RootLayout() {
           }}
         />
       </Stack>
+      <ToastViewport />
     </App>
   );
 }

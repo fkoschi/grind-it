@@ -1,15 +1,15 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { View } from "tamagui";
 import TabBar from "@/components/Navigation/TabBar";
 import DashboardCards from "@/components/Dashboard/DasboardCards";
 import DashboardHeader from "@/components/Dashboard/DashboardHeader";
 import { CoffeeBean } from "@/types";
 import { useBeanStore } from "@/store/bean-store";
-import { selectBeansBySearchAndFilter } from "@/db/queries";
+import { queryBeansBySearchAndFilter } from "@/db/queries";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { beanTable, roasteryTable } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { beanTable } from "@/db/schema";
+
 import NoData from "@/components/NoData/NoData";
 
 const HomePageComponent: FC = () => {
@@ -18,16 +18,12 @@ const HomePageComponent: FC = () => {
   const beanTasteFilter = useBeanStore((store) => store.tasteFilter);
 
   const { data } = useLiveQuery(
-    db
-      .selectDistinct({
-        id: beanTable.id,
-        name: beanTable.name,
-        roastery: roasteryTable.name,
-        degreeOfGrinding: beanTable.degreeOfGrinding,
-        isFavorite: beanTable.isFavorit,
-      })
-      .from(beanTable)
-      .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id)),
+    queryBeansBySearchAndFilter(db, beanTasteFilter, search),
+    [beanTasteFilter, search],
+  );
+
+  const { data: allBeans } = useLiveQuery(
+    db.select({ id: beanTable.id }).from(beanTable),
   );
 
   const handleChangeText = (searchText: string) => {
@@ -35,9 +31,16 @@ const HomePageComponent: FC = () => {
   };
 
   return (
-    <View flex={1} bgC="$screenBackground" pb="$12">
-      <DashboardHeader onChangeText={handleChangeText} />
-      <HomePage data={data} search={search} filter={beanTasteFilter} />
+    <View flex={1} bgC="$screenBackground">
+      <View flex={1} pb="$12">
+        <DashboardHeader onChangeText={handleChangeText} />
+        <HomePage
+          data={data}
+          search={search}
+          filter={beanTasteFilter}
+          hasBeans={!!allBeans?.length}
+        />
+      </View>
       <TabBar />
     </View>
   );
@@ -47,38 +50,10 @@ interface HomePageProps {
   data?: CoffeeBean[];
   search: string;
   filter: number[];
+  hasBeans: boolean;
 }
-const HomePage: FC<HomePageProps> = ({ data: initialData, search, filter }) => {
-  const { db } = useDatabase();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [beansData, setBeansData] = useState<CoffeeBean[] | undefined>(
-    initialData,
-  );
-
-  const updateBeansData = useCallback(() => {
-    const updatedBeansData = selectBeansBySearchAndFilter(db, filter).all({
-      search: `%${search}%`,
-    });
-    setBeansData(updatedBeansData);
-  }, [db, filter, search]);
-
-  useEffect(() => {
-    updateBeansData();
-  }, [initialData, updateBeansData]);
-
-  useEffect(() => {
-    setIsLoading(true);
-    const debounceTimer = setTimeout(() => {
-      setIsLoading(false);
-    }, 200);
-
-    return () => clearTimeout(debounceTimer);
-  }, [search, filter]);
-
-  const isEmpty = beansData?.length === 0;
-  const isFiltered = search?.length > 0 || filter?.length > 0;
-
-  if (isEmpty && !isFiltered) {
+const HomePage: FC<HomePageProps> = ({ data, search, filter, hasBeans }) => {
+  if (!hasBeans) {
     return (
       <NoData
         variant={1}
@@ -88,7 +63,7 @@ const HomePage: FC<HomePageProps> = ({ data: initialData, search, filter }) => {
     );
   }
 
-  return <DashboardCards beansData={beansData} loading={isLoading} />;
+  return <DashboardCards beansData={data} />;
 };
 
 export default HomePageComponent;

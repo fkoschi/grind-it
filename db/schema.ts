@@ -17,6 +17,8 @@ export const beanTable = sqliteTable("bean_table", {
   arabicaAmount: int(),
   roastery: int().references(() => roasteryTable.id),
   degreeOfGrinding: real(),
+  singleShotDosis: real(),
+  doubleShotDosis: real(),
   isFavorit: integer({ mode: "boolean" }),
 });
 

@@ -1,4 +1,4 @@
-import { Dimensions, ImageBackground } from "react-native";
+import { ImageBackground } from "react-native";
 import { FC } from "react";
 import { Button, View } from "tamagui";
 import { useRouter } from "expo-router";
@@ -10,26 +10,24 @@ import TabBarIcon from "./TabBarIcon";
 
 const TabBar: FC = () => {
   const router = useRouter();
-  const screenWidth = Dimensions.get("window").width;
 
   return (
     <View
-      flex={1}
       flexDirection="column"
       position="absolute"
       height={92}
       bottom={0}
+      width="100%"
       zIndex={1_000}
     >
       <View
         position="absolute"
         height={92}
-        flex={1}
         alignItems="center"
         justifyContent="center"
         zIndex={100_000}
         bottom={40}
-        width={screenWidth}
+        width="100%"
       >
         <Button
           circular
@@ -43,7 +41,7 @@ const TabBar: FC = () => {
       </View>
       <ImageBackground
         source={require("@/assets/images/tab-bar.png")}
-        style={{ flex: 1, justifyContent: "center", width: screenWidth }}
+        style={{ flex: 1, justifyContent: "center", width: "100%" }}
         resizeMode="cover"
       >
         <View

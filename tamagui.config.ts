@@ -2,7 +2,7 @@ import { config } from "@tamagui/config/v3";
 import { createTamagui, createTokens } from "tamagui";
 import { createAnimations } from "@tamagui/animations-moti";
 
-const tokens = createTokens({
+export const tokens = createTokens({
   ...config.tokens,
   color: {
     primary: "#E89E3F",
@@ -15,6 +15,11 @@ const tokens = createTokens({
     white: "#fff",
     favorite: "#CD5B5B",
     error: "#CD5B5B",
+    gray1: "#D9D9D9",
+    gray2: "#838179",
+    gray3: "#CCCCCC",
+    gray4: "#E5E5E5",
+    gray5: "#181818",
   },
 });
 

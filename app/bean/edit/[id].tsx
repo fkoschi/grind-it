@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import {
@@ -27,6 +27,7 @@ import {
   InputWithIcon,
   LoadingScreen,
   Select as ThemedSelect,
+  StepperInput,
 } from "@/components/ui";
 import { useBeanStore } from "@/store/bean-store";
 import { Image } from "expo-image";
@@ -38,7 +39,53 @@ interface FormState {
   roastery: number;
   arabicaAmount: string;
   robustaAmount: string;
+  singleShotDosis: string;
+  doubleShotDosis: string;
 }
+interface BeansTasteInputProps {
+  beanTasteData: { id: number; flavor: string | null }[];
+  onEditTaste: () => void;
+}
+
+const BeansTasteInput: FC<BeansTasteInputProps> = ({
+  beanTasteData = [],
+  onEditTaste,
+}) => {
+  const imageSource = require("@/assets/images/latte-art.png");
+
+  return (
+    <YStack gap="$1" mt="$2">
+      <Text fontSize="$4">Geschmack</Text>
+      {!beanTasteData.length && (
+        <XStack flex={0} height="$8" justifyContent="center">
+          <Image source={imageSource} style={{ width: 80, height: 80 }} />
+        </XStack>
+      )}
+      <View flex={1} gap="$2" flexWrap="wrap" flexDirection="row" mt="$3">
+        {beanTasteData.map(({ flavor }, index) => (
+          <View key={index} flex={0}>
+            <Badge title={flavor ?? ""} />
+          </View>
+        ))}
+      </View>
+      <View flex={1} mt="$4">
+        <Button
+          mt="$2"
+          bgC="$secondary"
+          color="white"
+          size="$3"
+          onPress={onEditTaste}
+          pressStyle={{
+            backgroundColor: "$secondary",
+          }}
+        >
+          Geschmack bearbeiten
+        </Button>
+      </View>
+    </YStack>
+  );
+};
+
 const EditBeanPage: FC = () => {
   const { db } = useDatabase();
   const { control } = useForm<FormState>();
@@ -53,11 +100,13 @@ const EditBeanPage: FC = () => {
         beanName: beanTable.name,
         arabicaAmount: beanTable.arabicaAmount,
         robustaAmount: beanTable.robustaAmount,
+        singleShotDosis: beanTable.singleShotDosis,
+        doubleShotDosis: beanTable.doubleShotDosis,
         roastery: roasteryTable.name,
       })
       .from(beanTable)
       .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
-      .where(eq(beanTable.id, Number(beanId))),
+      .where(eq(beanTable.id, Number(beanId)))
   );
   const { data: roasteryData } = useLiveQuery(db.select().from(roasteryTable));
   const { data: beanTasteData } = useLiveQuery(
@@ -66,10 +115,10 @@ const EditBeanPage: FC = () => {
       .from(beanTasteTable)
       .leftJoin(
         beanTasteAssociationTable,
-        eq(beanTasteAssociationTable.tasteId, beanTasteTable.id),
+        eq(beanTasteAssociationTable.tasteId, beanTasteTable.id)
       )
       .where(eq(beanTasteAssociationTable.beanId, Number(beanId))),
-    [editTaste],
+    [editTaste]
   );
 
   const handleNameChange = async (name: string) => {
@@ -118,6 +167,66 @@ const EditBeanPage: FC = () => {
       />
     </View>
   );
+  const handleSingleShotDosisChange = async (amount: string) => {
+    await db
+      .update(beanTable)
+      .set({ singleShotDosis: Number(amount) })
+      .where(eq(beanTable.id, Number(beanId)));
+  };
+  const handleDoubleShotDosisChange = async (amount: string) => {
+    await db
+      .update(beanTable)
+      .set({ doubleShotDosis: Number(amount) })
+      .where(eq(beanTable.id, Number(beanId)));
+  };
+
+  const BeanDosisInput = () => (
+    <View>
+      <XStack gap="$4">
+        <View flex={1}>
+          <Label>Single Shot</Label>
+        </View>
+        <XStack flex={1} gap="$2">
+          <Controller
+            name="singleShotDosis"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <StepperInput
+                step={0.1}
+                value={Number(value ?? beanData?.[0]?.singleShotDosis ?? 0)}
+                onChange={(val) => {
+                  onChange(val.toString());
+                  handleSingleShotDosisChange(val.toString());
+                }}
+              />
+            )}
+          />
+        </XStack>
+      </XStack>
+      <XStack gap="$4">
+        <View flex={1}>
+          <Label>Double Shot</Label>
+        </View>
+        <XStack flex={1} gap="$2">
+          <Controller
+            name="doubleShotDosis"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <StepperInput
+                step={0.1}
+                value={Number(value ?? beanData?.[0]?.doubleShotDosis ?? 0)}
+                onChange={(val) => {
+                  onChange(val.toString());
+                  handleDoubleShotDosisChange(val.toString());
+                }}
+              />
+            )}
+          />
+        </XStack>
+      </XStack>
+    </View>
+  );
+
   const BeanArabicaRobustaInput = () => (
     <XStack gap="$4">
       <Label>Arabica / Robusta</Label>
@@ -164,9 +273,7 @@ const EditBeanPage: FC = () => {
                 <ThemedSelect
                   label="Rösterei"
                   items={roasteryData}
-                  SelectProps={{
-                    defaultValue: beanData?.[0]?.roastery?.toLowerCase() ?? "",
-                  }}
+                  value={beanData?.[0]?.roastery}
                   onChange={handleRoasteryChange}
                   {...props}
                 />
@@ -191,44 +298,6 @@ const EditBeanPage: FC = () => {
       />
     </>
   );
-  const BeansTasteInput = () => {
-    return (
-      <>
-        <YStack gap="$1" mt="$2">
-          <Text fontSize="$4">Geschmack</Text>
-          {!beanTasteData.length && (
-            <XStack flex={0} height="$8" justifyContent="center">
-              <Image
-                source={require("@/assets/images/latte-art.png")}
-                style={{ width: 80, height: 80 }}
-              />
-            </XStack>
-          )}
-          <View flex={1} gap="$2" flexWrap="wrap" flexDirection="row" mt="$3">
-            {beanTasteData.map(({ flavor }, index) => (
-              <View key={index} flex={0}>
-                <Badge title={flavor} />
-              </View>
-            ))}
-          </View>
-          <View flex={1} mt="$4">
-            <Button
-              mt="$2"
-              bgC="$secondary"
-              color="white"
-              size="$3"
-              onPress={() => showTasteSheet({ showSheet: true, type: "edit" })}
-              pressStyle={{
-                backgroundColor: "$secondary",
-              }}
-            >
-              Geschmack bearbeiten
-            </Button>
-          </View>
-        </YStack>
-      </>
-    );
-  };
 
   if (beanData.length === 0) {
     return <LoadingScreen />;
@@ -237,10 +306,14 @@ const EditBeanPage: FC = () => {
   return (
     <ScrollView flex={1} py="$6" px="$4">
       <YStack gap="$2">
+        <BeanDosisInput />
         <BeanArabicaRobustaInput />
         <BeanNameInput />
         <BeanRoasteryInput />
-        <BeansTasteInput />
+        <BeansTasteInput
+          beanTasteData={beanTasteData ?? []}
+          onEditTaste={() => showTasteSheet({ showSheet: true, type: "edit" })}
+        />
       </YStack>
     </ScrollView>
   );

@@ -36,6 +36,20 @@
       "when": 1733226167936,
       "tag": "0004_aromatic_karnak",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1764504753552,
+      "tag": "0005_bumpy_black_panther",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1764623216095,
+      "tag": "0006_foamy_gauntlet",
+      "breakpoints": true
     }
   ]
 }

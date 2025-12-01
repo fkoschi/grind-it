@@ -7,9 +7,9 @@ import {
   useRouteInfo,
   useRouter,
 } from "expo-router/build/hooks";
-import { PATH_NAME as EDIT_BEAN_PATH_NAME } from "../edit/[id]";
-import { PATH_NAME as DETAILS_BEAN_PATH_NAME } from "../details/[id]";
-import { PATH_NAME as EDIT_DEGREE_PATH_NAME } from "../edit/degree/[id]";
+import { PATH_NAME as EDIT_BEAN_PATH_NAME } from "@/app/bean/edit/[id]";
+import { PATH_NAME as DETAILS_BEAN_PATH_NAME } from "@/app/bean/details/[id]";
+import { PATH_NAME as EDIT_DEGREE_PATH_NAME } from "@/app/bean/edit/degree/[id]";
 
 import { BeanHeaderLayoutEdit as EditBean } from "./BeanHeaderLayout.Edit";
 import { BeanHeaderLayoutDetails as Details } from "./BeanHeaderLayout.Details";

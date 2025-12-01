@@ -1,16 +1,21 @@
 import { roasteryTable } from "@/db/schema";
 import { FC, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
 import { Button, Input, Text, View, XStack } from "tamagui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AddIcon } from "@/components/ui/Icons";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { useAutoFocus } from "@/hooks/useAutoFocus";
+import { TextInput } from "react-native";
 
 interface AddRoasteryFormInput {
   name: string;
 }
+
+const insertSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+});
 
 interface AddRoasteryFrameProps {
   open: boolean;
@@ -21,8 +26,7 @@ const AddRoasteryFrame: FC<AddRoasteryFrameProps> = ({
   onFormSubmit,
 }) => {
   const { db } = useDatabase();
-  const insertSchema = createInsertSchema(roasteryTable);
-  const inputRef = useRef<Input>(null);
+  const inputRef = useRef<TextInput>(null);
 
   const {
     control,
