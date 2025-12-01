@@ -11,7 +11,10 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.fkoschi.grind-it",
-      "appStoreUrl": "https://apps.apple.com/de/app/grind-it/id6740140366"
+      "appStoreUrl": "https://apps.apple.com/de/app/grind-it/id6740140366",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
