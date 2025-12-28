@@ -20,7 +20,11 @@ const DetailsPageComponent: FC<Props> = ({
 }) => (
   <View flex={1}>
     <Image
-      source={require("@/assets/images/coffee-cup.png")}
+      source={
+        beansData.isFavorite
+          ? require("@/assets/images/coffee-cup-favorite.png")
+          : require("@/assets/images/coffee-cup.png")
+      }
       style={{
         position: "absolute",
         zIndex: 1,

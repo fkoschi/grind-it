@@ -19,11 +19,12 @@ export const useBeanDetails = () => {
         singleShotDosis: beanTable.singleShotDosis,
         doubleShotDosis: beanTable.doubleShotDosis,
         degreeOfGrinding: beanTable.degreeOfGrinding,
+        isFavorite: beanTable.isFavorit,
       })
       .from(beanTable)
       .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
       .where(eq(beanTable.id, Number(id))),
-    [beanTable.id]
+    [beanTable.id],
   );
 
   return data?.[0];
