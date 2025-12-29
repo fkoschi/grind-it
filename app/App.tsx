@@ -9,6 +9,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { DatabaseProvider } from "@/provider/DatabaseProvider";
+import { BeanDataProvider } from "@/provider/BeanDataProvider";
 
 import "react-native-reanimated";
 
@@ -40,7 +41,9 @@ const App: FC<PropsWithChildren> = ({ children }) => {
       <GestureHandlerRootView>
         <TamaguiProvider config={tamaguiConfig}>
           <PortalProvider shouldAddRootHost>
-            <DatabaseProvider>{children}</DatabaseProvider>
+            <DatabaseProvider>
+              <BeanDataProvider>{children}</BeanDataProvider>
+            </DatabaseProvider>
           </PortalProvider>
         </TamaguiProvider>
       </GestureHandlerRootView>
