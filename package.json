@@ -1,7 +1,7 @@
 {
   "name": "grind-it",
   "main": "expo-router/entry",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
@@ -10,7 +10,12 @@
     "format": "prettier . --write",
     "lint": "expo lint",
     "storybook-generate": "sb-rn-get-stories --config-path .storybook",
-    "storybook": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start"
+    "storybook": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start",
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "release:patch": "standard-version --release-as patch",
+    "release:first": "standard-version --first-release"
   },
   "jest": {
     "preset": "jest-expo"
@@ -71,6 +76,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.10",
     "@babel/runtime": "^7.27.0",
+    "@mccraveiro/standard-version-expo": "^2.0.5",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.14.1",
     "@types/react": "~19.1.10",
@@ -86,6 +92,7 @@
     "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "react-test-renderer": "18.2.0",
+    "standard-version": "^9.5.0",
     "typescript": "~5.9.2"
   },
   "private": true
