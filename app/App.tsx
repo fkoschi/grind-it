@@ -40,11 +40,11 @@ const App: FC<PropsWithChildren> = ({ children }) => {
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <GestureHandlerRootView>
         <TamaguiProvider config={tamaguiConfig}>
-          <PortalProvider shouldAddRootHost>
-            <DatabaseProvider>
+          <DatabaseProvider>
+            <PortalProvider shouldAddRootHost>
               <BeanDataProvider>{children}</BeanDataProvider>
-            </DatabaseProvider>
-          </PortalProvider>
+            </PortalProvider>
+          </DatabaseProvider>
         </TamaguiProvider>
       </GestureHandlerRootView>
     </View>
