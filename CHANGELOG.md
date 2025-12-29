@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/fkoschi/grind-it/compare/v1.7.0...v1.8.0) (2025-12-29)
+
+
+### ✨ Features
+
+* introduce chat functionality with dedicated UI components, API endpoint, and supporting utilities. ([#4](https://github.com/fkoschi/grind-it/issues/4)) ([2dc4400](https://github.com/fkoschi/grind-it/commit/2dc4400ae8291ab47e89cd51cd5deb5135e954ad))
+
 ## [1.7.0](https://github.com/fkoschi/grind-it/compare/v1.6.0...v1.7.0) (2025-12-29)
 
 
