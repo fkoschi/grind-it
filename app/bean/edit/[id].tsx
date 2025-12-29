@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import {
@@ -102,7 +102,7 @@ const EditBeanPage: FC = () => {
         robustaAmount: beanTable.robustaAmount,
         singleShotDosis: beanTable.singleShotDosis,
         doubleShotDosis: beanTable.doubleShotDosis,
-        roastery: roasteryTable.name,
+        roastery: beanTable.roastery,
       })
       .from(beanTable)
       .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
@@ -140,7 +140,10 @@ const EditBeanPage: FC = () => {
       .where(eq(beanTable.id, Number(beanId)));
   };
   const handleRoasteryChange = async (value: number) => {
-    await db.update(beanTable).set({ roastery: value });
+    await db
+      .update(beanTable)
+      .set({ roastery: value })
+      .where(eq(beanTable.id, Number(beanId)));
   };
 
   const BeanNameInput = () => (
@@ -273,7 +276,7 @@ const EditBeanPage: FC = () => {
                 <ThemedSelect
                   label="Rösterei"
                   items={roasteryData}
-                  value={beanData?.[0]?.roastery}
+                  value={beanData?.[0]?.roastery ?? undefined}
                   onChange={handleRoasteryChange}
                   {...props}
                 />
