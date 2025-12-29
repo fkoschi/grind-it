@@ -3,13 +3,14 @@ import { beanTasteAssociationTable, beanTasteTable } from "@/db/schema";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { useBeanStore } from "@/store/bean-store";
 import { Taste } from "@/types";
+import { useDuplicateCheck } from "@/hooks/useDuplicateCheck";
 import { eq } from "drizzle-orm";
 import { useLocalSearchParams } from "expo-router";
 import { Image } from "expo-image";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { KeyboardAvoidingView, Platform, Pressable } from "react-native";
-import { Input, View, XStack, Text, ScrollView, getFontSize } from "tamagui";
+import { getFontSize, Input, ScrollView, Text, View, XStack } from "tamagui";
 import {
   selectBeanTasteById,
   selectFilteredBeanTasteSuggestion,
@@ -31,6 +32,10 @@ const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
   const [beanSuggestionTasteData, setBeanSuggestionTasteData] = useState<
     Taste[]
   >([]);
+  const { duplicateError, checkInput, clearError } = useDuplicateCheck({
+    table: beanTasteTable,
+    fieldName: "flavor",
+  });
 
   const { control, reset, handleSubmit } = useForm<BeanTasteForm>();
   const updateTasteSheet = useBeanStore((state) => state.updateEditBeanTaste);
@@ -82,28 +87,32 @@ const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
   };
 
   const onSubmit = async (formData: BeanTasteForm) => {
-    const flavorName = formData.flavorName.trim();
-    const isFlavorStoredInDb = !!beanTasteData.find(
-      (taste: Taste) => taste.flavor.toLowerCase() === flavorName.toLowerCase(),
-    );
-
-    if (isFlavorStoredInDb) {
-      // TODO: show some error
+    if (duplicateError) {
       return;
     }
 
-    const insertedTasteId = await db
-      .insert(beanTasteTable)
-      .values({ flavor: flavorName })
-      .returning({ id: beanTasteTable.id });
+    const flavorName = formData.flavorName.trim();
+    if (!flavorName) {
+      return;
+    }
 
-    await db.insert(beanTasteAssociationTable).values({
-      beanId: Number(beanId),
-      tasteId: insertedTasteId[0].id,
-    });
+    try {
+      const insertedTasteId = await db
+        .insert(beanTasteTable)
+        .values({ flavor: flavorName })
+        .returning({ id: beanTasteTable.id });
 
-    reset();
-    update();
+      await db.insert(beanTasteAssociationTable).values({
+        beanId: Number(beanId),
+        tasteId: insertedTasteId[0].id,
+      });
+
+      reset();
+      clearError();
+      update();
+    } catch (error) {
+      console.error("Error saving taste:", error);
+    }
   };
 
   useAutoFocus(inputRef, open);
@@ -115,7 +124,7 @@ const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
       keyboardVerticalOffset={100}
     >
       <View flex={1} bgC="$screenBackground">
-        <ScrollView flex={1} padding="$4">
+        <ScrollView flex={1} padding="$4" keyboardShouldPersistTaps="handled">
           <View>
             <ThemedText
               fw={500}
@@ -166,21 +175,31 @@ const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
       </View>
 
       <XStack flex={0} py="$4" px="$4" bgC={"$white"}>
-        <View flex={1} height={48} justifyContent="center">
+        <View flex={1}>
           <Controller
             name="flavorName"
             control={control}
-            render={({ field: { onChange } }) => (
+            render={({ field: { onChange, value } }) => (
               <Input
                 ref={inputRef}
+                value={value}
                 returnKeyType="done"
-                onChangeText={onChange}
+                onChangeText={(text) => {
+                  onChange(text);
+                  checkInput(text);
+                }}
                 onSubmitEditing={handleSubmit(onSubmit)}
                 returnKeyLabel="Fertig"
                 submitBehavior="submit"
+                borderColor={duplicateError ? "$red10" : undefined}
               />
             )}
           />
+          {duplicateError && (
+            <Text mt="$2" fontSize={12} color="$red10">
+              {duplicateError}
+            </Text>
+          )}
         </View>
         <View flex={0} ml="$3" height={48} justifyContent="center">
           <Pressable

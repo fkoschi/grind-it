@@ -1,36 +1,78 @@
 ---
-description: How to build the iOS app using EAS
+description: How to build and publish the iOS app using EAS
 ---
 
 To build the iOS app, you can use the EAS CLI.
 
-1.  **Install EAS CLI** (if not already installed):
+## 0. Version Bump (Recommended)
+
+Before building, it's recommended to bump the app version automatically:
+
+1. **Make commits with conventional format**:
+   - `feat: add new feature` → minor bump (1.4.0 → 1.5.0)
+   - `fix: resolve bug` → patch bump (1.4.0 → 1.4.1)
+   - `feat!: breaking change` → major bump (1.4.0 → 2.0.0)
+
+2. **Run release command**:
+   ```bash
+   npm run release
+   ```
+   
+   Or specify the bump type explicitly:
+   ```bash
+   npm run release:patch  # For bug fixes
+   npm run release:minor  # For new features
+   npm run release:major  # For breaking changes
+   ```
+
+3. **Push changes and tags**:
+   ```bash
+   git push --follow-tags origin main
+   ```
+
+## 1. Install EAS CLI
+
+```bash
+npm install -g eas-cli
+```
+
+## 2. Login to Expo
+
+```bash
+eas login
+```
+
+## 3. Build for iOS
+
+You can build for different profiles defined in `eas.json`.
+
+-   **Development Build** (for simulator or device testing):
     ```bash
-    npm install -g eas-cli
+    eas build --platform ios --profile development
     ```
 
-2.  **Login to Expo**:
+-   **Preview Build** (for internal distribution):
     ```bash
-    eas login
+    eas build --platform ios --profile preview
     ```
 
-3.  **Build for iOS**:
-    You can build for different profiles defined in `eas.json`.
+-   **Production Build** (for App Store):
+    ```bash
+    eas build --platform ios --profile production
+    ```
 
-    -   **Development Build** (for simulator or device testing):
-        ```bash
-        eas build --platform ios --profile development
-        ```
+## 4. Submit to TestFlight
 
-    -   **Preview Build** (for internal distribution):
-        ```bash
-        eas build --platform ios --profile preview
-        ```
+- **Automatic Submission**:
+  ```bash
+  eas build --platform ios --profile production --auto-submit
+  ```
 
-    -   **Production Build** (for App Store):
-        ```bash
-        eas build --platform ios --profile production
-        ```
+- **Manual Submission via EAS**:
+  ```bash
+  eas submit --platform ios
+  ```
 
-4.  **Follow the prompts**:
-    The CLI will guide you through the process, including setting up credentials if needed.
+## 5. Follow the prompts
+
+The CLI will guide you through the process, including setting up credentials if needed.

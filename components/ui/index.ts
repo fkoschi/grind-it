@@ -18,3 +18,4 @@ export * from "./Tabs";
 export * from "./Toast";
 export * from "./ProFeatureOverlay/ProFeatureOverlay";
 export * from "./Chat";
+export { default as AromaSlider } from "./AromaSlider/AromaSlider";

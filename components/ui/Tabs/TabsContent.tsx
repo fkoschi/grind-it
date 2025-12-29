@@ -17,7 +17,11 @@ export const TabsContent = ({
 
   return (
     <AnimatePresence>
-      {isActive && <View marginHorizontal="$4">{children}</View>}
+      {isActive && (
+        <View flex={1} marginHorizontal="$4" {...props}>
+          {children}
+        </View>
+      )}
     </AnimatePresence>
   );
 };

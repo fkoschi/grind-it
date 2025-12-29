@@ -1,65 +1,101 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { View } from "tamagui";
 import { Image } from "expo-image";
 import { ActionButton, EditIcon, Tabs } from "@/components/ui";
 import { CoffeeBean } from "@/types";
 import { DetailsPageInfoTab } from "./components/DetailsPage.InfoTab";
 import { DetailsPageDetailsTab } from "./components/DetailsPage.DetailsTab";
+import { useIsProUser } from "@/hooks/useIsProUser";
 
 interface Props {
   beansData: CoffeeBean;
   tastes: { flavor: string }[];
   onEditPress: () => void;
   onDegreePress: () => void;
+  onAromaEditPress: () => void;
+  onAromaInfoPress: () => void;
 }
 const DetailsPageComponent: FC<Props> = ({
   beansData,
   tastes,
   onEditPress,
   onDegreePress,
-}) => (
-  <View flex={1}>
-    <Image
-      source={
-        beansData.isFavorite
-          ? require("@/assets/images/coffee-cup-favorite.png")
-          : require("@/assets/images/coffee-cup.png")
-      }
-      style={{
-        position: "absolute",
-        zIndex: 1,
-        top: -140,
-        right: -20,
-        width: 200,
-        height: 200,
-      }}
-    />
-    <Tabs defaultValue="info" width="100%">
-      <Tabs.List marginHorizontal="$4">
-        <Tabs.Trigger value="info">Info</Tabs.Trigger>
-        <Tabs.Trigger value="details">Details</Tabs.Trigger>
-      </Tabs.List>
-      <Tabs.Content value="info">
-        <DetailsPageInfoTab
-          tastes={tastes}
-          beansData={beansData}
-          onDegreePress={onDegreePress}
-        />
-      </Tabs.Content>
-      <Tabs.Content value="details">
-        <DetailsPageDetailsTab />
-      </Tabs.Content>
-    </Tabs>
+  onAromaEditPress,
+  onAromaInfoPress,
+}) => {
+  const [activeTab, setActiveTab] = useState<"info" | "details">("info");
+  const isProUser = useIsProUser();
 
-    <ActionButton
-      bgC="$primary"
-      onPress={onEditPress}
-      pressStyle={{
-        bgC: "$primaryHover",
-      }}
-      icon={<EditIcon />}
-    />
-  </View>
-);
+  // Determine which action the floating button should trigger
+  const handleActionPress = () => {
+    if (activeTab === "details") {
+      onAromaEditPress();
+    } else {
+      onEditPress();
+    }
+  };
+
+  const hideActionButton = activeTab === "details" && !isProUser;
+
+  return (
+    <View flex={1}>
+      <View
+        style={{
+          position: "absolute",
+          zIndex: 1,
+          top: -140,
+          right: -20,
+          width: 200,
+          height: 200,
+        }}
+        pointerEvents="none"
+      >
+        <Image
+          source={
+            beansData.isFavorite
+              ? require("@/assets/images/coffee-cup-favorite.png")
+              : require("@/assets/images/coffee-cup.png")
+          }
+          style={{ width: 200, height: 200 }}
+        />
+      </View>
+      <Tabs
+        defaultValue="info"
+        flex={1}
+        width="100%"
+        onValueChange={(value) => setActiveTab(value as "info" | "details")}
+      >
+        <Tabs.List marginHorizontal="$4">
+          <Tabs.Trigger value="info">Infos</Tabs.Trigger>
+          <Tabs.Trigger value="details">Aroma Rad</Tabs.Trigger>
+        </Tabs.List>
+        <Tabs.Content value="info">
+          <DetailsPageInfoTab
+            tastes={tastes}
+            beansData={beansData}
+            onDegreePress={onDegreePress}
+          />
+        </Tabs.Content>
+        <Tabs.Content value="details">
+          <DetailsPageDetailsTab
+            beansData={beansData}
+            onInfoPress={onAromaInfoPress}
+          />
+        </Tabs.Content>
+      </Tabs>
+
+      {!hideActionButton && (
+        <ActionButton
+          bgC="$primary"
+          onPress={handleActionPress}
+          pressStyle={{
+            bgC: "$primaryHover",
+          }}
+          icon={<EditIcon />}
+        />
+      )}
+    </View>
+  );
+};
 
 export default DetailsPageComponent;

@@ -7,7 +7,7 @@ import {
   Pressable,
   TextInputSubmitEditingEventData,
 } from "react-native";
-import { Input, Text, View, XStack } from "tamagui";
+import { Input, ScrollView, Text, View, XStack } from "tamagui";
 import { useBeanStore } from "@/store/bean-store";
 import { selectTasteNotInArray } from "@/db/queries";
 import { useDatabase } from "@/provider/DatabaseProvider";
@@ -77,11 +77,17 @@ const AddBeanTasteFrame: FC<AddBeanTasteFrameProps> = ({ open }) => {
     >
       <View flex={1} bgC="$screenBackground">
         <View flex={1} p={"$4"}>
-          <AddBeanTasteFrameSelection tasteData={beanTaste} />
-          <AddBeanTasteFrameSuggestions
-            tasteData={suggestionData}
-            onPress={handleSuggestionPress}
-          />
+          <ScrollView
+            flex={1}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+          >
+            <AddBeanTasteFrameSelection tasteData={beanTaste} />
+            <AddBeanTasteFrameSuggestions
+              tasteData={suggestionData}
+              onPress={handleSuggestionPress}
+            />
+          </ScrollView>
         </View>
         <XStack flex={0} py="$4" px="$4" bgC={"$white"}>
           <View flex={1} justifyContent="center">
