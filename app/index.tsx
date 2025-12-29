@@ -8,22 +8,20 @@ import { useBeanStore } from "@/store/bean-store";
 import { queryBeansBySearchAndFilter } from "@/db/queries";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { beanTable } from "@/db/schema";
 
 import NoData from "@/components/NoData/NoData";
+
+import { useBeanData } from "@/provider/BeanDataProvider";
 
 const HomePageComponent: FC = () => {
   const { db } = useDatabase();
   const [search, setSearch] = useState<string>("");
   const beanTasteFilter = useBeanStore((store) => store.tasteFilter);
+  const { allBeans } = useBeanData();
 
   const { data } = useLiveQuery(
     queryBeansBySearchAndFilter(db, beanTasteFilter, search),
-    [beanTasteFilter, search],
-  );
-
-  const { data: allBeans } = useLiveQuery(
-    db.select({ id: beanTable.id }).from(beanTable),
+    [beanTasteFilter, search]
   );
 
   const handleChangeText = (searchText: string) => {
@@ -61,6 +59,11 @@ const HomePage: FC<HomePageProps> = ({ data, search, filter, hasBeans }) => {
         copy="Erstelle deine erste Bohne."
       />
     );
+  }
+
+  // If we have beans but data is empty with no filters, we're loading
+  if (hasBeans && data?.length === 0 && !search && filter.length === 0) {
+    return null;
   }
 
   return <DashboardCards beansData={data} />;

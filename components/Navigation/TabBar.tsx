@@ -10,6 +10,8 @@ import TabBarIcon from "./TabBarIcon";
 
 const TabBar: FC = () => {
   const router = useRouter();
+  const isHomeActive = useIsRouteActive("/");
+  const isSettingsActive = useIsRouteActive("/settings");
 
   return (
     <View
@@ -51,11 +53,15 @@ const TabBar: FC = () => {
           justifyContent="center"
         >
           <TabBarIcon
-            onPress={() => router.replace("/")}
-            icon={<HomeIcon active={useIsRouteActive("/")} />}
+            onPress={() => {
+              if (!isHomeActive) {
+                router.replace("/");
+              }
+            }}
+            icon={<HomeIcon active={isHomeActive} />}
           />
           <TabBarIcon
-            icon={<ProfileIcon active={useIsRouteActive("/settings")} />}
+            icon={<ProfileIcon active={isSettingsActive} />}
             onPress={() => router.replace("/settings")}
           />
         </View>
