@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.2](https://github.com/fkoschi/grind-it/compare/v1.8.1...v1.8.2) (2025-12-29)
+
+
+### 🐛 Bug Fixes
+
+* wrap PortalProvider with DatabaseProvider ([dcf7763](https://github.com/fkoschi/grind-it/commit/dcf7763eba115d7828af790105ea6589d890e3b0))
+
 ### [1.8.1](https://github.com/fkoschi/grind-it/compare/v1.8.0...v1.8.1) (2025-12-29)
 
 ## [1.8.0](https://github.com/fkoschi/grind-it/compare/v1.7.0...v1.8.0) (2025-12-29)
