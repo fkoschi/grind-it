@@ -2,20 +2,14 @@ import { beanTasteAssociationTable, beanTasteTable } from "@/db/schema";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { Image } from "expo-image";
 import React, { FC, useState } from "react";
-import { ListItem, Text, ScrollView, View, YGroup } from "tamagui";
-import Reanimated, {
-  SharedValue,
-  useAnimatedStyle,
-} from "react-native-reanimated";
-import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
+import { Text, ScrollView, View, XGroup } from "tamagui";
 import {
   AddIcon,
   ActionButton,
-  DeleteOutlinedIcon,
   Sheet as BottomSheet,
+  Badge,
 } from "@/components/ui";
 import { eq } from "drizzle-orm";
-import { HapticTab } from "@/components/ui/HapticTab/HapticTab";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { Pressable } from "react-native";
 import { useRouter } from "expo-router";
@@ -39,51 +33,19 @@ const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
     await db.delete(beanTasteTable).where(eq(beanTasteTable.id, tasteId));
   };
 
-  const RightAction = (
-    prog: SharedValue<number>,
-    drag: SharedValue<number>,
-    tasteId: number,
-    index: number,
-  ) => {
-    const styleAnimation = useAnimatedStyle(() => {
-      return {
-        width: Math.max(40, drag.value * -1), // Minimum width of 100, expands with drag
-        backgroundColor: "#CD5B5B",
-        justifyContent: "center",
-        alignItems: "flex-end",
-        paddingHorizontal: 8,
-        borderTopRightRadius: index === 0 ? 12 : 0,
-        borderBottomRightRadius: index === data.length - 1 ? 12 : 0,
-      };
-    });
-
-    return (
-      <Reanimated.View style={styleAnimation}>
-        <HapticTab mr="$1" onPress={() => deleteTaste(tasteId)}>
-          <DeleteOutlinedIcon size={18} color="white" />
-        </HapticTab>
-      </Reanimated.View>
-    );
-  };
-
   const DataView = () => (
     <ScrollView>
-      <YGroup>
+      <XGroup gap="$2">
         {data.map((taste, index) => (
-          <ReanimatedSwipeable
-            renderRightActions={(prog, drag) =>
-              RightAction(prog, drag, taste.id, index)
-            }
-            key={index}
-          >
-            <YGroup.Item>
-              <ListItem circular py="$4">
-                <Text>{taste.flavor}</Text>
-              </ListItem>
-            </YGroup.Item>
-          </ReanimatedSwipeable>
+          <View key={taste.flavor} alignSelf="flex-start" mb="$2">
+            <Badge
+              title={taste.flavor}
+              withButton
+              onPress={() => deleteTaste(taste.id)}
+            />
+          </View>
         ))}
-      </YGroup>
+      </XGroup>
     </ScrollView>
   );
 
