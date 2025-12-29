@@ -24,7 +24,7 @@ interface SpiderChartProps {
 
 const SpiderChart: React.FC<SpiderChartProps> = ({
   data,
-  size = 300,
+  size = 350,
   color,
   backgroundColor = "transparent",
 }) => {

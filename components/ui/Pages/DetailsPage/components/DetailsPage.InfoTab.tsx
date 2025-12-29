@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { View, Text, XStack, YStack } from "tamagui";
-import { Image } from "expo-image";
 import { Badge, ThemedText } from "@/components/ui";
 import { Pressable } from "react-native";
 import { CoffeeBean } from "@/types";
