@@ -7,7 +7,7 @@ interface Props {
 }
 const BottomSheet: FC<Props> = ({ sheetProps, frame }) => {
   return (
-    <Sheet animation="medium" {...sheetProps}>
+    <Sheet animation="medium" modal {...sheetProps}>
       <Sheet.Overlay animation="medium" />
       <Sheet.Handle />
       <Sheet.Frame>{frame}</Sheet.Frame>

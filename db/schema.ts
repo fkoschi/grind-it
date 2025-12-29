@@ -20,6 +20,16 @@ export const beanTable = sqliteTable("bean_table", {
   singleShotDosis: real(),
   doubleShotDosis: real(),
   isFavorit: integer({ mode: "boolean" }),
+  // Coffee aroma profile metrics (0-100)
+  aromaFruity: int(),
+  aromaFloral: int(),
+  aromaSweet: int(),
+  aromaNutty: int(),
+  aromaSpices: int(),
+  aromaRoasted: int(),
+  aromaGreen: int(),
+  aromaSour: int(),
+  aromaOther: int(),
 });
 
 // Junction table for many-to-many relationship between beans and tastes

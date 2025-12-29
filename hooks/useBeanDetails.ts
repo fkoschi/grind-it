@@ -19,6 +19,15 @@ export const useBeanDetails = () => {
         singleShotDosis: beanTable.singleShotDosis,
         doubleShotDosis: beanTable.doubleShotDosis,
         degreeOfGrinding: beanTable.degreeOfGrinding,
+        aromaFruity: beanTable.aromaFruity,
+        aromaFloral: beanTable.aromaFloral,
+        aromaSweet: beanTable.aromaSweet,
+        aromaNutty: beanTable.aromaNutty,
+        aromaSpices: beanTable.aromaSpices,
+        aromaRoasted: beanTable.aromaRoasted,
+        aromaGreen: beanTable.aromaGreen,
+        aromaSour: beanTable.aromaSour,
+        aromaOther: beanTable.aromaOther,
       })
       .from(beanTable)
       .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))

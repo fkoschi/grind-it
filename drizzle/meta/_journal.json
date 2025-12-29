@@ -50,6 +50,13 @@
       "when": 1764623216095,
       "tag": "0006_foamy_gauntlet",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1767021346606,
+      "tag": "0007_lonely_sandman",
+      "breakpoints": true
     }
   ]
 }
