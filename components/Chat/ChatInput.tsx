@@ -1,0 +1,61 @@
+import { useState } from "react";
+import { XStack, Input, Button, View } from "tamagui";
+import { Send } from "@tamagui/lucide-icons";
+
+interface ChatInputProps {
+  onSend: (message: string) => void;
+  isLoading?: boolean;
+}
+
+export const ChatInput = ({ onSend, isLoading }: ChatInputProps) => {
+  const [message, setMessage] = useState("");
+
+  const handleSend = () => {
+    if (message.trim()) {
+      onSend(message);
+      setMessage("");
+    }
+  };
+
+  return (
+    <View padding="$4" backgroundColor="$screenBackground">
+      <XStack
+        backgroundColor="$gray4"
+        borderRadius="$10" // Pill shape
+        paddingHorizontal="$4"
+        paddingVertical="$2"
+        alignItems="center"
+        gap="$2"
+      >
+        <Input
+          flex={1}
+          unstyled // Removes default styles to blend in
+          size="$4"
+          placeholder="Ask anything..."
+          placeholderTextColor="$gray2"
+          value={message}
+          onChangeText={setMessage}
+          onSubmitEditing={handleSend}
+          multiline
+          color="$black"
+          numberOfLines={1}
+          maxHeight={120} // Limit height growth
+        />
+
+        <Button
+          size="$3"
+          circular
+          icon={Send}
+          backgroundColor="transparent"
+          borderWidth={0}
+          color={message.trim() ? "$primary" : "$gray10"}
+          onPress={handleSend}
+          disabled={!message.trim() || isLoading}
+          hoverStyle={{ scale: 1.1 }}
+          pressStyle={{ scale: 0.9 }}
+          animation="quick"
+        />
+      </XStack>
+    </View>
+  );
+};

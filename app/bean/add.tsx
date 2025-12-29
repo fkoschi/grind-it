@@ -53,7 +53,7 @@ const AddBeanPage: FC = () => {
   const removeBeanTaste = useBeanStore((state) => state.removeBeanTaste);
   const updateEditRoastery = useBeanStore((state) => state.updateEditRoastery);
   const updateEditBeanTaste = useBeanStore(
-    (state) => state.updateEditBeanTaste
+    (state) => state.updateEditBeanTaste,
   );
 
   const { data: roasteries } = useLiveQuery(db.select().from(roasteryTable));
@@ -83,7 +83,7 @@ const AddBeanPage: FC = () => {
       await insertTaste(
         beanId.id,
         tasteForBeanTable,
-        beanTasteAssociationValueIds
+        beanTasteAssociationValueIds,
       );
     }
     router.dismissTo("/");
@@ -108,7 +108,7 @@ const AddBeanPage: FC = () => {
   const insertTaste = async (
     beanId: number,
     beanTasteValues: Pick<Taste, "flavor">[],
-    beanTasteAssociationValueIds: Pick<Taste, "id">[]
+    beanTasteAssociationValueIds: Pick<Taste, "id">[],
   ) => {
     const tasteIds = await db
       .insert(beanTasteTable)

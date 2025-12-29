@@ -51,7 +51,11 @@ const DetailsPageComponent: FC<Props> = ({
         pointerEvents="none"
       >
         <Image
-          source={require("@/assets/images/coffee-cup.png")}
+          source={
+            beansData.isFavorite
+              ? require("@/assets/images/coffee-cup-favorite.png")
+              : require("@/assets/images/coffee-cup.png")
+          }
           style={{ width: 200, height: 200 }}
         />
       </View>

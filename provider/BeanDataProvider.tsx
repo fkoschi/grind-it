@@ -8,7 +8,7 @@ interface BeanDataContextState {
 }
 
 const BeanDataContext = createContext<BeanDataContextState | undefined>(
-  undefined
+  undefined,
 );
 
 export const BeanDataProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -16,7 +16,7 @@ export const BeanDataProvider: FC<PropsWithChildren> = ({ children }) => {
 
   // Query all beans once at the provider level - persists across routes
   const { data: allBeans } = useLiveQuery(
-    db.select({ id: beanTable.id }).from(beanTable)
+    db.select({ id: beanTable.id }).from(beanTable),
   );
 
   return (

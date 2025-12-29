@@ -106,7 +106,7 @@ const EditBeanPage: FC = () => {
       })
       .from(beanTable)
       .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
-      .where(eq(beanTable.id, Number(beanId)))
+      .where(eq(beanTable.id, Number(beanId))),
   );
   const { data: roasteryData } = useLiveQuery(db.select().from(roasteryTable));
   const { data: beanTasteData } = useLiveQuery(
@@ -115,10 +115,10 @@ const EditBeanPage: FC = () => {
       .from(beanTasteTable)
       .leftJoin(
         beanTasteAssociationTable,
-        eq(beanTasteAssociationTable.tasteId, beanTasteTable.id)
+        eq(beanTasteAssociationTable.tasteId, beanTasteTable.id),
       )
       .where(eq(beanTasteAssociationTable.beanId, Number(beanId))),
-    [editTaste]
+    [editTaste],
   );
 
   const handleNameChange = async (name: string) => {

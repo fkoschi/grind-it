@@ -13,8 +13,8 @@ module.exports = function (api) {
         },
       ],
       ["inline-import", { extensions: [".sql"] }],
-      // NOTE: this is only necessary if you are using reanimated for animations
-      "react-native-reanimated/plugin", // NOTE: this is only necessary if you are using reanimated for animations
+      // NOTE: reanimated 4.x includes worklets support internally
+      "react-native-reanimated/plugin",
     ],
   };
 };

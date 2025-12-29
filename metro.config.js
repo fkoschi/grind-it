@@ -8,6 +8,7 @@ const { withStorybook } = require("@storybook/react-native/metro/withStorybook")
 /** @type {import('expo/metro-config').MetroConfig} */
 const config = getDefaultConfig(__dirname);
 config.resolver.sourceExts.push("sql");
+config.resolver.unstable_enablePackageExports = true;
 
 module.exports = withStorybook(wrapWithReanimatedMetroConfig(config), {
   enabled: process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === "true",

@@ -55,7 +55,11 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
     <StyledCard>
       <View flex={0} justifyContent="center">
         <Image
-          source={require("@/assets/images/coffee-cup.png")}
+          source={
+            isFavorite
+              ? require("@/assets/images/coffee-cup-favorite.png")
+              : require("@/assets/images/coffee-cup.png")
+          }
           style={{ marginLeft: -24, width: 80, height: 80 }}
         />
       </View>

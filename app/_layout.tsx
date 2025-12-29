@@ -1,3 +1,4 @@
+import "@/polyfill";
 import App from "./App";
 import React from "react";
 import { Stack } from "expo-router";
@@ -43,6 +44,13 @@ export default function RootLayout() {
           name="taste/EditTasteComponent"
           options={{
             headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="chat"
+          options={{
+            headerShown: false,
+            presentation: "modal",
           }}
         />
       </Stack>

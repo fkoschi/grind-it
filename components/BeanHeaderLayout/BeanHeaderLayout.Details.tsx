@@ -40,6 +40,10 @@ export const BeanHeaderLayoutDetails = ({
 
   const handleFavoriteButtonPress = async (isFavorit: boolean) => {
     setIsFavorit(isFavorit);
+    await db
+      .update(beanTable)
+      .set({ isFavorit: isFavorit })
+      .where(eq(beanTable.id, Number(beanId)));
   };
 
   return (

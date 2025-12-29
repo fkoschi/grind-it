@@ -21,7 +21,7 @@ const HomePageComponent: FC = () => {
 
   const { data } = useLiveQuery(
     queryBeansBySearchAndFilter(db, beanTasteFilter, search),
-    [beanTasteFilter, search]
+    [beanTasteFilter, search],
   );
 
   const handleChangeText = (searchText: string) => {
