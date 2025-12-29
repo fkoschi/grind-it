@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/fkoschi/grind-it/compare/v1.6.0...v1.7.0) (2025-12-29)
+
+
+### ✨ Features
+
+* Introduce aroma profile fields for beans, including a new slider, info frame, and database migration. ([#9](https://github.com/fkoschi/grind-it/issues/9)) ([a8811ba](https://github.com/fkoschi/grind-it/commit/a8811ba42ee3c8346cca0ede64654b589ca09a45))
+
 ## 1.6.0 (2025-12-29)
 
 
@@ -28,4 +35,3 @@ All notable changes to this project will be documented in this file. See [standa
 * overflow issue on coghweel ([1d83022](https://github.com/fkoschi/grind-it/commit/1d830221d0d4ab7b23538f0a8e7e1361770e55ac))
 * query on homepage to only select distinct entries ([6f5658a](https://github.com/fkoschi/grind-it/commit/6f5658a63d971fdf56f3233f2c5d0853ef0189d8))
 * rework db adapter ([52a7091](https://github.com/fkoschi/grind-it/commit/52a7091296553375c4bb4d4beade0cb4ad33a105))
-
