@@ -16,7 +16,7 @@
     },
     {
       "filename": "app.json",
-      "updater": "node_modules/@mccraveiro/standard-version-expo/index.js"
+      "updater": "node_modules/@mccraveiro/standard-version-expo/build/bumpers/expo-version.js"
     }
   ]
 }
