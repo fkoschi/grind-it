@@ -61,11 +61,11 @@ export const DetailsPageDetailsTab = ({
           <Info size={20} color="#333" />
         </TouchableOpacity>
 
-        <View flex={1}>
+        <View flex={1} mt="$10">
           {shouldShowChart ? (
             <SpiderChart data={displayData} />
           ) : (
-            <YStack alignItems="center" gap="$3" px="$6" maxWidth={400}>
+            <YStack alignItems="center" gap="$3" px="$6">
               <Text fontSize="$6" fontWeight="600" color="$primary">
                 Noch kein Aroma-Profil
               </Text>
