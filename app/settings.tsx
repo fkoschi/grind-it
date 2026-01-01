@@ -50,17 +50,6 @@ const SettingsPage: FC = () => {
             </ListItem>
           </YGroup.Item>
           <Separator />
-          <YGroup.Item>
-            <ListItem
-              pressTheme
-              bgC="$secondary"
-              color="$white"
-              onPress={() => router.navigate("/chat")}
-              textAlign="center"
-            >
-              Brew Buddy (Beta)
-            </ListItem>
-          </YGroup.Item>
         </YGroup>
       </View>
       <TabBar />
