@@ -37,7 +37,7 @@ const SettingsPage: FC = () => {
       if (!jsonData) {
         Alert.alert(
           "Export fehlgeschlagen",
-          "Die Daten konnten nicht exportiert werden.",
+          "Die Daten konnten nicht exportiert werden."
         );
         return;
       }
@@ -112,22 +112,22 @@ const SettingsPage: FC = () => {
                 if (importResult?.success) {
                   Alert.alert(
                     "Import erfolgreich",
-                    `${importResult.beansCreated} Bohnen importiert.\n${importResult.beansSkipped} Duplikate übersprungen.`,
+                    `${importResult.beansCreated} Bohnen importiert.\n${importResult.beansSkipped} Duplikate übersprungen.`
                   );
                 } else if (importResult) {
                   Alert.alert(
                     "Import mit Fehlern",
-                    `Importiert: ${importResult.beansCreated}\nFehler: ${importResult.errors.join("\n")}`,
+                    `Importiert: ${importResult.beansCreated}\nFehler: ${importResult.errors.join("\n")}`
                   );
                 }
               },
             },
-          ],
+          ]
         );
       } catch {
         Alert.alert(
           "Fehler",
-          "Die Datei konnte nicht gelesen werden. Ist es eine gültige JSON-Datei?",
+          "Die Datei konnte nicht gelesen werden. Ist es eine gültige JSON-Datei?"
         );
       }
     } catch (err) {
@@ -173,7 +173,8 @@ const SettingsPage: FC = () => {
               Geschmack
             </ListItem>
           </YGroup.Item>
-          <Separator />
+        </YGroup>
+        <YGroup p="$4">
           <YGroup.Item>
             <ListItem
               pressTheme
@@ -199,7 +200,6 @@ const SettingsPage: FC = () => {
               Daten importieren
             </ListItem>
           </YGroup.Item>
-          <Separator />
         </YGroup>
       </View>
       <TabBar />
