@@ -21,7 +21,7 @@ const DashboardCards: FC<Props> = ({ beansData }) => {
   };
 
   return (
-    <ScrollView bgC="$screenBackground" flex={1} pl="$8" pt="$4" pr="$8">
+    <ScrollView bgC="$screenBackground" flex={1} pl="$6" pt="$4" pr="$4">
       {renderCards()}
     </ScrollView>
   );
