@@ -97,11 +97,7 @@ const ChatPage: FC = () => {
                     gap="$4"
                     paddingBottom="$8"
                   >
-                    <Text
-                      fontSize="$9"
-                      fontFamily="TBJSodabery-LightOriginal"
-                      color="$primary"
-                    >
+                    <Text fontSize="$9" fontFamily="$sodabery" color="$primary">
                       Brew Buddy
                     </Text>
                     <Image

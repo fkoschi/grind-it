@@ -11,7 +11,7 @@ const DashboardNoData = () => (
         style={{ flex: 0, height: 120, width: 120 }}
       />
     </View>
-    <Text fontSize="$8" fontFamily="TBJSodabery-LightOriginal">
+    <Text fontSize="$8" fontFamily="$sodabery">
       Leider kein Treffer!
     </Text>
     <View py="$4" mt="$2">

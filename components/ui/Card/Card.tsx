@@ -75,12 +75,7 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
           >
             {roastery}
           </Text>
-          <Text
-            fontSize={28}
-            numberOfLines={1}
-            fontFamily="TBJSodabery-LightOriginal"
-            mt="$2"
-          >
+          <Text fontSize={28} numberOfLines={1} fontFamily="$sodabery" mt="$2">
             {name}
           </Text>
         </Pressable>
@@ -91,12 +86,7 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
               <ThemedText fw={300} fontSize={12} mt="$1">
                 Mahlgrad
               </ThemedText>
-              <Text
-                mt="$1"
-                c="$primary"
-                fontSize={32}
-                fontFamily="TBJSodabery-LightOriginal"
-              >
+              <Text mt="$1" c="$primary" fontSize={32} fontFamily="$sodabery">
                 {degreeOfGrinding}
               </Text>
             </View>
@@ -110,7 +100,7 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
                     mt="$1"
                     c="$primary"
                     fontSize={20}
-                    fontFamily="TBJSodabery-LightOriginal"
+                    fontFamily="$sodabery"
                   >
                     {singleShotDosis}g
                   </Text>
@@ -125,7 +115,7 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
                     mt="$1"
                     c="$primary"
                     fontSize={20}
-                    fontFamily="TBJSodabery-LightOriginal"
+                    fontFamily="$sodabery"
                   >
                     {doubleShotDosis}g
                   </Text>

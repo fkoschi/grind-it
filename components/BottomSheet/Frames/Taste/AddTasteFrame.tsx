@@ -62,11 +62,7 @@ const AddTasteFrame: FC<AddTasteFrameProps> = ({ open, onCancel, onSave }) => {
 
   return (
     <View flex={1} p="$6">
-      <Text
-        fontSize={26}
-        color={"$primary"}
-        fontFamily="TBJSodabery-LightOriginal"
-      >
+      <Text fontSize={26} color={"$primary"} fontFamily="$sodabery">
         Neuer Geschmack
       </Text>
       <Text mt="$2" fontSize={12} color={"$copyText"}>

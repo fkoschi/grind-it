@@ -10,7 +10,7 @@ export const BeanHeaderLayoutEditDegree = () => (
     width="100%"
   >
     <YStack flex={0} alignItems="center">
-      <Text fontSize="$10" fontFamily="TBJSodabery-LightOriginal">
+      <Text fontSize="$10" fontFamily="$sodabery">
         Toskana
       </Text>
       <ThemedText fontSize="$5" fw={500}>
