@@ -96,29 +96,14 @@ const AromaInfoFrame: FC<AromaInfoFrameProps> = ({ onClose }) => {
               borderWidth={1}
               borderColor="$gray4"
             >
-              <Text
-                fontSize="$5"
-                fontWeight="bold"
-                color="$primary"
-                marginBottom="$2"
-              >
+              <Text fontSize="$5" fontWeight="bold" color="$primary" marginBottom="$2">
                 {aroma.name}
               </Text>
-              <Text
-                fontSize="$3"
-                color="$copyText"
-                lineHeight="$2"
-                marginBottom="$3"
-              >
+              <Text fontSize="$3" color="$copyText" lineHeight="$2" marginBottom="$3">
                 {aroma.description}
               </Text>
               <View backgroundColor="$gray100" padding="$3" borderRadius="$3">
-                <Text
-                  fontSize="$2"
-                  fontWeight="600"
-                  color="$gray500"
-                  marginBottom="$1"
-                >
+                <Text fontSize="$2" fontWeight="600" color="$gray500" marginBottom="$1">
                   Beispiele:
                 </Text>
                 <Text fontSize="$3" color="$gray600" lineHeight="$1">

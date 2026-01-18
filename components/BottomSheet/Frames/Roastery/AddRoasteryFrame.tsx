@@ -21,10 +21,7 @@ interface AddRoasteryFrameProps {
   open: boolean;
   onFormSubmit: () => void;
 }
-const AddRoasteryFrame: FC<AddRoasteryFrameProps> = ({
-  open,
-  onFormSubmit,
-}) => {
+const AddRoasteryFrame: FC<AddRoasteryFrameProps> = ({ open, onFormSubmit }) => {
   const { db } = useDatabase();
   const inputRef = useRef<TextInput>(null);
 

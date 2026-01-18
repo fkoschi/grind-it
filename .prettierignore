@@ -1,8 +1,0 @@
-.eslintrc.js
-pnpm-lock.yaml
-babel.config.js
-metro.config.js
-tamagui.config.ts
-**.md
-**.json
-drizzle/

@@ -71,10 +71,6 @@ export const calculateSimilarity = (str1: string, str2: string): number => {
  * isSimilar('hello', 'world') // returns false
  * isSimilar('hello', 'hallo', 70) // returns true (with 70% threshold)
  */
-export const isSimilar = (
-  str1: string,
-  str2: string,
-  threshold: number = 80,
-): boolean => {
+export const isSimilar = (str1: string, str2: string, threshold: number = 80): boolean => {
   return calculateSimilarity(str1, str2) >= threshold;
 };

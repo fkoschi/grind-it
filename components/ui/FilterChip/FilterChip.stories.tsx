@@ -40,7 +40,7 @@ export const Default: Story = {
     ];
     return (
       <XStack gap="$2">
-        {items.map((item, index) => (
+        {items.map((item) => (
           <FilterChip
             id={item.id}
             name={item.name}

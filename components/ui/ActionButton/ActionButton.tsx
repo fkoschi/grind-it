@@ -10,13 +10,7 @@ const ActionButton: FC<Props> = ({ onPress, icon, ...props }) => {
   const { width } = Dimensions.get("window");
 
   return (
-    <View
-      position="absolute"
-      bottom={40}
-      width={width}
-      alignItems="center"
-      zIndex={100_000}
-    >
+    <View position="absolute" bottom={40} width={width} alignItems="center" zIndex={100_000}>
       <Button circular width={52} height={52} onPress={onPress} {...props}>
         {icon}
       </Button>

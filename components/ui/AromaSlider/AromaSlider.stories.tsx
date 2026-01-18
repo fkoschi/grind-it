@@ -19,13 +19,7 @@ export default meta;
 
 type Story = StoryObj<typeof AromaSlider>;
 
-const StatefulWrapper = ({
-  initialValue,
-  label,
-}: {
-  initialValue: number;
-  label: string;
-}) => {
+const StatefulWrapper = ({ initialValue, label }: { initialValue: number; label: string }) => {
   const [value, setValue] = useState(initialValue);
   return <AromaSlider label={label} value={value} onChange={setValue} />;
 };

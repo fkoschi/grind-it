@@ -5,9 +5,7 @@ type TabsContextType = {
   setActiveTab: (value: string) => void;
 };
 
-export const TabsContext = createContext<TabsContextType | undefined>(
-  undefined,
-);
+export const TabsContext = createContext<TabsContextType | undefined>(undefined);
 
 export const useTabs = () => {
   const context = useContext(TabsContext);

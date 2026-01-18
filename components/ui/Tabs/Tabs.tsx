@@ -11,12 +11,7 @@ interface TabsProps extends StackProps {
   onValueChange?: (value: string) => void;
 }
 
-const TabsRoot = ({
-  defaultValue,
-  children,
-  onValueChange,
-  ...props
-}: TabsProps) => {
+const TabsRoot = ({ defaultValue, children, onValueChange, ...props }: TabsProps) => {
   const [activeTab, setActiveTab] = useState(defaultValue);
 
   const handleValueChange = (value: string) => {
@@ -25,9 +20,7 @@ const TabsRoot = ({
   };
 
   return (
-    <TabsContext.Provider
-      value={{ activeTab, setActiveTab: handleValueChange }}
-    >
+    <TabsContext.Provider value={{ activeTab, setActiveTab: handleValueChange }}>
       <YStack {...props}>{children}</YStack>
     </TabsContext.Provider>
   );

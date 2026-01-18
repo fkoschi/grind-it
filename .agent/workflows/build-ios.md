@@ -14,11 +14,13 @@ Before building, it's recommended to bump the app version automatically:
    - `feat!: breaking change` → major bump (1.4.0 → 2.0.0)
 
 2. **Run release command**:
+
    ```bash
    npm run release
    ```
-   
+
    Or specify the bump type explicitly:
+
    ```bash
    npm run release:patch  # For bug fixes
    npm run release:minor  # For new features
@@ -46,24 +48,27 @@ eas login
 
 You can build for different profiles defined in `eas.json`.
 
--   **Development Build** (for simulator or device testing):
-    ```bash
-    eas build --platform ios --profile development
-    ```
+- **Development Build** (for simulator or device testing):
 
--   **Preview Build** (for internal distribution):
-    ```bash
-    eas build --platform ios --profile preview
-    ```
+  ```bash
+  eas build --platform ios --profile development
+  ```
 
--   **Production Build** (for App Store):
-    ```bash
-    eas build --platform ios --profile production
-    ```
+- **Preview Build** (for internal distribution):
+
+  ```bash
+  eas build --platform ios --profile preview
+  ```
+
+- **Production Build** (for App Store):
+  ```bash
+  eas build --platform ios --profile production
+  ```
 
 ## 4. Submit to TestFlight
 
 - **Automatic Submission**:
+
   ```bash
   eas build --platform ios --profile production --auto-submit
   ```

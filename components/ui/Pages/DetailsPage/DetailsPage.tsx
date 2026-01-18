@@ -70,17 +70,10 @@ const DetailsPageComponent: FC<Props> = ({
           <Tabs.Trigger value="details">Aroma Rad</Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content value="info">
-          <DetailsPageInfoTab
-            tastes={tastes}
-            beansData={beansData}
-            onDegreePress={onDegreePress}
-          />
+          <DetailsPageInfoTab tastes={tastes} beansData={beansData} onDegreePress={onDegreePress} />
         </Tabs.Content>
         <Tabs.Content value="details">
-          <DetailsPageDetailsTab
-            beansData={beansData}
-            onInfoPress={onAromaInfoPress}
-          />
+          <DetailsPageDetailsTab beansData={beansData} onInfoPress={onAromaInfoPress} />
         </Tabs.Content>
       </Tabs>
 

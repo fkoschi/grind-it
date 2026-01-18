@@ -49,7 +49,7 @@ const NoData: FC<NoDataProps> = ({ variant, headline, copy }) => {
         contentFit="contain"
         style={{ flex: 0, height: 400, width: "50%" }}
       />
-      <Text fontSize="$8" fontFamily="TBJSodabery-LightOriginal">
+      <Text fontSize="$8" fontFamily="$sodabery">
         {headline}
       </Text>
       {copy && (
@@ -60,10 +60,7 @@ const NoData: FC<NoDataProps> = ({ variant, headline, copy }) => {
 
       <Animated.Image
         source={require("@/assets/icons/arrow-down.png")}
-        style={[
-          { flex: 0, height: 24, width: 24, marginTop: 16 },
-          animatedStyle,
-        ]}
+        style={[{ flex: 0, height: 24, width: 24, marginTop: 16 }, animatedStyle]}
       />
     </YStack>
   );
