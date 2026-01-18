@@ -30,3 +30,6 @@ storybook-static
 .vercel
 .env
 .env*.local
+
+# act
+.actrc
