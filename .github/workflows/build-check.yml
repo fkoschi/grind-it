@@ -75,4 +75,4 @@ jobs:
 
       - name: 🛠 Build iOS (Debug)
         run: |
-          xcodebuild -workspace ios/*.xcworkspace -scheme $(ls -d ios/*.xcworkspace | xargs basename -s .xcworkspace) -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 15' build CODE_SIGNING_ALLOWED=NO
+          xcodebuild -workspace ios/*.xcworkspace -scheme $(ls -d ios/*.xcworkspace | xargs basename -s .xcworkspace) -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator' build CODE_SIGNING_ALLOWED=NO
