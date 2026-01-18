@@ -7,23 +7,15 @@ interface BeanDataContextState {
   allBeans?: { id: number }[];
 }
 
-const BeanDataContext = createContext<BeanDataContextState | undefined>(
-  undefined,
-);
+const BeanDataContext = createContext<BeanDataContextState | undefined>(undefined);
 
 export const BeanDataProvider: FC<PropsWithChildren> = ({ children }) => {
   const { db } = useDatabase();
 
   // Query all beans once at the provider level - persists across routes
-  const { data: allBeans } = useLiveQuery(
-    db.select({ id: beanTable.id }).from(beanTable),
-  );
+  const { data: allBeans } = useLiveQuery(db.select({ id: beanTable.id }).from(beanTable));
 
-  return (
-    <BeanDataContext.Provider value={{ allBeans }}>
-      {children}
-    </BeanDataContext.Provider>
-  );
+  return <BeanDataContext.Provider value={{ allBeans }}>{children}</BeanDataContext.Provider>;
 };
 
 export const useBeanData = (): BeanDataContextState => {

@@ -1,8 +1,4 @@
-import {
-  calculateSimilarity,
-  isSimilar,
-  levenshteinDistance,
-} from "./fuzzyMatch";
+import { calculateSimilarity, isSimilar, levenshteinDistance } from "./fuzzyMatch";
 
 describe("levenshteinDistance", () => {
   test("should return 0 for identical strings", () => {
@@ -71,9 +67,7 @@ describe("calculateSimilarity", () => {
 
   test("should handle German taste names", () => {
     // Very similar tastes should have high similarity
-    expect(
-      calculateSimilarity("Schokolade", "Schokolate"),
-    ).toBeGreaterThanOrEqual(90);
+    expect(calculateSimilarity("Schokolade", "Schokolate")).toBeGreaterThanOrEqual(90);
     expect(calculateSimilarity("Karamell", "Karamel")).toBeGreaterThan(85);
     expect(calculateSimilarity("Nuss", "Nüss")).toBeGreaterThanOrEqual(75);
 

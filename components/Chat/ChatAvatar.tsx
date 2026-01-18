@@ -17,11 +17,7 @@ export const ChatAvatar = ({ type, image }: ChatAvatarProps) => {
           alignItems="center"
           justifyContent="center"
         >
-          {type === "user" ? (
-            <User color="$gray2" size="$2" />
-          ) : (
-            <Bot color="$white" size="$2" />
-          )}
+          {type === "user" ? <User color="$gray2" size="$2" /> : <Bot color="$white" size="$2" />}
         </Avatar.Fallback>
       )}
     </Avatar>

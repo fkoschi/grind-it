@@ -17,9 +17,7 @@ interface DatabaseContextState {
   db: ExpoSQLiteDatabase;
 }
 
-const DatabaseContext = createContext<DatabaseContextState | undefined>(
-  undefined,
-);
+const DatabaseContext = createContext<DatabaseContextState | undefined>(undefined);
 
 export const DatabaseProvider: FC<PropsWithChildren> = ({ children }) => {
   const { success, error } = useMigrations(db, migrations);
@@ -38,11 +36,7 @@ export const DatabaseProvider: FC<PropsWithChildren> = ({ children }) => {
     return <LoadingScreen />;
   }
 
-  return (
-    <DatabaseContext.Provider value={{ db }}>
-      {children}
-    </DatabaseContext.Provider>
-  );
+  return <DatabaseContext.Provider value={{ db }}>{children}</DatabaseContext.Provider>;
 };
 
 export const useDatabase = () => {

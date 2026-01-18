@@ -46,12 +46,7 @@ const TabBar: FC = () => {
         style={{ flex: 1, justifyContent: "center", width: "100%" }}
         resizeMode="cover"
       >
-        <View
-          flex={1}
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="center"
-        >
+        <View flex={1} flexDirection="row" alignItems="center" justifyContent="center">
           <TabBarIcon
             onPress={() => {
               if (!isHomeActive) {

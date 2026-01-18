@@ -7,7 +7,7 @@ trigger: always_on
 ## Purpose
 
 This guideline describes how to design React UI components using the **Composition Pattern** instead of relying on a large number of props.  
-Following this pattern improves **reusability**, **maintainability**, **readability**, and **scalability** of components in your codebase.  [oai_citation:1‡DEV Community](https://dev.to/ricardolmsilva/composition-pattern-in-react-28mj?utm_source=chatgpt.com)
+Following this pattern improves **reusability**, **maintainability**, **readability**, and **scalability** of components in your codebase. [oai_citation:1‡DEV Community](https://dev.to/ricardolmsilva/composition-pattern-in-react-28mj?utm_source=chatgpt.com)
 
 ---
 
@@ -17,15 +17,15 @@ Traditional component implementations often grow many props as requirements chan
 
 - increases complexity and prop drilling,
 - makes components harder to understand,
-- leads to maintenance challenges as requirements evolve.  [oai_citation:2‡DEV Community](https://dev.to/ricardolmsilva/composition-pattern-in-react-28mj?utm_source=chatgpt.com)
+- leads to maintenance challenges as requirements evolve. [oai_citation:2‡DEV Community](https://dev.to/ricardolmsilva/composition-pattern-in-react-28mj?utm_source=chatgpt.com)
 
-The Composition Pattern prevents this by **breaking a component into smaller building blocks** that are composed together in usage rather than configured through props.  [oai_citation:3‡DEV Community](https://dev.to/ricardolmsilva/composition-pattern-in-react-28mj?utm_source=chatgpt.com)
+The Composition Pattern prevents this by **breaking a component into smaller building blocks** that are composed together in usage rather than configured through props. [oai_citation:3‡DEV Community](https://dev.to/ricardolmsilva/composition-pattern-in-react-28mj?utm_source=chatgpt.com)
 
 ---
 
 ## Composition Rule (General)
 
-> **Design all new UI components as composable pieces, with a root container and sub-components representing functional or visual sub parts. Provide a clear, declarative API by exposing those sub-components instead of supporting many props on one monolithic component.**  [oai_citation:4‡DEV Community](https://dev.to/ricardolmsilva/composition-pattern-in-react-28mj?utm_source=chatgpt.com)
+> **Design all new UI components as composable pieces, with a root container and sub-components representing functional or visual sub parts. Provide a clear, declarative API by exposing those sub-components instead of supporting many props on one monolithic component.** [oai_citation:4‡DEV Community](https://dev.to/ricardolmsilva/composition-pattern-in-react-28mj?utm_source=chatgpt.com)
 
 ---
 
@@ -53,13 +53,14 @@ export const SomethingRoot: React.FC<ComponentRootProps> = ({
 ### 2. Define Sub-components for functional parts
 
 ```
+
 export const SomethingIcon: React.FC<React.ComponentProps<typeof Icon>> = props => (
-  <Icon {...props} />
+<Icon {...props} />
 );
 
 export const SomethingText: React.FC<React.ComponentProps<'span'>> = ({
-  children,
-  ...props
+children,
+...props
 }) => <span {...props}>{children}</span>;
 
 ```
@@ -72,11 +73,13 @@ Each sub-component should have single responsibility and its own props so it is 
 Provide all pieces together on a single namespace for convenient usage:
 
 ```
+
 export const Something = {
-  Root: SomethingRoot,
-  Icon: SomethingIcon,
-  Text: SomethingText,
+Root: SomethingRoot,
+Icon: SomethingIcon,
+Text: SomethingText,
 };
+
 ```
 
 Best Practices
@@ -117,3 +120,4 @@ By designing components as small pieces that are composed instead of controlled 
 	•	code becomes more maintainable,
 	•	adding new variants doesn’t increase internal complexity,
 	•	structure is clearer to consumers of components.  ￼
+```

@@ -36,7 +36,7 @@ const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
   const DataView = () => (
     <ScrollView>
       <XGroup gap="$2">
-        {data.map((taste, index) => (
+        {data.map((taste) => (
           <View key={taste.flavor} alignSelf="flex-start" mb="$2">
             <Badge
               title={taste.flavor}

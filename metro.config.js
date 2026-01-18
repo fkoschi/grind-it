@@ -1,6 +1,4 @@
-const {
-  wrapWithReanimatedMetroConfig,
-} = require("react-native-reanimated/metro-config");
+const { wrapWithReanimatedMetroConfig } = require("react-native-reanimated/metro-config");
 const { getDefaultConfig } = require("expo/metro-config");
 const path = require("path");
 const { withStorybook } = require("@storybook/react-native/metro/withStorybook");

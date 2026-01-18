@@ -10,11 +10,7 @@ interface Props {
   onDegreePress: () => void;
 }
 
-export const DetailsPageInfoTab: FC<Props> = ({
-  beansData,
-  tastes,
-  onDegreePress,
-}) => (
+export const DetailsPageInfoTab: FC<Props> = ({ beansData, tastes, onDegreePress }) => (
   <YStack mt="$4">
     <ThemedText fontSize="$6" color="$primary" fw={500}>
       {beansData.roastery}

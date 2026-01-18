@@ -23,9 +23,7 @@ type Story = StoryObj<typeof meta>;
 export const UserMessage: Story = {
   render: () => (
     <Chat.Message alignment="right">
-      <Chat.Bubble variant="primary">
-        Hello, how do I brew better espresso?
-      </Chat.Bubble>
+      <Chat.Bubble variant="primary">Hello, how do I brew better espresso?</Chat.Bubble>
     </Chat.Message>
   ),
 };
@@ -112,9 +110,7 @@ export const FullConversation: Story = {
   render: () => (
     <Chat.Root>
       <Chat.Message alignment="right">
-        <Chat.Bubble variant="primary">
-          {`How do I make **great** espresso?`}
-        </Chat.Bubble>
+        <Chat.Bubble variant="primary">{`How do I make **great** espresso?`}</Chat.Bubble>
       </Chat.Message>
 
       <Chat.Message alignment="left">

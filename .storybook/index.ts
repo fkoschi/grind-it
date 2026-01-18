@@ -2,10 +2,10 @@ import { view } from "./storybook.requires";
 
 const StorybookUIRoot = view.getStorybookUI({
   storage: {
-    getItem: async (key: string) => {
+    getItem: async () => {
       return null;
     },
-    setItem: async (key: string, value: string) => {},
+    setItem: async () => {},
   },
 });
 

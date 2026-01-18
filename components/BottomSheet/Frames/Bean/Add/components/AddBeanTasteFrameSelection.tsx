@@ -32,9 +32,7 @@ const NoData = () => (
 interface AddBeanTasteFrameSelectionProps {
   tasteData: Taste[];
 }
-const AddBeanTasteFrameSelection: FC<AddBeanTasteFrameSelectionProps> = ({
-  tasteData,
-}) => {
+const AddBeanTasteFrameSelection: FC<AddBeanTasteFrameSelectionProps> = ({ tasteData }) => {
   const removeBeanTaste = useBeanStore((state) => state.removeBeanTaste);
 
   if (!tasteData.length) {
@@ -52,14 +50,7 @@ const AddBeanTasteFrameSelection: FC<AddBeanTasteFrameSelectionProps> = ({
       >
         Aktuelle Auswahl:
       </ThemedText>
-      <View
-        flex={1}
-        flexDirection="row"
-        gap="$2"
-        pt="$3"
-        flexWrap="wrap"
-        mb="$4"
-      >
+      <View flex={1} flexDirection="row" gap="$2" pt="$3" flexWrap="wrap" mb="$4">
         {tasteData.map((taste: Taste, index: number) => (
           <Badge
             key={`bean-badge-${taste}-${index}`}

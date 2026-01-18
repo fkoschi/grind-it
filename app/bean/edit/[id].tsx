@@ -1,24 +1,10 @@
 import React, { FC } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
-import {
-  View,
-  Text,
-  Input,
-  XStack,
-  ScrollView,
-  Label,
-  YStack,
-  Button,
-} from "tamagui";
+import { View, Text, Input, XStack, ScrollView, Label, YStack, Button } from "tamagui";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { useDatabase } from "@/provider/DatabaseProvider";
-import {
-  beanTable,
-  beanTasteAssociationTable,
-  beanTasteTable,
-  roasteryTable,
-} from "@/db/schema";
+import { beanTable, beanTasteAssociationTable, beanTasteTable, roasteryTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import {
   AddIcon,
@@ -47,10 +33,7 @@ interface BeansTasteInputProps {
   onEditTaste: () => void;
 }
 
-const BeansTasteInput: FC<BeansTasteInputProps> = ({
-  beanTasteData = [],
-  onEditTaste,
-}) => {
+const BeansTasteInput: FC<BeansTasteInputProps> = ({ beanTasteData = [], onEditTaste }) => {
   const imageSource = require("@/assets/images/latte-art.png");
 
   return (
@@ -113,10 +96,7 @@ const EditBeanPage: FC = () => {
     db
       .select({ id: beanTasteTable.id, flavor: beanTasteTable.flavor })
       .from(beanTasteTable)
-      .leftJoin(
-        beanTasteAssociationTable,
-        eq(beanTasteAssociationTable.tasteId, beanTasteTable.id),
-      )
+      .leftJoin(beanTasteAssociationTable, eq(beanTasteAssociationTable.tasteId, beanTasteTable.id))
       .where(eq(beanTasteAssociationTable.beanId, Number(beanId))),
     [editTaste],
   );
@@ -268,7 +248,7 @@ const EditBeanPage: FC = () => {
       <Controller
         name="roastery"
         control={control}
-        render={({ field, ...props }) => (
+        render={({ field: _field, ...props }) => (
           <View>
             <XStack gap="$4" alignItems="center">
               <Label minWidth={"$6"}>Rösterei</Label>

@@ -11,10 +11,7 @@ interface DetailsPageDetailsTabProps {
   onInfoPress: () => void;
 }
 
-export const DetailsPageDetailsTab = ({
-  beansData,
-  onInfoPress,
-}: DetailsPageDetailsTabProps) => {
+export const DetailsPageDetailsTab = ({ beansData, onInfoPress }: DetailsPageDetailsTabProps) => {
   const isPro = useIsProUser();
   const hasAromaData =
     beansData.aromaFruity != null ||
@@ -69,14 +66,8 @@ export const DetailsPageDetailsTab = ({
               <Text fontSize="$6" fontWeight="600" color="$primary">
                 Noch kein Aroma-Profil
               </Text>
-              <Text
-                fontSize="$4"
-                color="$gray400"
-                textAlign="center"
-                lineHeight="$2"
-              >
-                Nutze den Button unten, um ein Aroma-Profil für diese Bohne zu
-                erstellen.
+              <Text fontSize="$4" color="$gray400" textAlign="center" lineHeight="$2">
+                Nutze den Button unten, um ein Aroma-Profil für diese Bohne zu erstellen.
               </Text>
             </YStack>
           )}

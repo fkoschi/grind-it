@@ -79,17 +79,13 @@ export const useDuplicateCheck = ({
 
           // Exact match (case-insensitive)
           if (debouncedInput.toLowerCase() === existingValue.toLowerCase()) {
-            setDuplicateError(
-              `Der Geschmack "${existingValue}" existiert bereits.`,
-            );
+            setDuplicateError(`Der Geschmack "${existingValue}" existiert bereits.`);
             return;
           }
 
           // Fuzzy match
           if (similarity >= similarityThreshold) {
-            setDuplicateError(
-              `Ähnlicher Geschmack "${existingValue}" existiert bereits.`,
-            );
+            setDuplicateError(`Ähnlicher Geschmack "${existingValue}" existiert bereits.`);
             return;
           }
         }

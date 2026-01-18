@@ -11,10 +11,7 @@ import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { KeyboardAvoidingView, Platform, Pressable } from "react-native";
 import { getFontSize, Input, ScrollView, Text, View, XStack } from "tamagui";
-import {
-  selectBeanTasteById,
-  selectFilteredBeanTasteSuggestion,
-} from "@/db/queries";
+import { selectBeanTasteById, selectFilteredBeanTasteSuggestion } from "@/db/queries";
 import { useAutoFocus } from "@/hooks/useAutoFocus";
 
 interface BeanTasteForm {
@@ -29,9 +26,7 @@ const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
   const inputRef = useRef<Input>(null);
   const { id: beanId } = useLocalSearchParams();
   const [beanTasteData, setBeanTasteData] = useState<Taste[]>([]);
-  const [beanSuggestionTasteData, setBeanSuggestionTasteData] = useState<
-    Taste[]
-  >([]);
+  const [beanSuggestionTasteData, setBeanSuggestionTasteData] = useState<Taste[]>([]);
   const { duplicateError, checkInput, clearError } = useDuplicateCheck({
     table: beanTasteTable,
     fieldName: "flavor",
@@ -40,14 +35,10 @@ const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
   const { control, reset, handleSubmit } = useForm<BeanTasteForm>();
   const updateTasteSheet = useBeanStore((state) => state.updateEditBeanTaste);
 
-  const fetchBeanTasteData = useCallback(
-    () => selectBeanTasteById(db, beanId).all(),
-    [beanId, db],
-  );
+  const fetchBeanTasteData = useCallback(() => selectBeanTasteById(db, beanId).all(), [beanId, db]);
 
   const fetchBeanSuggestionTasteData = useCallback(
-    (beanTasteFilter: number[]) =>
-      selectFilteredBeanTasteSuggestion(db, beanTasteFilter).all(),
+    (beanTasteFilter: number[]) => selectFilteredBeanTasteSuggestion(db, beanTasteFilter).all(),
     [db],
   );
 
@@ -56,8 +47,7 @@ const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
     setBeanTasteData(beanTasteData);
 
     const beanTasteFilter = beanTasteData.map((taste) => taste.id);
-    const beanTasteSuggestionData =
-      fetchBeanSuggestionTasteData(beanTasteFilter);
+    const beanTasteSuggestionData = fetchBeanSuggestionTasteData(beanTasteFilter);
     setBeanSuggestionTasteData(beanTasteSuggestionData);
   }, [fetchBeanSuggestionTasteData, fetchBeanTasteData]);
 
@@ -159,16 +149,14 @@ const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
               Vorschläge:
             </ThemedText>
             <XStack gap="$2" flexWrap="wrap" mt="$3">
-              {beanSuggestionTasteData?.map(
-                ({ id: tasteId, flavor }, index) => (
-                  <FilterChip
-                    key={index}
-                    id={tasteId}
-                    name={flavor ?? ""}
-                    onPress={() => handleSuggestionPress(tasteId)}
-                  />
-                ),
-              )}
+              {beanSuggestionTasteData?.map(({ id: tasteId, flavor }, index) => (
+                <FilterChip
+                  key={index}
+                  id={tasteId}
+                  name={flavor ?? ""}
+                  onPress={() => handleSuggestionPress(tasteId)}
+                />
+              ))}
             </XStack>
           </View>
         </ScrollView>
@@ -202,9 +190,7 @@ const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
           )}
         </View>
         <View flex={0} ml="$3" height={48} justifyContent="center">
-          <Pressable
-            onPress={() => updateTasteSheet({ showSheet: false, type: "edit" })}
-          >
+          <Pressable onPress={() => updateTasteSheet({ showSheet: false, type: "edit" })}>
             <Text>Abbrechen</Text>
           </Pressable>
         </View>
