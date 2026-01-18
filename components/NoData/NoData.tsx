@@ -60,10 +60,7 @@ const NoData: FC<NoDataProps> = ({ variant, headline, copy }) => {
 
       <Animated.Image
         source={require("@/assets/icons/arrow-down.png")}
-        style={[
-          { flex: 0, height: 24, width: 24, marginTop: 16 },
-          animatedStyle,
-        ]}
+        style={[{ flex: 0, height: 24, width: 24, marginTop: 16 }, animatedStyle]}
       />
     </YStack>
   );

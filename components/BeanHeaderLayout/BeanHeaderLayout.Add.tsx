@@ -19,16 +19,8 @@ export const BeanHeaderLayoutAdd = () => {
   }, [isKeyboardVisible, fontSize, isBottomSheetActive]);
 
   return (
-    <View
-      flex={1}
-      position="absolute"
-      bottom={24}
-      alignItems="center"
-      width="100%"
-    >
-      <Animated.Text
-        style={{ fontSize, fontFamily: "TBJSodabery-LightOriginal" }}
-      >
+    <View flex={1} position="absolute" bottom={24} alignItems="center" width="100%">
+      <Animated.Text style={{ fontSize, fontFamily: "TBJSodabery-LightOriginal" }}>
         Neue Bohne
       </Animated.Text>
       <ThemedText fw={400} mt="$1">

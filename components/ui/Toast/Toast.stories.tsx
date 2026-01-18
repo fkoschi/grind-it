@@ -10,13 +10,7 @@ const meta = {
   component: Toast,
   decorators: [
     (Story: ComponentType) => (
-      <View
-        p="$4"
-        bgC="$screenBackground"
-        flex={1}
-        justifyContent="center"
-        alignItems="center"
-      >
+      <View p="$4" bgC="$screenBackground" flex={1} justifyContent="center" alignItems="center">
         <Story />
       </View>
     ),
@@ -34,11 +28,7 @@ const ToastTrigger = ({ title, ...props }: any) => {
 
 export const Success: Story = {
   render: () => (
-    <ToastTrigger
-      title="Show Success Toast"
-      message="Bean saved successfully!"
-      variant="success"
-    />
+    <ToastTrigger title="Show Success Toast" message="Bean saved successfully!" variant="success" />
   ),
 };
 

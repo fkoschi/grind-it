@@ -16,20 +16,14 @@ const TriggerContainer = styled(View, {
   justifyContent: "center",
 });
 
-export const TabsTrigger = ({
-  value,
-  children,
-  ...props
-}: TabsTriggerProps) => {
+export const TabsTrigger = ({ value, children, ...props }: TabsTriggerProps) => {
   const { activeTab, setActiveTab } = useTabs();
   const isActive = activeTab === value;
 
   return (
     <TriggerContainer onPress={() => setActiveTab(value)} {...props}>
       <Text
-        fontFamily={
-          isActive ? "DarkerGrotesque_500Medium" : "DarkerGrotesque_400Regular"
-        }
+        fontFamily={isActive ? "DarkerGrotesque_500Medium" : "DarkerGrotesque_400Regular"}
         fontSize={16}
         color={isActive ? "$primary" : "$copyText"}
       >

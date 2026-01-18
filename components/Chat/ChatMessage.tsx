@@ -6,10 +6,7 @@ interface ChatMessageProps {
   alignment?: "left" | "right";
 }
 
-export const ChatMessage = ({
-  children,
-  alignment = "left",
-}: ChatMessageProps) => {
+export const ChatMessage = ({ children, alignment = "left" }: ChatMessageProps) => {
   const isRight = alignment === "right";
 
   return (

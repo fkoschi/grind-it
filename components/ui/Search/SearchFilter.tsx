@@ -13,9 +13,7 @@ const SearchFilter: FC<Props> = ({ filters }) => {
 
   const beanTasteFilter = useBeanStore((store) => store.tasteFilter);
   const addBeanTasteFilter = useBeanStore((store) => store.addBeanTasteFilter);
-  const removeBeanTasteFilter = useBeanStore(
-    (store) => store.removeBeanTasteFilter,
-  );
+  const removeBeanTasteFilter = useBeanStore((store) => store.removeBeanTasteFilter);
 
   useEffect(() => {
     if (filters) {

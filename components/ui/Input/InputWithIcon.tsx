@@ -20,12 +20,7 @@ const InputWithIcon: FC<Props> = ({ label, suffix, ...other }) => {
         <View flex={1}>
           <Input flex={1} bgC="white" borderWidth={0} height={40} {...other} />
         </View>
-        <View
-          height={40}
-          bgC="white"
-          alignItems="center"
-          justifyContent="center"
-        >
+        <View height={40} bgC="white" alignItems="center" justifyContent="center">
           <View flex={0} width={12} height={12} bgC="white" mr="$3">
             {suffix}
           </View>

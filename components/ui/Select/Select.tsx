@@ -11,21 +11,10 @@ interface Props {
   onOpenChange?: (value: number) => void;
   value?: number;
 }
-const ThemedSelect: FC<Props> = ({
-  label,
-  onChange,
-  placeholder,
-  items,
-  SelectProps,
-  value,
-}) => {
+const ThemedSelect: FC<Props> = ({ label, onChange, placeholder, items, SelectProps, value }) => {
   const renderItems = () =>
     items?.map((item, i) => (
-      <Select.Item
-        index={i}
-        key={`Select-Item-${i}`}
-        value={item.name.toLowerCase()}
-      >
+      <Select.Item index={i} key={`Select-Item-${i}`} value={item.name.toLowerCase()}>
         <Select.ItemText>{item.name}</Select.ItemText>
       </Select.Item>
     ));
@@ -49,23 +38,13 @@ const ThemedSelect: FC<Props> = ({
       </Select.Trigger>
 
       <Adapt when="sm" platform="touch">
-        <Sheet
-          native
-          modal
-          dismissOnSnapToBottom
-          snapPoints={[50]}
-          snapPointsMode="percent"
-        >
+        <Sheet native modal dismissOnSnapToBottom snapPoints={[50]} snapPointsMode="percent">
           <Sheet.Frame>
             <Sheet.ScrollView>
               <Adapt.Contents />
             </Sheet.ScrollView>
           </Sheet.Frame>
-          <Sheet.Overlay
-            animation="lazy"
-            enterStyle={{ opacity: 0 }}
-            exitStyle={{ opacity: 0 }}
-          />
+          <Sheet.Overlay animation="lazy" enterStyle={{ opacity: 0 }} exitStyle={{ opacity: 0 }} />
         </Sheet>
       </Adapt>
 

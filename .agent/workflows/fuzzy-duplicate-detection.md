@@ -17,6 +17,7 @@ The fuzzy duplicate detection system uses string similarity matching to catch bo
 Location: `utils/fuzzyMatch.ts`
 
 Functions:
+
 - `levenshteinDistance(str1, str2)` - Calculates edit distance between strings
 - `calculateSimilarity(str1, str2)` - Returns similarity percentage (0-100)
 - `isSimilar(str1, str2, threshold)` - Boolean check with threshold (default 80%)
@@ -26,23 +27,26 @@ Functions:
 Location: `hooks/useDuplicateCheck.ts`
 
 The `useDuplicateCheck` hook handles:
+
 - Debounced input tracking (300ms)
 - Database queries for existing entries
 - Fuzzy matching against all entries
 - Error message state management
 
 Usage:
+
 ```typescript
 const { duplicateError, checkInput, clearError } = useDuplicateCheck({
   tableName: beanTasteTable,
-  fieldName: 'flavor',
-  threshold: 80 // optional, defaults to 80
+  fieldName: "flavor",
+  threshold: 80, // optional, defaults to 80
 });
 ```
 
 ### 3. Implementation in Forms
 
 Add to your form component:
+
 1. Import the hook
 2. Call `checkInput(text)` in the input's `onChangeText`
 3. Display `duplicateError` below the input field
@@ -52,11 +56,13 @@ Add to your form component:
 ## Testing
 
 Run tests with:
+
 ```bash
 npm test -- fuzzyMatch.test.ts
 ```
 
 All 18 tests should pass, covering:
+
 - Exact string matching
 - Case insensitivity
 - German characters (ü, ö, ä, ß)
@@ -66,16 +72,19 @@ All 18 tests should pass, covering:
 ## Similarity Threshold
 
 The default 80% threshold means:
+
 - "Schokolade" vs "Schokolate" = 90% similar ✅ (blocked)
 - "Schokolade" vs "Vanille" = 20% similar ❌ (allowed)
 
 Adjust the threshold based on your needs:
+
 - Higher (90%+) = Only blocks very similar entries
 - Lower (70%) = More aggressive duplicate prevention
 
 ## Error Messages
 
 The system provides localized German error messages:
+
 - Exact match: `Der Geschmack "[name]" existiert bereits.`
 - Fuzzy match: `Ähnlicher Geschmack "[name]" existiert bereits.`
 

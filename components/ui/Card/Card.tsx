@@ -68,19 +68,10 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
           onPress={() => router.navigate(`/bean/details/${id}`)}
           style={{ marginRight: 24 }}
         >
-          <Text
-            c="$primary"
-            fontSize={12}
-            fontFamily="DarkerGrotesque_500Medium"
-          >
+          <Text c="$primary" fontSize={12} fontFamily="DarkerGrotesque_500Medium">
             {roastery}
           </Text>
-          <Text
-            fontSize={28}
-            numberOfLines={1}
-            fontFamily="TBJSodabery-LightOriginal"
-            mt="$2"
-          >
+          <Text fontSize={28} numberOfLines={1} fontFamily="TBJSodabery-LightOriginal" mt="$2">
             {name}
           </Text>
         </Pressable>
@@ -91,12 +82,7 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
               <ThemedText fw={300} fontSize={12} mt="$1">
                 Mahlgrad
               </ThemedText>
-              <Text
-                mt="$1"
-                c="$primary"
-                fontSize={32}
-                fontFamily="TBJSodabery-LightOriginal"
-              >
+              <Text mt="$1" c="$primary" fontSize={32} fontFamily="TBJSodabery-LightOriginal">
                 {degreeOfGrinding}
               </Text>
             </View>
@@ -106,12 +92,7 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
                   <ThemedText fw={300} fontSize={12} mt="$1">
                     Single Shot
                   </ThemedText>
-                  <Text
-                    mt="$1"
-                    c="$primary"
-                    fontSize={20}
-                    fontFamily="TBJSodabery-LightOriginal"
-                  >
+                  <Text mt="$1" c="$primary" fontSize={20} fontFamily="TBJSodabery-LightOriginal">
                     {singleShotDosis}g
                   </Text>
                 </View>
@@ -121,12 +102,7 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
                   <ThemedText fw={300} fontSize={12} mt="$1">
                     Double Shot
                   </ThemedText>
-                  <Text
-                    mt="$1"
-                    c="$primary"
-                    fontSize={20}
-                    fontFamily="TBJSodabery-LightOriginal"
-                  >
+                  <Text mt="$1" c="$primary" fontSize={20} fontFamily="TBJSodabery-LightOriginal">
                     {doubleShotDosis}g
                   </Text>
                 </View>

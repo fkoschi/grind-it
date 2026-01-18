@@ -30,13 +30,7 @@ export interface ToastProps {
   onClose?: () => void;
 }
 
-const Toast: FC<ToastProps> = ({
-  message,
-  variant = "info",
-  icon,
-  showClose = false,
-  onClose,
-}) => {
+const Toast: FC<ToastProps> = ({ message, variant = "info", icon, showClose = false, onClose }) => {
   const getBackgroundColor = () => {
     switch (variant) {
       case "success":
@@ -64,14 +58,7 @@ const Toast: FC<ToastProps> = ({
   const displayIcon = icon !== undefined ? icon : getDefaultIcon();
 
   return (
-    <View
-      bgC={getBackgroundColor()}
-      borderRadius="$4"
-      p="$3"
-      px="$4"
-      minWidth={280}
-      maxWidth={400}
-    >
+    <View bgC={getBackgroundColor()} borderRadius="$4" p="$3" px="$4" minWidth={280} maxWidth={400}>
       <XStack alignItems="center" gap="$3">
         {displayIcon && <View flex={0}>{displayIcon}</View>}
 
@@ -87,12 +74,7 @@ const Toast: FC<ToastProps> = ({
         </View>
 
         {showClose && onClose && (
-          <View
-            flex={0}
-            onPress={onClose}
-            cursor="pointer"
-            pressStyle={{ opacity: 0.7 }}
-          >
+          <View flex={0} onPress={onClose} cursor="pointer" pressStyle={{ opacity: 0.7 }}>
             <ClearIcon fill="white" size={18} />
           </View>
         )}

@@ -35,13 +35,7 @@ interface Props {
   variant?: "text" | "icon";
   onPress?: (id: number) => void;
 }
-const FilterChip: FC<Props> = ({
-  id,
-  name,
-  variant = "text",
-  onPress,
-  active,
-}) => {
+const FilterChip: FC<Props> = ({ id, name, variant = "text", onPress, active }) => {
   const handlePress = () => {
     onPress?.(id);
   };

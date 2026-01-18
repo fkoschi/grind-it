@@ -20,11 +20,7 @@ interface EditAromaFrameProps {
   onCancel: () => void;
 }
 
-const EditAromaFrame: FC<EditAromaFrameProps> = ({
-  initialValues,
-  onSave,
-  onCancel,
-}) => {
+const EditAromaFrame: FC<EditAromaFrameProps> = ({ initialValues, onSave, onCancel }) => {
   const [values, setValues] = useState<AromaValues>({
     aromaFruity: initialValues.aromaFruity ?? 0,
     aromaFloral: initialValues.aromaFloral ?? 0,

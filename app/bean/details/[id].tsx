@@ -1,11 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
-import {
-  beanTable,
-  beanTasteAssociationTable,
-  beanTasteTable,
-} from "@/db/schema";
+import { beanTable, beanTasteAssociationTable, beanTasteTable } from "@/db/schema";
 import { eq, inArray } from "drizzle-orm";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import React from "react";

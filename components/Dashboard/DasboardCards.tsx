@@ -15,9 +15,7 @@ const DashboardCards: FC<Props> = ({ beansData }) => {
   }
 
   const renderCards = () => {
-    return beansData.map((bean, i) => (
-      <Card key={`dashboard-card-${i}`} data={bean} />
-    ));
+    return beansData.map((bean, i) => <Card key={`dashboard-card-${i}`} data={bean} />);
   };
 
   return (
