@@ -18,7 +18,10 @@ SplashScreen.preventAutoHideAsync();
 
 const App: FC<PropsWithChildren> = ({ children }) => {
   const [appIsReady, setAppReady] = useState<boolean>(false);
-  const [loaded, error] = useFonts(darkerGrotesqueFonts);
+  const [loaded, error] = useFonts({
+    ...darkerGrotesqueFonts,
+    "TBJSodabery-Light": require("../assets/fonts/TBJSodabery-Light.otf"),
+  });
 
   useEffect(() => {
     if (loaded || error) {
@@ -39,7 +42,7 @@ const App: FC<PropsWithChildren> = ({ children }) => {
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <GestureHandlerRootView>
-        <TamaguiProvider config={tamaguiConfig}>
+        <TamaguiProvider config={tamaguiConfig} defaultTheme="light">
           <DatabaseProvider>
             <PortalProvider shouldAddRootHost>
               <BeanDataProvider>{children}</BeanDataProvider>

@@ -1,5 +1,5 @@
 import { config } from "@tamagui/config/v3";
-import { createTamagui, createTokens } from "tamagui";
+import { createFont, createTamagui, createTokens } from "tamagui";
 import { createAnimations } from "@tamagui/animations-moti";
 
 export const tokens = createTokens({
@@ -22,31 +22,6 @@ export const tokens = createTokens({
     gray5: "#181818",
   },
 });
-
-// FIXME!
-/* const darkerGrotesqueFont = createFont({
-  family: "DarkerGrotesque_400Regular",
-  size: {
-    1: 12,
-    2: 24,
-    3: 32,
-  },
-  lineHeight: {
-    1: 14,
-    2: 26,
-    3: 36,
-  },
-  weight: {
-    3: "300",
-    4: "400",
-    5: "500",
-  },
-  face: {
-    300: { normal: "DarkerGrotesque_300Light" },
-    400: { normal: "DarkerGrotesque_400Regular" },
-    500: { normal: "DarkerGrotesque_500Medium" },
-  },
-}); */
 
 export const animationsReanimated = createAnimations({
   "75ms": {
@@ -109,6 +84,49 @@ export const animationsReanimated = createAnimations({
 export const tamaguiConfig = createTamagui({
   ...config,
   tokens,
+  fonts: {
+    ...config.fonts,
+    sodabery: createFont({
+      family: "TBJSodabery-Light",
+      size: {
+        "1": 12,
+        "2": 14,
+        "3": 16,
+        "4": 18,
+        "5": 20,
+        "6": 24,
+        "7": 28,
+        "8": 32,
+        "9": 48,
+        "10": 64,
+        true: 16,
+      },
+      lineHeight: {
+        "1": 16,
+        "2": 18,
+        "3": 20,
+        "4": 22,
+        "5": 24,
+        "6": 28,
+        "7": 32,
+        "8": 36,
+        "9": 52,
+        "10": 68,
+      },
+      weight: {
+        "1": "300",
+      },
+      letterSpacing: {
+        "1": 0,
+        "2": 0,
+        "9": -1,
+        "10": -2,
+      },
+      face: {
+        300: { normal: "TBJSodabery-Light" },
+      },
+    }),
+  },
   animations: animationsReanimated,
   shorthands: {
     c: "color",

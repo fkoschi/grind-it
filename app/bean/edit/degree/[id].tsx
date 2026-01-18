@@ -3,7 +3,11 @@ import { useDatabase } from "@/provider/DatabaseProvider";
 import { eq } from "drizzle-orm";
 import { useLocalSearchParams } from "expo-router";
 import { FC, useCallback, useEffect, useState } from "react";
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 import { Circle, Slider, Text, View } from "tamagui";
 import * as Haptics from "expo-haptics";
 
@@ -40,7 +44,10 @@ const EditDegree: FC = () => {
     setDegreeValue(value);
   };
 
-  const resetRotationValue = useCallback(() => (rotation.value = 0), [rotation]);
+  const resetRotationValue = useCallback(
+    () => (rotation.value = 0),
+    [rotation],
+  );
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -62,13 +69,18 @@ const EditDegree: FC = () => {
   return (
     <View flex={1}>
       <View flex={1} alignItems="center" mt="$10">
-        <Text fontSize={140} color="$primary" fontFamily="TBJSodabery-LightOriginal">
+        <Text fontSize={140} color="$primary" fontFamily="$sodabery">
           {parsedValue}
         </Text>
       </View>
 
       <View flex={1} alignItems="center" overflow="hidden" pt="$4">
-        <Circle flex={1} justifyContent="flex-start" size={CIRCEL_SIZE} bgC="#E8E8E8">
+        <Circle
+          flex={1}
+          justifyContent="flex-start"
+          size={CIRCEL_SIZE}
+          bgC="#E8E8E8"
+        >
           <Slider
             size="$2"
             width="$16"
@@ -82,7 +94,12 @@ const EditDegree: FC = () => {
             <Slider.Track>
               <Slider.TrackActive backgroundColor="$primary" />
             </Slider.Track>
-            <Slider.Thumb circular backgroundColor="$primary" borderColor="white" index={0} />
+            <Slider.Thumb
+              circular
+              backgroundColor="$primary"
+              borderColor="white"
+              index={0}
+            />
           </Slider>
           <Animated.Image
             source={require("@/assets/images/cogwheel-layer.png")}

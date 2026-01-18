@@ -15,7 +15,7 @@ export const DetailsPageInfoTab: FC<Props> = ({ beansData, tastes, onDegreePress
     <ThemedText fontSize="$6" color="$primary" fw={500}>
       {beansData.roastery}
     </ThemedText>
-    <Text fontSize="$11" mt="$2" fontFamily="TBJSodabery-LightOriginal">
+    <Text fontSize="$11" mt="$2" fontFamily="$sodabery">
       {beansData.name}
     </Text>
 
@@ -71,7 +71,7 @@ export const DetailsPageInfoTab: FC<Props> = ({ beansData, tastes, onDegreePress
             fontSize="$16"
             lineHeight="$16"
             color="$primary"
-            fontFamily="TBJSodabery-LightOriginal"
+            fontFamily="$sodabery"
           >
             {beansData.degreeOfGrinding ?? 0}
           </Text>
