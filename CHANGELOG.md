@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/fkoschi/grind-it/compare/v1.8.3...v1.9.0) (2026-01-18)
+
+
+### 🐛 Bug Fixes
+
+* android build ([#17](https://github.com/fkoschi/grind-it/issues/17)) ([6baf120](https://github.com/fkoschi/grind-it/commit/6baf120f86ec4d4302b13de40032963474704c86))
+* data export functionality ([343166c](https://github.com/fkoschi/grind-it/commit/343166ca5b5d71cee482be14c28d7073d1bad77f))
+* font issues and refactor tamagui config ([#18](https://github.com/fkoschi/grind-it/issues/18)) ([3ec76ce](https://github.com/fkoschi/grind-it/commit/3ec76ceb16bf33702324138f2d493f0411c16752))
+
+
+### ✨ Features
+
+* change add bean presentation ([62d19b6](https://github.com/fkoschi/grind-it/commit/62d19b6895b84c72d0274691c665937ac1835db0))
+* Implement data export and import capabilities, including new utilities, hooks, and UI integration. ([#10](https://github.com/fkoschi/grind-it/issues/10)) ([d9011ca](https://github.com/fkoschi/grind-it/commit/d9011ca04d139b156fd2df9c36bc9cc87816d3a6))
+
 ### [1.8.3](https://github.com/fkoschi/grind-it/compare/v1.8.2...v1.8.3) (2026-01-01)
 
 ### [1.8.2](https://github.com/fkoschi/grind-it/compare/v1.8.1...v1.8.2) (2025-12-29)
