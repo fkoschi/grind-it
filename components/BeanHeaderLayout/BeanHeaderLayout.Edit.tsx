@@ -56,9 +56,7 @@ export const BeanHeaderLayoutEdit = () => {
         />
       </View>
       <View flex={1} justifyContent="flex-end" alignItems="center" mb="$6">
-        <Animated.Text
-          style={{ fontSize, fontFamily: "TBJSodabery-LightOriginal" }}
-        >
+        <Animated.Text style={{ fontSize, fontFamily: "$sodabery" }}>
           {beansData?.name}
         </Animated.Text>
       </View>

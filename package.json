@@ -1,14 +1,16 @@
 {
   "name": "grind-it",
-  "main": "expo-router/entry",
   "version": "1.8.3",
+  "private": true,
+  "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "test": "jest --watchAll",
-    "format": "prettier . --write",
-    "lint": "expo lint",
+    "format": "oxfmt . --write",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
     "storybook-generate": "sb-rn-get-stories --config-path .storybook",
     "storybook": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start",
     "release": "standard-version",
@@ -16,9 +18,6 @@
     "release:major": "standard-version --release-as major",
     "release:patch": "standard-version --release-as patch",
     "release:first": "standard-version --first-release"
-  },
-  "jest": {
-    "preset": "jest-expo"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.1",
@@ -53,6 +52,7 @@
     "expensify-common": "^2.0.115",
     "expo": "^54.0.25",
     "expo-asset": "~12.0.10",
+    "expo-build-properties": "~0.12.0",
     "expo-blur": "~15.0.7",
     "expo-clipboard": "~8.0.8",
     "expo-constants": "~18.0.10",
@@ -104,17 +104,16 @@
     "@types/react-test-renderer": "^18.3.1",
     "babel-plugin-inline-import": "^3.0.0",
     "drizzle-kit": "^0.28.1",
-    "eslint": "^8.57.1",
-    "eslint-config-expo": "~10.0.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.6",
     "jest": "^29.7.0",
     "jest-expo": "~54.0.13",
-    "prettier": "^3.5.3",
-    "prettier-plugin-organize-imports": "^4.1.0",
+    "lint-staged": "^16.2.7",
+    "oxfmt": "^0.24.0",
+    "oxlint": "^1.39.0",
     "react-test-renderer": "18.2.0",
     "standard-version": "^9.5.0",
     "typescript": "~5.9.2"
   },
-  "private": true
+  "jest": {
+    "preset": "jest-expo"
+  }
 }

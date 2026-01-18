@@ -69,11 +69,7 @@ const EditDegree: FC = () => {
   return (
     <View flex={1}>
       <View flex={1} alignItems="center" mt="$10">
-        <Text
-          fontSize={140}
-          color="$primary"
-          fontFamily="TBJSodabery-LightOriginal"
-        >
+        <Text fontSize={140} color="$primary" fontFamily="$sodabery">
           {parsedValue}
         </Text>
       </View>

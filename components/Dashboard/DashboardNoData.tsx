@@ -11,13 +11,12 @@ const DashboardNoData = () => (
         style={{ flex: 0, height: 120, width: 120 }}
       />
     </View>
-    <Text fontSize="$8" fontFamily="TBJSodabery-LightOriginal">
+    <Text fontSize="$8" fontFamily="$sodabery">
       Leider kein Treffer!
     </Text>
     <View py="$4" mt="$2">
       <ThemedText textAlign="center" fontSize={16} fw={400}>
-        Für deine Suche konnte keine Bohne gefunden werden. Probier doch mal
-        eine andere Suche.
+        Für deine Suche konnte keine Bohne gefunden werden. Probier doch mal eine andere Suche.
       </ThemedText>
     </View>
   </YStack>

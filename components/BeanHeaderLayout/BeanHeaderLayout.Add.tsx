@@ -26,9 +26,7 @@ export const BeanHeaderLayoutAdd = () => {
       alignItems="center"
       width="100%"
     >
-      <Animated.Text
-        style={{ fontSize, fontFamily: "TBJSodabery-LightOriginal" }}
-      >
+      <Animated.Text style={{ fontSize, fontFamily: "$sodabery" }}>
         Neue Bohne
       </Animated.Text>
       <ThemedText fw={400} mt="$1">

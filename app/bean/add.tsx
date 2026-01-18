@@ -1,9 +1,4 @@
-import {
-  beanTable,
-  beanTasteAssociationTable,
-  beanTasteTable,
-  roasteryTable,
-} from "@/db/schema";
+import { beanTable, beanTasteAssociationTable, beanTasteTable, roasteryTable } from "@/db/schema";
 import React, { FC, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 
@@ -52,9 +47,7 @@ const AddBeanPage: FC = () => {
   const resetBeanState = useBeanStore((state) => state.clearBeanTaste);
   const removeBeanTaste = useBeanStore((state) => state.removeBeanTaste);
   const updateEditRoastery = useBeanStore((state) => state.updateEditRoastery);
-  const updateEditBeanTaste = useBeanStore(
-    (state) => state.updateEditBeanTaste,
-  );
+  const updateEditBeanTaste = useBeanStore((state) => state.updateEditBeanTaste);
 
   const { data: roasteries } = useLiveQuery(db.select().from(roasteryTable));
 
@@ -80,11 +73,7 @@ const AddBeanPage: FC = () => {
       const beanTasteAssociationValueIds = beanTaste
         .filter((taste) => taste.id !== -1)
         .map((taste) => ({ id: taste.id }));
-      await insertTaste(
-        beanId.id,
-        tasteForBeanTable,
-        beanTasteAssociationValueIds,
-      );
+      await insertTaste(beanId.id, tasteForBeanTable, beanTasteAssociationValueIds);
     }
     router.dismissTo("/");
   };
@@ -115,10 +104,7 @@ const AddBeanPage: FC = () => {
       .values(beanTasteValues)
       .returning({ id: beanTasteTable.id });
 
-    const insertAssociationValues = [
-      ...tasteIds,
-      ...beanTasteAssociationValueIds,
-    ].map((taste) => ({
+    const insertAssociationValues = [...tasteIds, ...beanTasteAssociationValueIds].map((taste) => ({
       beanId,
       tasteId: taste.id,
     }));
@@ -174,11 +160,7 @@ const AddBeanPage: FC = () => {
             name="singleShotDosis"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <StepperInput
-                value={value}
-                onChange={onChange}
-                label="Single Shot"
-              />
+              <StepperInput value={value} onChange={onChange} label="Single Shot" />
             )}
           />
 
@@ -186,11 +168,7 @@ const AddBeanPage: FC = () => {
             control={control}
             name="doubleShotDosis"
             render={({ field: { onChange, value } }) => (
-              <StepperInput
-                value={value}
-                onChange={onChange}
-                label="Double Shot"
-              />
+              <StepperInput value={value} onChange={onChange} label="Double Shot" />
             )}
           />
         </XStack>
@@ -213,13 +191,7 @@ const AddBeanPage: FC = () => {
           />
         </View>
 
-        <XStack
-          flex={0}
-          width="100%"
-          justifyContent="center"
-          alignItems="center"
-          gap="$4"
-        >
+        <XStack flex={0} width="100%" justifyContent="center" alignItems="center" gap="$4">
           <View flex={1}>
             <Controller
               name="roastery"
@@ -256,14 +228,7 @@ const AddBeanPage: FC = () => {
         <View flex={0} mt="$4">
           <Text fontSize="$6">Geschmack</Text>
           {beanTaste && (
-            <View
-              flex={0}
-              flexDirection="row"
-              gap="$2"
-              pt="$3"
-              flexWrap="wrap"
-              mb="$4"
-            >
+            <View flex={0} flexDirection="row" gap="$2" pt="$3" flexWrap="wrap" mb="$4">
               {beanTaste.map((taste: Taste, index) => (
                 <Badge
                   key={`bean-badge-${taste}-${index}`}
@@ -288,9 +253,7 @@ const AddBeanPage: FC = () => {
               bgC="$secondary"
               color="white"
               size="$3"
-              onPress={() =>
-                updateEditBeanTaste({ showSheet: true, type: "add" })
-              }
+              onPress={() => updateEditBeanTaste({ showSheet: true, type: "add" })}
               pressStyle={{
                 backgroundColor: "$secondary",
               }}

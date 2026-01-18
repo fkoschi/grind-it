@@ -13,10 +13,7 @@ import { selectTasteNotInArray } from "@/db/queries";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { Taste } from "@/types";
 import { useAutoFocus } from "@/hooks/useAutoFocus";
-import {
-  AddBeanTasteFrameSelection,
-  AddBeanTasteFrameSuggestions,
-} from "./components";
+import { AddBeanTasteFrameSelection, AddBeanTasteFrameSuggestions } from "./components";
 
 interface AddTasteFormInput {
   name: string;
@@ -34,9 +31,7 @@ const AddBeanTasteFrame: FC<AddBeanTasteFrameProps> = ({ open }) => {
 
   const { control, reset } = useForm<AddTasteFormInput>();
 
-  const handleSubmit = async (
-    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
-  ) => {
+  const handleSubmit = async (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => {
     e.preventDefault();
 
     if (value.trim().length === 0) {
@@ -108,9 +103,7 @@ const AddBeanTasteFrame: FC<AddBeanTasteFrameProps> = ({ open }) => {
             />
           </View>
           <View flex={0} ml="$3" justifyContent="center">
-            <Pressable
-              onPress={() => showTasteSheet({ showSheet: false, type: "add" })}
-            >
+            <Pressable onPress={() => showTasteSheet({ showSheet: false, type: "add" })}>
               <Text>Abbrechen</Text>
             </Pressable>
           </View>

@@ -9,9 +9,7 @@ import { useDatabase } from "@/provider/DatabaseProvider";
 import { eq } from "drizzle-orm";
 import { useLocalSearchParams } from "expo-router";
 
-export const BeanHeaderLayoutDetails = ({
-  isFavorite: defaultIsFavorite,
-}: any) => {
+export const BeanHeaderLayoutDetails = ({ isFavorite: defaultIsFavorite }: any) => {
   const { db } = useDatabase();
   const animationRef = useRef<LottieView>(null);
   const { id: beanId } = useLocalSearchParams();

@@ -2,11 +2,7 @@ import { Pressable } from "react-native";
 import Animated, { useSharedValue } from "react-native-reanimated";
 import { Image } from "expo-image";
 import { LinearGradient } from "tamagui/linear-gradient";
-import {
-  useLocalSearchParams,
-  useRouteInfo,
-  useRouter,
-} from "expo-router/build/hooks";
+import { useLocalSearchParams, useRouteInfo, useRouter } from "expo-router/build/hooks";
 import { PATH_NAME as EDIT_BEAN_PATH_NAME } from "@/app/bean/edit/[id]";
 import { PATH_NAME as DETAILS_BEAN_PATH_NAME } from "@/app/bean/details/[id]";
 import { PATH_NAME as EDIT_DEGREE_PATH_NAME } from "@/app/bean/edit/degree/[id]";
@@ -26,8 +22,7 @@ const BeanHeaderLayout = () => {
 
   const height = useSharedValue(240);
   const isEditBeanRoute = routerPathName === `${EDIT_BEAN_PATH_NAME}/${beanId}`;
-  const isDetailsRoute =
-    routerPathName === `${DETAILS_BEAN_PATH_NAME}/${beanId}`;
+  const isDetailsRoute = routerPathName === `${DETAILS_BEAN_PATH_NAME}/${beanId}`;
   const isEditDegreeRoute = routerPathName.includes(EDIT_DEGREE_PATH_NAME);
   const isAddRoute = routerPathName.includes("add");
 
@@ -41,19 +36,11 @@ const BeanHeaderLayout = () => {
         start={[0, 1]}
         end={[0, 0]}
       >
-        <Pressable
-          style={{ position: "sticky", top: 80, left: 32 }}
-          onPress={() => router.back()}
-        >
-          <Image
-            source={require("@/assets/icons/back.png")}
-            style={{ width: 24, height: 24 }}
-          />
+        <Pressable style={{ position: "sticky", top: 80, left: 32 }} onPress={() => router.back()}>
+          <Image source={require("@/assets/icons/back.png")} style={{ width: 24, height: 24 }} />
         </Pressable>
         {isAddRoute && <Add />}
-        {isDetailsRoute && beansData && (
-          <Details isFavorite={beansData.isFavorit} />
-        )}
+        {isDetailsRoute && beansData && <Details isFavorite={beansData.isFavorit} />}
         {isEditDegreeRoute && <EditDegree />}
         {isEditBeanRoute && <EditBean />}
       </LinearGradient>

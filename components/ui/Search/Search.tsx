@@ -24,13 +24,7 @@ const Search: FC<Props> = ({ disabled = false, onChangeText }) => {
   const showClear = search && search?.length > 0;
 
   return (
-    <View
-      flex={1}
-      bgC="white"
-      flexDirection="row"
-      borderRadius="$10"
-      alignItems="center"
-    >
+    <View flex={1} bgC="white" flexDirection="row" borderRadius="$10" alignItems="center">
       <View width={40} alignItems="center">
         <Image
           source={require("@/assets/icons/search.png")}

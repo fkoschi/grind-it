@@ -36,7 +36,7 @@ const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
   const DataView = () => (
     <ScrollView>
       <XGroup gap="$2">
-        {data.map((taste, index) => (
+        {data.map((taste) => (
           <View key={taste.flavor} alignSelf="flex-start" mb="$2">
             <Badge
               title={taste.flavor}
@@ -74,12 +74,7 @@ const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
           </Pressable>
         </View>
         <View flex={1} justifyContent="flex-end" alignItems="center">
-          <Text
-            fontSize={32}
-            c={"$white"}
-            fontFamily="TBJSodabery-LightOriginal"
-            mb="$6"
-          >
+          <Text fontSize={32} c={"$white"} fontFamily="$sodabery" mb="$6">
             Geschmack
           </Text>
         </View>

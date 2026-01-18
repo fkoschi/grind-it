@@ -1,10 +1,5 @@
 import { ExpoSQLiteDatabase } from "drizzle-orm/expo-sqlite";
-import {
-  beanTable,
-  beanTasteAssociationTable,
-  beanTasteTable,
-  roasteryTable,
-} from "./schema";
+import { beanTable, beanTasteAssociationTable, beanTasteTable, roasteryTable } from "./schema";
 import { eq, sql, and, inArray, notInArray } from "drizzle-orm";
 
 /**
@@ -30,8 +25,7 @@ const selectTasteInArray = (db: ExpoSQLiteDatabase, filterBy: number[]) => {
     .prepare();
 };
 
-const selectRoasteries = (db: ExpoSQLiteDatabase) =>
-  db.select().from(roasteryTable).prepare();
+const selectRoasteries = (db: ExpoSQLiteDatabase) => db.select().from(roasteryTable).prepare();
 
 const queryBeansBySearchAndFilter = (
   db: ExpoSQLiteDatabase,
@@ -53,10 +47,7 @@ const queryBeansBySearchAndFilter = (
     })
     .from(beanTable)
     .leftJoin(roasteryTable, eq(beanTable.roastery, roasteryTable.id))
-    .leftJoin(
-      beanTasteAssociationTable,
-      eq(beanTable.id, beanTasteAssociationTable.beanId),
-    )
+    .leftJoin(beanTasteAssociationTable, eq(beanTable.id, beanTasteAssociationTable.beanId))
     .where(
       and(
         sql`${beanTable.name} like ${`%${search}%`}`,
@@ -68,27 +59,18 @@ const queryBeansBySearchAndFilter = (
     );
 };
 
-const selectFilteredBeanTasteSuggestion = (
-  db: ExpoSQLiteDatabase,
-  beanTasteFilter: number[],
-) =>
+const selectFilteredBeanTasteSuggestion = (db: ExpoSQLiteDatabase, beanTasteFilter: number[]) =>
   db
     .select({ id: beanTasteTable.id, flavor: beanTasteTable.flavor })
     .from(beanTasteTable)
     .where(notInArray(beanTasteTable.id, beanTasteFilter))
     .prepare();
 
-const selectBeanTasteById = (
-  db: ExpoSQLiteDatabase,
-  beanId: string | string[],
-) =>
+const selectBeanTasteById = (db: ExpoSQLiteDatabase, beanId: string | string[]) =>
   db
     .select({ id: beanTasteTable.id, flavor: beanTasteTable.flavor })
     .from(beanTasteTable)
-    .innerJoin(
-      beanTasteAssociationTable,
-      eq(beanTasteAssociationTable.tasteId, beanTasteTable.id),
-    )
+    .innerJoin(beanTasteAssociationTable, eq(beanTasteAssociationTable.tasteId, beanTasteTable.id))
     .where(eq(beanTasteAssociationTable.beanId, Number(beanId)))
     .prepare();
 

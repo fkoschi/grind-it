@@ -7,11 +7,7 @@ interface TabsContentProps extends StackProps {
   children: ReactNode;
 }
 
-export const TabsContent = ({
-  value,
-  children,
-  ...props
-}: TabsContentProps) => {
+export const TabsContent = ({ value, children, ...props }: TabsContentProps) => {
   const { activeTab } = useTabs();
   const isActive = activeTab === value;
 
