@@ -47,6 +47,14 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen
+          name="add-bean"
+          options={{
+            headerShown: false,
+            presentation: "fullScreenModal",
+            animation: "slide_from_bottom",
+          }}
+        />
+        <Stack.Screen
           name="chat"
           options={{
             headerShown: false,

@@ -13,6 +13,7 @@ import { BeanHeaderLayoutAdd as Add } from "./BeanHeaderLayout.Add";
 import { BeanHeaderLayoutEditDegree as EditDegree } from "./BeanHeaderLayout.EditDegree";
 import React from "react";
 import { useBeansData } from "@/hooks/useBensData";
+import { ClearIcon } from "@/components/ui";
 
 const BeanHeaderLayout = () => {
   const router = useRouter();
@@ -37,7 +38,11 @@ const BeanHeaderLayout = () => {
         end={[0, 0]}
       >
         <Pressable style={{ position: "sticky", top: 80, left: 32 }} onPress={() => router.back()}>
-          <Image source={require("@/assets/icons/back.png")} style={{ width: 24, height: 24 }} />
+          {isAddRoute ? (
+            <ClearIcon size={24} fill="#000" />
+          ) : (
+            <Image source={require("@/assets/icons/back.png")} style={{ width: 24, height: 24 }} />
+          )}
         </Pressable>
         {isAddRoute && <Add />}
         {isDetailsRoute && beansData && <Details isFavorite={beansData.isFavorit} />}

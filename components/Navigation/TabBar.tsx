@@ -35,7 +35,7 @@ const TabBar: FC = () => {
           circular
           bgC={"#664F3F"}
           flex={1}
-          onPress={() => router.navigate("/bean/add")}
+          onPress={() => router.push("/add-bean")}
           pressStyle={{ bgC: "$secondaryHover" }}
         >
           <AddIcon />
