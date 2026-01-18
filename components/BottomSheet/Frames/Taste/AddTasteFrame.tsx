@@ -66,8 +66,8 @@ const AddTasteFrame: FC<AddTasteFrameProps> = ({ open, onCancel, onSave }) => {
         Neuer Geschmack
       </Text>
       <Text mt="$2" fontSize={12} color={"$copyText"}>
-        Dieser Geschmack wird unabhängig von einer Bohne erstellt und kann
-        später zu beliebig vielen Bohnen zugeordnet werden.
+        Dieser Geschmack wird unabhängig von einer Bohne erstellt und kann später zu beliebig vielen
+        Bohnen zugeordnet werden.
       </Text>
 
       <XStack mt="$6">

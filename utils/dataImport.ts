@@ -1,10 +1,5 @@
 import { ExpoSQLiteDatabase } from "drizzle-orm/expo-sqlite";
-import {
-  beanTable,
-  beanTasteAssociationTable,
-  beanTasteTable,
-  roasteryTable,
-} from "@/db/schema";
+import { beanTable, beanTasteAssociationTable, beanTasteTable, roasteryTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { ExportedData, EXPORT_VERSION } from "./dataExport";
 import { calculateSimilarity } from "./fuzzyMatch";
@@ -34,11 +29,7 @@ const validateImportData = (data: unknown): ExportedData => {
 
   const exportData = data as Partial<ExportedData>;
 
-  if (
-    !exportData.version ||
-    !exportData.beans ||
-    !Array.isArray(exportData.beans)
-  ) {
+  if (!exportData.version || !exportData.beans || !Array.isArray(exportData.beans)) {
     throw new Error("Missing required fields in import data");
   }
 
@@ -67,10 +58,7 @@ const findOrCreateRoastery = async (
     return existing[0].id;
   }
 
-  const result = await db
-    .insert(roasteryTable)
-    .values({ name: roasteryName })
-    .returning();
+  const result = await db.insert(roasteryTable).values({ name: roasteryName }).returning();
 
   stats.created++;
   return result[0].id;
@@ -81,10 +69,7 @@ const findOrCreateTaste = async (
   flavor: string,
   stats: { created: number },
 ): Promise<number> => {
-  const existing = await db
-    .select()
-    .from(beanTasteTable)
-    .where(eq(beanTasteTable.flavor, flavor));
+  const existing = await db.select().from(beanTasteTable).where(eq(beanTasteTable.flavor, flavor));
 
   if (existing.length > 0) {
     return existing[0].id;
@@ -157,11 +142,7 @@ export const importData = async (
           }
         }
 
-        const roasteryId = await findOrCreateRoastery(
-          db,
-          beanData.roasteryName,
-          roasteryStats,
-        );
+        const roasteryId = await findOrCreateRoastery(db, beanData.roasteryName, roasteryStats);
 
         const insertedBean = await db
           .insert(beanTable)
@@ -198,11 +179,8 @@ export const importData = async (
 
         result.beansCreated++;
       } catch (error) {
-        const errorMessage =
-          error instanceof Error ? error.message : String(error);
-        result.errors.push(
-          `Failed to import bean "${beanData.name}": ${errorMessage}`,
-        );
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        result.errors.push(`Failed to import bean "${beanData.name}": ${errorMessage}`);
       }
     }
 

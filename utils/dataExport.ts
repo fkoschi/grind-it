@@ -1,10 +1,5 @@
 import { ExpoSQLiteDatabase } from "drizzle-orm/expo-sqlite";
-import {
-  beanTable,
-  beanTasteAssociationTable,
-  beanTasteTable,
-  roasteryTable,
-} from "@/db/schema";
+import { beanTable, beanTasteAssociationTable, beanTasteTable, roasteryTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export const EXPORT_VERSION = "1.0.0";
@@ -36,9 +31,7 @@ export interface ExportedData {
   beans: ExportedBean[];
 }
 
-export const exportAllData = async (
-  db: ExpoSQLiteDatabase,
-): Promise<string> => {
+export const exportAllData = async (db: ExpoSQLiteDatabase): Promise<string> => {
   const beans = await db.select().from(beanTable);
 
   const exportedBeans: ExportedBean[] = await Promise.all(

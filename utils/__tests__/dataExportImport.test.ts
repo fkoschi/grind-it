@@ -1,12 +1,7 @@
 import { exportAllData, EXPORT_VERSION } from "../dataExport";
 import { importData } from "../dataImport";
 import { ExpoSQLiteDatabase } from "drizzle-orm/expo-sqlite";
-import {
-  beanTable,
-  beanTasteAssociationTable,
-  beanTasteTable,
-  roasteryTable,
-} from "@/db/schema";
+import { beanTable, beanTasteAssociationTable, beanTasteTable, roasteryTable } from "@/db/schema";
 
 const createMockDb = (): ExpoSQLiteDatabase => {
   const mockData = {
@@ -57,13 +52,11 @@ const createMockDb = (): ExpoSQLiteDatabase => {
         return Promise.resolve(mockData.beans);
       }
       if (table === roasteryTable) {
-        mock.where = jest
-          .fn()
-          .mockResolvedValue(mockData.roasteries.slice(0, 1));
+        mock.where = jest.fn().mockResolvedValue(mockData.roasteries.slice(0, 1));
         return mock;
       }
       if (table === beanTasteTable) {
-        mock.where = jest.fn((condition) => {
+        mock.where = jest.fn(() => {
           return Promise.resolve([mockData.tastes[0]]);
         });
         return mock;

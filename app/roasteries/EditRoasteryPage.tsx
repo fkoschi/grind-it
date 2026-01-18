@@ -10,16 +10,8 @@ import { Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import NoData from "@/components/NoData/NoData";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
-import {
-  ActionButton,
-  AddIcon,
-  DeleteOutlinedIcon,
-  Sheet as BottomSheet,
-} from "@/components/ui";
-import Reanimated, {
-  SharedValue,
-  useAnimatedStyle,
-} from "react-native-reanimated";
+import { ActionButton, AddIcon, DeleteOutlinedIcon, Sheet as BottomSheet } from "@/components/ui";
+import Reanimated, { SharedValue, useAnimatedStyle } from "react-native-reanimated";
 import { HapticTab } from "@/components/ui/HapticTab/HapticTab";
 
 import { AddRoasteryFrame } from "@/components";
@@ -44,10 +36,7 @@ const EditRoasteries: FC = () => {
       end={[0, 0]}
     >
       <View>
-        <Pressable
-          style={{ position: "sticky", top: 80, left: 32 }}
-          onPress={() => router.back()}
-        >
+        <Pressable style={{ position: "sticky", top: 80, left: 32 }} onPress={() => router.back()}>
           <Image
             source={require("@/assets/icons/back.png")}
             style={{ width: 24, height: 24, tintColor: "white" }}
@@ -74,11 +63,7 @@ const EditRoasteries: FC = () => {
 
     return (
       <Reanimated.View style={animatedStyle}>
-        <HapticTab
-          mr="$1"
-          onPress={() => handleDelete(roasteryId)}
-          style={{ padding: 8 }}
-        >
+        <HapticTab mr="$1" onPress={() => handleDelete(roasteryId)} style={{ padding: 8 }}>
           <DeleteOutlinedIcon size={18} color="white" />
         </HapticTab>
       </Reanimated.View>
@@ -112,11 +97,7 @@ const EditRoasteries: FC = () => {
       <Header />
       <View flex={1} mt="$4" py="$6">
         {noData && (
-          <NoData
-            variant={3}
-            headline="Keine Daten!"
-            copy="Erstelle deine erste Rösterei"
-          />
+          <NoData variant={3} headline="Keine Daten!" copy="Erstelle deine erste Rösterei" />
         )}
         {hasData && <DataView />}
       </View>
@@ -134,12 +115,7 @@ const EditRoasteries: FC = () => {
           onOpenChange: (open: boolean) => setOpenSheet(open),
           dismissOnSnapToBottom: true,
         }}
-        frame={
-          <AddRoasteryFrame
-            open={openSheet}
-            onFormSubmit={() => setOpenSheet(false)}
-          />
-        }
+        frame={<AddRoasteryFrame open={openSheet} onFormSubmit={() => setOpenSheet(false)} />}
       />
     </View>
   );

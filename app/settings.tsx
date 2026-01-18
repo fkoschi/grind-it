@@ -1,14 +1,6 @@
 import { FC, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  Avatar,
-  Text,
-  ListItem,
-  View,
-  YGroup,
-  Separator,
-  Spinner,
-} from "tamagui";
+import { Avatar, Text, ListItem, View, YGroup, Separator, Spinner } from "tamagui";
 import { ChevronRight, Share2, Upload } from "@tamagui/lucide-icons";
 import { useRouter } from "expo-router";
 import { Share, Alert, Platform } from "react-native";
@@ -28,6 +20,7 @@ const SettingsPage: FC = () => {
   const [isSharing, setIsSharing] = useState(false);
 
   const { importData, isImporting } = useDataImport();
+  const [isPickingFile, setIsPickingFile] = useState(false);
 
   const handleShareData = async () => {
     setIsSharing(true);
@@ -35,10 +28,7 @@ const SettingsPage: FC = () => {
       const jsonData = await exportData();
 
       if (!jsonData) {
-        Alert.alert(
-          "Export fehlgeschlagen",
-          "Die Daten konnten nicht exportiert werden."
-        );
+        Alert.alert("Export fehlgeschlagen", "Die Daten konnten nicht exportiert werden.");
         return;
       }
 
@@ -72,6 +62,9 @@ const SettingsPage: FC = () => {
   };
 
   const handleImportData = async () => {
+    if (isPickingFile) return;
+    setIsPickingFile(true);
+
     try {
       const result = await DocumentPicker.getDocumentAsync({
         type: "application/json",
@@ -83,12 +76,6 @@ const SettingsPage: FC = () => {
       }
 
       const fileUri = result.assets[0].uri;
-      // Define the file using the URI directly - assuming modern API supports this constructor or similar pattern
-      // based on user request "new File().text()"
-      // Note: If constructor requires (dir, filename), we might need to parse uri, but let's try strict URI first
-      // Actually, expo-file-system File constructor usually takes (dir, filename).
-      // But let's try passing uri as first arg if that's what's supported effectively.
-      // Wait, let's use type casting if needed to avoid TS error if types are old
       const file = new File(fileUri);
       const fileContent = await file.text();
 
@@ -112,27 +99,34 @@ const SettingsPage: FC = () => {
                 if (importResult?.success) {
                   Alert.alert(
                     "Import erfolgreich",
-                    `${importResult.beansCreated} Bohnen importiert.\n${importResult.beansSkipped} Duplikate übersprungen.`
+                    `${importResult.beansCreated} Bohnen importiert.\n${importResult.beansSkipped} Duplikate übersprungen.`,
                   );
                 } else if (importResult) {
                   Alert.alert(
                     "Import mit Fehlern",
-                    `Importiert: ${importResult.beansCreated}\nFehler: ${importResult.errors.join("\n")}`
+                    `Importiert: ${importResult.beansCreated}\nFehler: ${importResult.errors.join("\n")}`,
                   );
                 }
               },
             },
-          ]
+          ],
         );
       } catch {
         Alert.alert(
           "Fehler",
-          "Die Datei konnte nicht gelesen werden. Ist es eine gültige JSON-Datei?"
+          "Die Datei konnte nicht gelesen werden. Ist es eine gültige JSON-Datei?",
         );
       }
     } catch (err) {
       console.error("Import error:", err);
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      if (errorMessage.includes("Different document picking in progress")) {
+        // Ignore this specific error as it means the user just tapped too fast
+        return;
+      }
       Alert.alert("Fehler", "Beim Importieren ist ein Fehler aufgetreten.");
+    } finally {
+      setIsPickingFile(false);
     }
   };
 
@@ -192,10 +186,10 @@ const SettingsPage: FC = () => {
             <ListItem
               pressTheme
               bgC="$white"
-              iconAfter={isImporting ? Spinner : Upload}
+              iconAfter={isImporting || isPickingFile ? Spinner : Upload}
               onPress={handleImportData}
-              disabled={isImporting}
-              opacity={isImporting ? 0.5 : 1}
+              disabled={isImporting || isPickingFile}
+              opacity={isImporting || isPickingFile ? 0.5 : 1}
             >
               Daten importieren
             </ListItem>

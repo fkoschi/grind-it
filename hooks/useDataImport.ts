@@ -3,10 +3,7 @@ import { importData, ImportResult } from "@/utils/dataImport";
 import { useState } from "react";
 
 interface UseDataImportReturn {
-  importData: (
-    jsonData: string,
-    skipDuplicates?: boolean
-  ) => Promise<ImportResult | null>;
+  importData: (jsonData: string, skipDuplicates?: boolean) => Promise<ImportResult | null>;
   isImporting: boolean;
   lastResult: ImportResult | null;
   error: string | null;
@@ -20,7 +17,7 @@ export const useDataImport = (): UseDataImportReturn => {
 
   const performImport = async (
     jsonData: string,
-    skipDuplicates: boolean = true
+    skipDuplicates: boolean = true,
   ): Promise<ImportResult | null> => {
     setIsImporting(true);
     setError(null);

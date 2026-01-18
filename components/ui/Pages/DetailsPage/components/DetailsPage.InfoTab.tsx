@@ -67,12 +67,7 @@ export const DetailsPageInfoTab: FC<Props> = ({ beansData, tastes, onDegreePress
           Mahlgrad
         </ThemedText>
         <Pressable onPress={onDegreePress}>
-          <Text
-            fontSize="$16"
-            lineHeight="$16"
-            color="$primary"
-            fontFamily="$sodabery"
-          >
+          <Text fontSize="$16" lineHeight="$16" color="$primary" fontFamily="$sodabery">
             {beansData.degreeOfGrinding ?? 0}
           </Text>
         </Pressable>

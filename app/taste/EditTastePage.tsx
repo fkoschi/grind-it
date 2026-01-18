@@ -3,12 +3,7 @@ import { useDatabase } from "@/provider/DatabaseProvider";
 import { Image } from "expo-image";
 import React, { FC, useState } from "react";
 import { Text, ScrollView, View, XGroup } from "tamagui";
-import {
-  AddIcon,
-  ActionButton,
-  Sheet as BottomSheet,
-  Badge,
-} from "@/components/ui";
+import { AddIcon, ActionButton, Sheet as BottomSheet, Badge } from "@/components/ui";
 import { eq } from "drizzle-orm";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { Pressable } from "react-native";
@@ -38,11 +33,7 @@ const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
       <XGroup gap="$2">
         {data.map((taste) => (
           <View key={taste.flavor} alignSelf="flex-start" mb="$2">
-            <Badge
-              title={taste.flavor}
-              withButton
-              onPress={() => deleteTaste(taste.id)}
-            />
+            <Badge title={taste.flavor} withButton onPress={() => deleteTaste(taste.id)} />
           </View>
         ))}
       </XGroup>
@@ -81,11 +72,7 @@ const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
       </LinearGradient>
       <View flex={1} mt="$4" py="$6">
         {noData && (
-          <NoData
-            variant={2}
-            headline="Keine Daten!"
-            copy="Erstelle deinen ersten Geschmack"
-          />
+          <NoData variant={2} headline="Keine Daten!" copy="Erstelle deinen ersten Geschmack" />
         )}
         {hasData && <DataView />}
         <View flex={0} style={{ position: "absolute", bottom: 0 }}>

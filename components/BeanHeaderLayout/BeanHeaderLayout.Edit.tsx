@@ -44,12 +44,7 @@ export const BeanHeaderLayoutEdit = () => {
           description="Soll die Bohne endgültig gelöscht werden?"
           onActionPress={handleDeleteBeanPress}
           alertTrigger={
-            <Button
-              flex={1}
-              bgC={"rgba(255, 255, 255, 0.2)"}
-              borderRadius="$radius.9"
-              p="$3"
-            >
+            <Button flex={1} bgC={"rgba(255, 255, 255, 0.2)"} borderRadius="$radius.9" p="$3">
               <DeleteOutlinedIcon size={16} color="#CD5B5B" />
             </Button>
           }

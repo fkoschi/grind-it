@@ -68,11 +68,7 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
           onPress={() => router.navigate(`/bean/details/${id}`)}
           style={{ marginRight: 24 }}
         >
-          <Text
-            c="$primary"
-            fontSize={12}
-            fontFamily="DarkerGrotesque_500Medium"
-          >
+          <Text c="$primary" fontSize={12} fontFamily="DarkerGrotesque_500Medium">
             {roastery}
           </Text>
           <Text fontSize={28} numberOfLines={1} fontFamily="$sodabery" mt="$2">
@@ -96,12 +92,7 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
                   <ThemedText fw={300} fontSize={12} mt="$1">
                     Single Shot
                   </ThemedText>
-                  <Text
-                    mt="$1"
-                    c="$primary"
-                    fontSize={20}
-                    fontFamily="$sodabery"
-                  >
+                  <Text mt="$1" c="$primary" fontSize={20} fontFamily="$sodabery">
                     {singleShotDosis}g
                   </Text>
                 </View>
@@ -111,12 +102,7 @@ const CoffeeCard: FC<CoffeeCardProps> = ({ data }) => {
                   <ThemedText fw={300} fontSize={12} mt="$1">
                     Double Shot
                   </ThemedText>
-                  <Text
-                    mt="$1"
-                    c="$primary"
-                    fontSize={20}
-                    fontFamily="$sodabery"
-                  >
+                  <Text mt="$1" c="$primary" fontSize={20} fontFamily="$sodabery">
                     {doubleShotDosis}g
                   </Text>
                 </View>
