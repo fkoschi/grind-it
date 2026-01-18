@@ -31,11 +31,7 @@ const MessageBubble = styled(View, {
   } as const,
 });
 
-export const ChatMessage: FC<ChatMessageProps> = ({
-  message,
-  type,
-  avatarImage,
-}) => {
+export const ChatMessage: FC<ChatMessageProps> = ({ message, type, avatarImage }) => {
   const isUser = type === "user";
 
   return (
@@ -57,7 +53,7 @@ export const ChatMessage: FC<ChatMessageProps> = ({
           {message}
         </ThemedText>
       </MessageBubble>
-      {/* User avatar is typically not shown in iMessage, but keeping it if desired or removing it for strict adherence. 
+      {/* User avatar is typically not shown in iMessage, but keeping it if desired or removing it for strict adherence.
           The user asked for "avatar for the user" previously, but "styling as in apple messages" now. 
           I will hide the user avatar to match iMessage strictly, or maybe just keep it small? 
           Let's keep it for now as per previous request, but maybe the user wants it gone? 

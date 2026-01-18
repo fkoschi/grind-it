@@ -1,7 +1,6 @@
 import { TamaguiProvider } from "tamagui";
 import config from "../tamagui.config";
 import { useFonts } from "expo-font";
-import { useEffect } from "react";
 
 const preview = {
   parameters: {

@@ -1,12 +1,5 @@
 import React, { useMemo } from "react";
-import {
-  Svg,
-  Polygon,
-  Line,
-  Circle,
-  Text as SvgText,
-  G,
-} from "react-native-svg";
+import { Svg, Polygon, Line, Circle, Text as SvgText, G } from "react-native-svg";
 import { tokens } from "@/tamagui.config";
 import { View } from "tamagui";
 

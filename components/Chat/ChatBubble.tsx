@@ -7,10 +7,7 @@ interface ChatBubbleProps {
   variant?: "primary" | "secondary";
 }
 
-export const ChatBubble = ({
-  children,
-  variant = "secondary",
-}: ChatBubbleProps) => {
+export const ChatBubble = ({ children, variant = "secondary" }: ChatBubbleProps) => {
   const isPrimary = variant === "primary";
 
   const markdownStyles = useMemo(
@@ -24,9 +21,7 @@ export const ChatBubble = ({
         color: isPrimary ? "#87CEEB" : "#0066cc",
       },
       code_inline: {
-        backgroundColor: isPrimary
-          ? "rgba(0, 0, 0, 0.2)"
-          : "rgba(0, 0, 0, 0.05)",
+        backgroundColor: isPrimary ? "rgba(0, 0, 0, 0.2)" : "rgba(0, 0, 0, 0.05)",
         color: isPrimary ? "#ffffff" : "#000000",
         fontFamily: "monospace",
         fontSize: 13,
@@ -35,9 +30,7 @@ export const ChatBubble = ({
         borderRadius: 3,
       },
       code_block: {
-        backgroundColor: isPrimary
-          ? "rgba(0, 0, 0, 0.2)"
-          : "rgba(0, 0, 0, 0.05)",
+        backgroundColor: isPrimary ? "rgba(0, 0, 0, 0.2)" : "rgba(0, 0, 0, 0.05)",
         color: isPrimary ? "#ffffff" : "#000000",
         fontFamily: "monospace",
         fontSize: 13,
@@ -45,9 +38,7 @@ export const ChatBubble = ({
         borderRadius: 4,
       },
       fence: {
-        backgroundColor: isPrimary
-          ? "rgba(0, 0, 0, 0.2)"
-          : "rgba(0, 0, 0, 0.05)",
+        backgroundColor: isPrimary ? "rgba(0, 0, 0, 0.2)" : "rgba(0, 0, 0, 0.05)",
         color: isPrimary ? "#ffffff" : "#000000",
         fontFamily: "monospace",
         fontSize: 13,
@@ -55,12 +46,8 @@ export const ChatBubble = ({
         borderRadius: 4,
       },
       blockquote: {
-        backgroundColor: isPrimary
-          ? "rgba(0, 0, 0, 0.1)"
-          : "rgba(0, 0, 0, 0.03)",
-        borderLeftColor: isPrimary
-          ? "rgba(255, 255, 255, 0.3)"
-          : "rgba(0, 0, 0, 0.2)",
+        backgroundColor: isPrimary ? "rgba(0, 0, 0, 0.1)" : "rgba(0, 0, 0, 0.03)",
+        borderLeftColor: isPrimary ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.2)",
         borderLeftWidth: 3,
         marginLeft: 0,
         paddingLeft: 10,

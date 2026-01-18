@@ -19,10 +19,10 @@ const HomePageComponent: FC = () => {
   const beanTasteFilter = useBeanStore((store) => store.tasteFilter);
   const { allBeans } = useBeanData();
 
-  const { data } = useLiveQuery(
-    queryBeansBySearchAndFilter(db, beanTasteFilter, search),
-    [beanTasteFilter, search],
-  );
+  const { data } = useLiveQuery(queryBeansBySearchAndFilter(db, beanTasteFilter, search), [
+    beanTasteFilter,
+    search,
+  ]);
 
   const handleChangeText = (searchText: string) => {
     setSearch(searchText);
@@ -53,11 +53,7 @@ interface HomePageProps {
 const HomePage: FC<HomePageProps> = ({ data, search, filter, hasBeans }) => {
   if (!hasBeans) {
     return (
-      <NoData
-        variant={1}
-        headline="Keine Bohnen gefunden"
-        copy="Erstelle deine erste Bohne."
-      />
+      <NoData variant={1} headline="Keine Bohnen gefunden" copy="Erstelle deine erste Bohne." />
     );
   }
 

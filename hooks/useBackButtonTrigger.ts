@@ -10,7 +10,7 @@ export const useBackButtonTrigger = (callback?: () => void) => {
 
   useEffect(() => {
     // Add a listener for the 'beforeRemove' event which fires when back button is pressed
-    const unsubscribe = navigation.addListener("beforeRemove", (e) => {
+    const unsubscribe = navigation.addListener("beforeRemove", () => {
       // If a callback was provided, execute it
       if (callback) {
         callback();

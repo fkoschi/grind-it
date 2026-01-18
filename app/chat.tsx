@@ -1,10 +1,5 @@
 import { FC, useRef, useEffect } from "react";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView as RNScrollView,
-  Image,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView as RNScrollView, Image } from "react-native";
 import { View, YStack, Text, Button, ScrollView } from "tamagui";
 import { useRouter } from "expo-router";
 import { ChevronDown } from "@tamagui/lucide-icons";
@@ -97,11 +92,7 @@ const ChatPage: FC = () => {
                     gap="$4"
                     paddingBottom="$8"
                   >
-                    <Text
-                      fontSize="$9"
-                      fontFamily="TBJSodabery-LightOriginal"
-                      color="$primary"
-                    >
+                    <Text fontSize="$9" fontFamily="TBJSodabery-LightOriginal" color="$primary">
                       Brew Buddy
                     </Text>
                     <Image
@@ -140,10 +131,7 @@ Du kannst mich alles fragen! Ich bin spezialisiert auf Kaffee und Siebträgerwis
                     .join("");
 
                   return (
-                    <Chat.Message
-                      key={msg.id}
-                      alignment={isUser ? "right" : "left"}
-                    >
+                    <Chat.Message key={msg.id} alignment={isUser ? "right" : "left"}>
                       {isUser ? (
                         <Chat.Bubble variant="primary">{text}</Chat.Bubble>
                       ) : (
@@ -250,10 +238,7 @@ Du kannst mich alles fragen! Ich bin spezialisiert auf Kaffee und Siebträgerwis
             </ScrollView>
 
             {/* Input */}
-            <Chat.Input
-              onSend={(text) => sendMessage({ text })}
-              isLoading={status !== "ready"}
-            />
+            <Chat.Input onSend={(text) => sendMessage({ text })} isLoading={status !== "ready"} />
           </YStack>
         </KeyboardAvoidingView>
       </View>

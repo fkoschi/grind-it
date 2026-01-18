@@ -17,6 +17,7 @@ This project uses automated version bumping with conventional commits.
 ### Making Commits
 
 Use conventional commit prefixes:
+
 - `feat:` - New feature (minor: 1.4.0 → 1.5.0)
 - `fix:` - Bug fix (patch: 1.4.0 → 1.4.1)
 - `feat!:` - Breaking change (major: 1.4.0 → 2.0.0)

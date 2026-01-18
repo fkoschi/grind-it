@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { View, Input, Button, XStack } from "tamagui";
+import { Input, Button, XStack } from "tamagui";
 import { Send } from "@tamagui/lucide-icons";
 
 interface ChatInputProps {

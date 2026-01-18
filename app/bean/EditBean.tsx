@@ -1,8 +1,4 @@
-import {
-  AddRoasteryFrame,
-  AddBeanTasteFrame,
-  EditBeanTasteFrame,
-} from "@/components";
+import { AddRoasteryFrame, AddBeanTasteFrame, EditBeanTasteFrame } from "@/components";
 
 import { Sheet as BottomSheet } from "@/components/ui";
 import { useBeanStore } from "@/store/bean-store";
@@ -29,10 +25,7 @@ const EditBean: FC<PropsWithChildren> = ({ children }) => {
           onOpenChange: () => hideRoasterySheet(false),
         }}
         frame={
-          <AddRoasteryFrame
-            open={editRoastery}
-            onFormSubmit={() => hideRoasterySheet(false)}
-          />
+          <AddRoasteryFrame open={editRoastery} onFormSubmit={() => hideRoasterySheet(false)} />
         }
       />
       <BottomSheet
@@ -44,8 +37,7 @@ const EditBean: FC<PropsWithChildren> = ({ children }) => {
           dismissOnSnapToBottom: true,
           animation: "medium",
           snapPoints: [90],
-          onOpenChange: () =>
-            hideTasteSheet({ showSheet: false, type: editTaste.type }),
+          onOpenChange: () => hideTasteSheet({ showSheet: false, type: editTaste.type }),
         }}
         frame={
           editTaste.type === "add" ? (

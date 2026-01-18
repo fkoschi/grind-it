@@ -43,9 +43,7 @@
       [
         "expo-font",
         {
-          "fonts": [
-            "./assets/fonts/TBJSodabery-Light.otf"
-          ]
+          "fonts": ["./assets/fonts/TBJSodabery-Light.otf"]
         }
       ],
       "expo-sqlite",

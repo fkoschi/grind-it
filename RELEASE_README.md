@@ -15,11 +15,13 @@ This document provides detailed information about the release process for Grind 
 Before creating a release, ensure you have:
 
 1. **Clean Working Directory**: All changes should be committed
+
    ```bash
    git status  # Should show "nothing to commit, working tree clean"
    ```
 
 2. **Correct Branch**: Always run releases from `main` branch
+
    ```bash
    git checkout main
    git pull origin main
@@ -37,14 +39,15 @@ Before creating a release, ensure you have:
 
 Before creating a release, ensure your commits follow the [Conventional Commits](https://www.conventionalcommits.org/) format:
 
-| Commit Prefix | Version Bump | Example |
-|---------------|--------------|---------|
-| `feat:` | Minor (1.4.0 → 1.5.0) | `feat: add dark mode support` |
-| `fix:` | Patch (1.4.0 → 1.4.1) | `fix: resolve dashboard flicker` |
-| `feat!:` or `BREAKING CHANGE:` | Major (1.4.0 → 2.0.0) | `feat!: redesign navigation` |
-| `chore:`, `docs:`, `style:`, `test:` | No bump | Hidden from changelog |
+| Commit Prefix                        | Version Bump          | Example                          |
+| ------------------------------------ | --------------------- | -------------------------------- |
+| `feat:`                              | Minor (1.4.0 → 1.5.0) | `feat: add dark mode support`    |
+| `fix:`                               | Patch (1.4.0 → 1.4.1) | `fix: resolve dashboard flicker` |
+| `feat!:` or `BREAKING CHANGE:`       | Major (1.4.0 → 2.0.0) | `feat!: redesign navigation`     |
+| `chore:`, `docs:`, `style:`, `test:` | No bump               | Hidden from changelog            |
 
 **Examples:**
+
 ```bash
 git commit -m "feat: add fuzzy duplicate detection"
 git commit -m "fix: prevent NoData flicker on navigation"
@@ -69,6 +72,7 @@ npm run release
 ```
 
 **What This Does:**
+
 1. Analyzes commits since the last tag
 2. Determines version bump type (major/minor/patch)
 3. Updates `package.json` version
@@ -112,6 +116,7 @@ git push --follow-tags origin main
 - `--follow-tags` pushes the commit AND any tags pointing to it
 
 **Alternative (explicit):**
+
 ```bash
 git push origin main
 git push origin --tags
@@ -136,6 +141,7 @@ eas build --platform ios --profile production --auto-submit
 ```
 
 **What happens:**
+
 1. EAS builds your app with production profile
 2. Automatically submits to App Store Connect
 3. Build appears in TestFlight after Apple processing (~5-30 min)
@@ -181,19 +187,20 @@ Configures `standard-version` behavior:
 ```json
 {
   "types": [
-    {"type": "feat", "section": "✨ Features"},
-    {"type": "fix", "section": "🐛 Bug Fixes"},
-    {"type": "refactor", "section": "♻️ Refactoring"},
-    {"type": "perf", "section": "⚡ Performance"}
+    { "type": "feat", "section": "✨ Features" },
+    { "type": "fix", "section": "🐛 Bug Fixes" },
+    { "type": "refactor", "section": "♻️ Refactoring" },
+    { "type": "perf", "section": "⚡ Performance" }
   ],
   "bumpFiles": [
-    {"filename": "package.json", "type": "json"},
-    {"filename": "app.json", "updater": "node_modules/@mccraveiro/standard-version-expo/index.js"}
+    { "filename": "package.json", "type": "json" },
+    { "filename": "app.json", "updater": "node_modules/@mccraveiro/standard-version-expo/index.js" }
   ]
 }
 ```
 
 **Key Points:**
+
 - `types`: Defines which commit types appear in changelog
 - `bumpFiles`: Specifies which files get version updates
 - Expo updater handles `app.json` versioning automatically
@@ -201,6 +208,7 @@ Configures `standard-version` behavior:
 ### Version Synchronization
 
 Both files will have the same version:
+
 - `package.json` → `"version": "1.4.0"`
 - `app.json` → `"expo.version": "1.4.0"`
 
@@ -211,6 +219,7 @@ Both files will have the same version:
 **Problem**: Release attempted on feature branch
 
 **Solution**:
+
 ```bash
 git checkout main
 git pull origin main
@@ -222,6 +231,7 @@ npm run release
 **Problem**: Uncommitted changes exist
 
 **Solution**:
+
 ```bash
 git status
 git add .
@@ -234,6 +244,7 @@ npm run release
 **Problem**: Version tag already created
 
 **Solution**:
+
 ```bash
 # Delete local tag
 git tag -d vX.X.X
@@ -250,6 +261,7 @@ npm run release
 **Problem**: No changes to bump
 
 **Solution**:
+
 - Make commits following conventional format
 - Or use explicit bump: `npm run release:patch`
 
@@ -258,6 +270,7 @@ npm run release
 **Problem**: Forgot `--follow-tags`
 
 **Solution**:
+
 ```bash
 git push origin --tags
 ```

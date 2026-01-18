@@ -33,11 +33,7 @@ export const Default: Story = {
       doubleShotDosis: 20,
       taste: [],
     },
-    tastes: [
-      { flavor: "Chocolate" },
-      { flavor: "Nutty" },
-      { flavor: "Caramel" },
-    ],
+    tastes: [{ flavor: "Chocolate" }, { flavor: "Nutty" }, { flavor: "Caramel" }],
     onEditPress: () => console.log("Edit pressed"),
     onDegreePress: () => console.log("Degree pressed"),
   },
