@@ -21,7 +21,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.fkoschi.grindit"
+      "package": "com.fkoschi.grindit",
+      "versionCode": 1
     },
     "web": {
       "bundler": "metro",
@@ -44,6 +45,15 @@
         "expo-font",
         {
           "fonts": ["./assets/fonts/TBJSodabery-Light.otf"]
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 36
+          }
         }
       ],
       "expo-sqlite",
