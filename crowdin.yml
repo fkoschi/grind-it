@@ -1,0 +1,3 @@
+files:
+  - source: /app
+    translation: /app/translations/%locale_with_underscore%
