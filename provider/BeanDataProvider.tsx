@@ -1,7 +1,9 @@
-import React, { createContext, FC, PropsWithChildren, useContext } from "react";
+import React, { createContext, FC, PropsWithChildren, useContext, useEffect, useRef } from "react";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { useDatabase } from "./DatabaseProvider";
 import { beanTable } from "@/db/schema";
+import { useWatchSync } from "@/hooks/useWatchSync";
+import { useAllBeansForSync } from "@/hooks/useAllBeansForSync";
 
 interface BeanDataContextState {
   allBeans?: { id: number }[];
@@ -14,6 +16,38 @@ export const BeanDataProvider: FC<PropsWithChildren> = ({ children }) => {
 
   // Query all beans once at the provider level - persists across routes
   const { data: allBeans } = useLiveQuery(db.select({ id: beanTable.id }).from(beanTable));
+
+  // Watch sync integration
+  const { syncBeans } = useWatchSync();
+  const { beans, roasteries } = useAllBeansForSync();
+
+  // Debounce timer ref
+  const syncTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Sync beans to Watch when they change (with 2 second debounce)
+  useEffect(() => {
+    // Clear any existing timer
+    if (syncTimerRef.current) {
+      clearTimeout(syncTimerRef.current);
+    }
+
+    // Set new timer
+    syncTimerRef.current = setTimeout(() => {
+      if (beans && roasteries) {
+        syncBeans(beans, roasteries).catch((error) => {
+          console.error("Watch sync error:", error);
+          // App continues functioning even if sync fails
+        });
+      }
+    }, 2000); // 2 second debounce
+
+    // Cleanup
+    return () => {
+      if (syncTimerRef.current) {
+        clearTimeout(syncTimerRef.current);
+      }
+    };
+  }, [beans, roasteries, syncBeans]);
 
   return <BeanDataContext.Provider value={{ allBeans }}>{children}</BeanDataContext.Provider>;
 };
