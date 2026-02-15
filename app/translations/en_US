@@ -1,108 +1,87 @@
-import { beanTasteAssociationTable, beanTasteTable } from "@/db/schema";
-import { useDatabase } from "@/provider/DatabaseProvider";
-import { Image } from "expo-image";
-import React, { FC, useState } from "react";
-import { Text, ScrollView, View, XGroup } from "tamagui";
-import { AddIcon, ActionButton, Sheet as BottomSheet, Badge } from "@/components/ui";
-import { eq } from "drizzle-orm";
-import { LinearGradient } from "tamagui/linear-gradient";
-import { Pressable } from "react-native";
-import { useRouter } from "expo-router";
-import NoData from "@/components/NoData/NoData";
-import { Taste } from "@/types";
-import { AddTasteFrame } from "@/components";
-import { useTranslation } from "react-i18next";
+import {
+  AddRoasteryFrame,
+  AddBeanTasteFrame,
+  EditBeanTasteFrame,
+  SelectRoasteryFrame,
+} from "@/components";
 
-interface EditTastePageProps {
-  data: Taste[];
+import { Sheet as BottomSheet } from "@/components/ui";
+import { useBeanStore } from "@/store/bean-store";
+import { FC, PropsWithChildren } from "react";
+import { View } from "tamagui";
+
+interface EditBeanProps extends PropsWithChildren {
+  selectedRoasteryId?: number;
+  onRoasterySelect?: (id: number) => void;
 }
-const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
-  const { t } = useTranslation();
-  const router = useRouter();
-  const { db } = useDatabase();
-  const [openSheet, setOpenSheet] = useState<boolean>(false);
 
-  const deleteTaste = async (tasteId: number) => {
-    await db
-      .delete(beanTasteAssociationTable)
-      .where(eq(beanTasteAssociationTable.tasteId, tasteId));
-
-    await db.delete(beanTasteTable).where(eq(beanTasteTable.id, tasteId));
-  };
-
-  const DataView = () => (
-    <ScrollView>
-      <XGroup gap="$2">
-        {data.map((taste) => (
-          <View key={taste.flavor} alignSelf="flex-start" mb="$2">
-            <Badge title={taste.flavor} withButton onPress={() => deleteTaste(taste.id)} />
-          </View>
-        ))}
-      </XGroup>
-    </ScrollView>
-  );
-
-  const noData = data.length === 0;
-  const hasData = data.length > 0;
+const EditBean: FC<EditBeanProps> = ({ children, selectedRoasteryId, onRoasterySelect }) => {
+  const editRoastery = useBeanStore((state) => state.editRoastery);
+  const selectRoastery = useBeanStore((state) => state.selectRoastery);
+  const editTaste = useBeanStore((state) => state.editBeanTaste);
+  const hideRoasterySheet = useBeanStore((state) => state.updateEditRoastery);
+  const hideSelectRoasterySheet = useBeanStore((state) => state.updateSelectRoastery);
+  const hideTasteSheet = useBeanStore((state) => state.updateEditBeanTaste);
 
   return (
     <View flex={1}>
-      <LinearGradient
-        height={"$14"}
-        colors={["#FFDAAB", "#E89E3F"]}
-        borderBottomLeftRadius="$12"
-        borderBottomRightRadius="$12"
-        start={[0, 1]}
-        end={[0, 0]}
-      >
-        <View>
-          <Pressable
-            style={{ position: "sticky", top: 80, left: 32 }}
-            onPress={() => router.back()}
-          >
-            <Image
-              source={require("@/assets/icons/back.png")}
-              style={{ width: 24, height: 24, tintColor: "white" }}
-            />
-          </Pressable>
-        </View>
-        <View flex={1} justifyContent="flex-end" alignItems="center">
-          <Text fontSize={32} c={"$white"} fontFamily="$sodabery" mb="$6">
-            {t("taste.title")}
-          </Text>
-        </View>
-      </LinearGradient>
-      <View flex={1} mt="$4" py="$6">
-        {noData && (
-          <NoData variant={2} headline={t("common.noData")} copy={t("taste.noData.subtitle")} />
-        )}
-        {hasData && <DataView />}
-        <View flex={0} style={{ position: "absolute", bottom: 0 }}>
-          <ActionButton
-            icon={<AddIcon />}
-            onPress={() => setOpenSheet(true)}
-            bgC="$primary"
-            pressStyle={{ backgroundColor: "$primaryHover" }}
-          />
-        </View>
-      </View>
+      {children}
       <BottomSheet
         sheetProps={{
-          open: openSheet,
-          animation: "medium",
-          onOpenChange: (open: boolean) => setOpenSheet(open),
+          open: editRoastery,
+          modal: false,
+          zIndex: 200_000_000,
+          snapPointsMode: "percent",
           dismissOnSnapToBottom: true,
+          animation: "medium",
+          onOpenChange: () => hideRoasterySheet(false),
         }}
         frame={
-          <AddTasteFrame
-            open={openSheet}
-            onSave={() => setOpenSheet(false)}
-            onCancel={() => setOpenSheet(false)}
-          />
+          <AddRoasteryFrame open={editRoastery} onFormSubmit={() => hideRoasterySheet(false)} />
+        }
+      />
+      {onRoasterySelect && (
+        <BottomSheet
+          sheetProps={{
+            open: selectRoastery,
+            modal: false,
+            zIndex: 200_000_000,
+            snapPointsMode: "percent",
+            dismissOnSnapToBottom: true,
+            animation: "medium",
+            snapPoints: [60],
+            onOpenChange: () => hideSelectRoasterySheet(false),
+          }}
+          frame={
+            <SelectRoasteryFrame
+              selectedRoasteryId={selectedRoasteryId}
+              onSelect={onRoasterySelect}
+              onClose={() => hideSelectRoasterySheet(false)}
+            />
+          }
+        />
+      )}
+      <BottomSheet
+        sheetProps={{
+          open: editTaste.showSheet,
+          modal: false,
+          zIndex: 200_000_000,
+          snapPointsMode: "percent",
+          dismissOnSnapToBottom: true,
+          animation: "medium",
+          snapPoints: [90],
+          onOpenChange: () => hideTasteSheet({ showSheet: false, type: editTaste.type }),
+        }}
+        frame={
+          editTaste.type === "add" ? (
+            <AddBeanTasteFrame open={editTaste.showSheet} />
+          ) : (
+            <EditBeanTasteFrame open={editTaste.showSheet} />
+          )
         }
       />
     </View>
   );
 };
 
-export default EditTastePage;
+export default EditBean;
