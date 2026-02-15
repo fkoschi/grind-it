@@ -2,7 +2,7 @@
   "expo": {
     "name": "Grind It",
     "slug": "grind-it",
-    "version": "1.10.1",
+    "version": "1.11.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "grind-it",
@@ -59,7 +59,8 @@
         }
       ],
       "expo-sqlite",
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true
