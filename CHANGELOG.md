@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/fkoschi/grind-it/compare/v1.9.0...v1.10.0) (2026-02-15)
+
+
+### 🐛 Bug Fixes
+
+* Update iOS build workflow to use generic platform for simulator destination. ([106cc4f](https://github.com/fkoschi/grind-it/commit/106cc4f2b3b3b074f614d2fe5c891ca9cc9caf27))
+
+
+### ✨ Features
+
+* add apple watch ([#24](https://github.com/fkoschi/grind-it/issues/24)) ([d8fc7b8](https://github.com/fkoschi/grind-it/commit/d8fc7b81577eb1dab710464ba027c5ebc2ada4ac))
+
 ## [1.9.0](https://github.com/fkoschi/grind-it/compare/v1.8.3...v1.9.0) (2026-01-18)
 
 
