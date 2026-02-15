@@ -1,125 +1,211 @@
 import { FC, useState } from "react";
-import { roasteryTable } from "@/db/schema";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { Text, ListItem, ScrollView, View, YGroup } from "tamagui";
-import { eq } from "drizzle-orm";
-import { Image } from "expo-image";
-import { useDatabase } from "@/provider/DatabaseProvider";
-import { LinearGradient } from "tamagui/linear-gradient";
-import { Pressable } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Avatar, Text, ListItem, View, YGroup, Separator, Spinner } from "tamagui";
+import { ChevronRight, Share2, Upload } from "@tamagui/lucide-icons";
 import { useRouter } from "expo-router";
-import NoData from "@/components/NoData/NoData";
-import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
-import { ActionButton, AddIcon, DeleteOutlinedIcon, Sheet as BottomSheet } from "@/components/ui";
-import Reanimated, { SharedValue, useAnimatedStyle } from "react-native-reanimated";
-import { HapticTab } from "@/components/ui/HapticTab/HapticTab";
+import { Share, Alert, Platform } from "react-native";
+import { File, Paths } from "expo-file-system";
+import TabBar from "@/components/Navigation/TabBar";
+import { ThemedText } from "@/components/ui";
+import { useDataExport } from "@/hooks/useDataExport";
+import { useDataImport } from "@/hooks/useDataImport";
+import * as DocumentPicker from "expo-document-picker";
 import { useTranslation } from "react-i18next";
 
-import { AddRoasteryFrame } from "@/components";
+import { version } from "../package.json";
 
-const EditRoasteries: FC = () => {
+const SettingsPage: FC = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { db } = useDatabase();
-  const [openSheet, setOpenSheet] = useState<boolean>(false);
-  const { data } = useLiveQuery(db.select().from(roasteryTable));
+  const insets = useSafeAreaInsets();
+  const { exportData, isExporting } = useDataExport();
+  const [isSharing, setIsSharing] = useState(false);
 
-  const handleDelete = async (id: number) => {
-    await db.delete(roasteryTable).where(eq(roasteryTable.id, id));
+  const { importData, isImporting } = useDataImport();
+  const [isPickingFile, setIsPickingFile] = useState(false);
+
+  const handleShareData = async () => {
+    setIsSharing(true);
+    try {
+      const jsonData = await exportData();
+
+      if (!jsonData) {
+        Alert.alert(t("settings.export.failed.title"), t("settings.export.failed.message"));
+        return;
+      }
+
+      const fileName = `grind-it-export-${new Date().toISOString().split("T")[0]}.json`;
+      const file = new File(Paths.document, fileName);
+
+      if (file.exists) {
+        await file.delete();
+      }
+      await file.create();
+      await file.write(jsonData);
+
+      const shareOptions = Platform.select({
+        ios: {
+          url: file.uri,
+          message: t("settings.export.shareTitle"),
+        },
+        default: {
+          title: t("settings.export.shareTitle"),
+          url: file.uri,
+        },
+      });
+
+      await Share.share(shareOptions);
+    } catch (err) {
+      console.error("Share error:", err);
+      Alert.alert(t("settings.export.shareError.title"), t("settings.export.shareError.message"));
+    } finally {
+      setIsSharing(false);
+    }
   };
 
-  const Header = () => (
-    <LinearGradient
-      height={"$14"}
-      colors={["#FFDAAB", "#E89E3F"]}
-      borderBottomLeftRadius="$12"
-      borderBottomRightRadius="$12"
-      start={[0, 1]}
-      end={[0, 0]}
-    >
-      <View>
-        <Pressable style={{ position: "sticky", top: 80, left: 32 }} onPress={() => router.back()}>
-          <Image
-            source={require("@/assets/icons/back.png")}
-            style={{ width: 24, height: 24, tintColor: "white" }}
-          />
-        </Pressable>
-      </View>
-      <View flex={1} justifyContent="flex-end" alignItems="center">
-        <Text fontSize={32} c={"$white"} fontFamily="$sodabery" mb="$6">
-          {t("roastery.title")}
-        </Text>
-      </View>
-    </LinearGradient>
-  );
+  const handleImportData = async () => {
+    if (isPickingFile) return;
+    setIsPickingFile(true);
 
-  const RightAction = (drag: SharedValue<number>, roasteryId: number) => {
-    const animatedStyle = useAnimatedStyle(() => ({
-      width: Math.max(40, drag.value * -1),
-      backgroundColor: "#CD5B5B",
-      justifyContent: "center",
-      alignItems: "flex-end",
-      borderTopRightRadius: 12,
-      borderBottomRightRadius: 12,
-    }));
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: "application/json",
+        copyToCacheDirectory: true,
+      });
 
-    return (
-      <Reanimated.View style={animatedStyle}>
-        <HapticTab mr="$1" onPress={() => handleDelete(roasteryId)} style={{ padding: 8 }}>
-          <DeleteOutlinedIcon size={18} color="white" />
-        </HapticTab>
-      </Reanimated.View>
-    );
+      if (result.canceled) {
+        return;
+      }
+
+      const fileUri = result.assets[0].uri;
+      const file = new File(fileUri);
+      const fileContent = await file.text();
+
+      try {
+        const parsedData = JSON.parse(fileContent);
+        const beanCount = parsedData.beans?.length || 0;
+
+        Alert.alert(
+          t("settings.import.confirm.title"),
+          t("settings.import.confirm.message", { count: beanCount }),
+          [
+            {
+              text: t("common.cancel"),
+              style: "cancel",
+            },
+            {
+              text: t("settings.import.action"),
+              onPress: async () => {
+                const importResult = await importData(fileContent, true);
+
+                if (importResult?.success) {
+                  Alert.alert(
+                    t("settings.import.success.title"),
+                    t("settings.import.success.message", {
+                      created: importResult.beansCreated,
+                      skipped: importResult.beansSkipped,
+                    }),
+                  );
+                } else if (importResult) {
+                  Alert.alert(
+                    t("settings.import.partial.title"),
+                    t("settings.import.partial.message", {
+                      created: importResult.beansCreated,
+                      errors: importResult.errors.join("\n"),
+                    }),
+                  );
+                }
+              },
+            },
+          ],
+        );
+      } catch {
+        Alert.alert(
+          t("settings.import.invalidFile.title"),
+          t("settings.import.invalidFile.message"),
+        );
+      }
+    } catch (err) {
+      console.error("Import error:", err);
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      if (errorMessage.includes("Different document picking in progress")) {
+        // Ignore this specific error as it means the user just tapped too fast
+        return;
+      }
+      Alert.alert(t("settings.import.error.title"), t("settings.import.error.message"));
+    } finally {
+      setIsPickingFile(false);
+    }
   };
-
-  const DataView = () => (
-    <ScrollView>
-      <YGroup>
-        {data.map((roastery, index) => (
-          <ReanimatedSwipeable
-            key={index}
-            renderRightActions={(prog, drag) => RightAction(drag, roastery.id)}
-          >
-            <YGroup.Item>
-              <ListItem circular py="$4">
-                {roastery.name}
-              </ListItem>
-            </YGroup.Item>
-          </ReanimatedSwipeable>
-        ))}
-      </YGroup>
-    </ScrollView>
-  );
-
-  const noData = data.length === 0;
-  const hasData = data.length > 0;
 
   return (
-    <View flex={1}>
-      <Header />
-      <View flex={1} mt="$4" py="$6">
-        {noData && (
-          <NoData variant={3} headline={t("common.noData")} copy={t("roastery.noData.subtitle")} />
-        )}
-        {hasData && <DataView />}
+    <View bgC={"$screenBackground"} flex={1}>
+      <View flex={1} pt={insets.top}>
+        <View alignItems="center" mt="$6">
+          <Avatar circular size="$10">
+            <Avatar.Image
+              accessibilityLabel="Grind It Logo"
+              src={require("@/assets/images/icon.png")}
+            />
+          </Avatar>
+          <Text fontSize={24} fontFamily="TBJSodabery-LightOriginal">
+            Grind It
+          </Text>
+          <ThemedText fw={400}>v.{version}</ThemedText>
+        </View>
+        <YGroup mt="$4" p="$4">
+          <YGroup.Item>
+            <ListItem
+              pressTheme
+              bgC="$white"
+              iconAfter={ChevronRight}
+              onPress={() => router.navigate("/roasteries/EditRoasteryPage")}
+            >
+              {t("settings.roasteries")}
+            </ListItem>
+          </YGroup.Item>
+          <Separator />
+          <YGroup.Item>
+            <ListItem
+              pressTheme
+              bgC="$white"
+              iconAfter={ChevronRight}
+              onPress={() => router.navigate("/taste/EditTasteComponent")}
+            >
+              {t("settings.taste")}
+            </ListItem>
+          </YGroup.Item>
+        </YGroup>
+        <YGroup p="$4">
+          <YGroup.Item>
+            <ListItem
+              pressTheme
+              bgC="$white"
+              iconAfter={isExporting || isSharing ? Spinner : Share2}
+              onPress={handleShareData}
+              disabled={isExporting || isSharing}
+              opacity={isExporting || isSharing ? 0.5 : 1}
+            >
+              {t("settings.exportData")}
+            </ListItem>
+          </YGroup.Item>
+          <Separator />
+          <YGroup.Item>
+            <ListItem
+              pressTheme
+              bgC="$white"
+              iconAfter={isImporting || isPickingFile ? Spinner : Upload}
+              onPress={handleImportData}
+              disabled={isImporting || isPickingFile}
+              opacity={isImporting || isPickingFile ? 0.5 : 1}
+            >
+              {t("settings.importData")}
+            </ListItem>
+          </YGroup.Item>
+        </YGroup>
       </View>
-      <View flex={0} style={{ position: "absolute", bottom: 0 }}>
-        <ActionButton
-          bgC="$primary"
-          icon={<AddIcon />}
-          onPress={() => setOpenSheet(true)}
-          pressStyle={{ backgroundColor: "$primaryHover" }}
-        />
-      </View>
-      <BottomSheet
-        sheetProps={{
-          open: openSheet,
-          onOpenChange: (open: boolean) => setOpenSheet(open),
-          dismissOnSnapToBottom: true,
-        }}
-        frame={<AddRoasteryFrame open={openSheet} onFormSubmit={() => setOpenSheet(false)} />}
-      />
+      <TabBar />
     </View>
   );
 };
-export default EditRoasteries;
+export default SettingsPage;
