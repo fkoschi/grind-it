@@ -7,6 +7,9 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
+      "ios": {
+        "scheme": "GrindIt"
+      },
       "android": {
         "autoIncrement": true
       },
@@ -16,6 +19,9 @@
     },
     "preview": {
       "distribution": "internal",
+      "ios": {
+        "scheme": "GrindIt"
+      },
       "android": {
         "autoIncrement": true
       },
@@ -25,6 +31,9 @@
     },
     "production": {
       "autoIncrement": true,
+      "ios": {
+        "scheme": "GrindIt"
+      },
       "android": {
         "autoIncrement": true
       },
