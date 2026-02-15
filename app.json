@@ -2,7 +2,7 @@
   "expo": {
     "name": "Grind It",
     "slug": "grind-it",
-    "version": "1.11.1",
+    "version": "1.11.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "grind-it",

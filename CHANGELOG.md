@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.2](https://github.com/fkoschi/grind-it/compare/v1.11.1...v1.11.2) (2026-02-15)
+
+
+### 🐛 Bug Fixes
+
+* roastery selection on new bean screen ([1ee6087](https://github.com/fkoschi/grind-it/commit/1ee6087397a77a2521e374648bcf21be94e95ad5))
+
 ### [1.11.1](https://github.com/fkoschi/grind-it/compare/v1.10.1...v1.11.1) (2026-02-15)
 
 
