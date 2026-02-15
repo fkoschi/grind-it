@@ -3,7 +3,6 @@ import { FC } from "react";
 import { ScrollView } from "tamagui";
 import Card from "@/components/ui/Card/Card";
 import DashboardNoData from "./DashboardNoData";
-import { Link } from "expo-router";
 
 interface Props {
   beansData?: CoffeeBean[];
@@ -21,7 +20,6 @@ const DashboardCards: FC<Props> = ({ beansData }) => {
 
   return (
     <ScrollView bgC="$screenBackground" flex={1} pl="$8" pt="$4" pr="$8">
-      <Link href="/watch-sync-test">Test Watch Sync</Link>
       {renderCards()}
     </ScrollView>
   );

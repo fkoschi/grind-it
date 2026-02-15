@@ -4,34 +4,35 @@ struct BeanCardView: View {
     let bean: Bean
 
     var body: some View {
-        HStack(spacing: 8) {
-            // Coffee cup image (matching iPhone design)
+        HStack(spacing: 4) {
+            // Coffee cup image — overflows left edge, clipped by the card background
             Image("coffee-cup")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 40, height: 40)
+                .frame(width: 60, height: 60)
+                .padding(.leading, -24)
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 1) {
                 // Roastery name
                 if let roastery = bean.roasteryName {
                     Text(roastery)
-                        .font(.system(size: 10, weight: .medium))
+                        .font(.system(size: 9, weight: .medium))
                         .foregroundColor(.grindItPrimary)
                 }
 
-                // Bean name - using custom font, black color
+                // Bean name
                 Text(bean.name)
-                    .font(.custom("TBJSodabery-LightOriginal", size: 16))
+                    .font(.custom("TBJSodabery-LightOriginal", size: 15))
                     .lineLimit(2)
                     .foregroundColor(.black)
 
-                // Grind settings
+                // Grind settings — spread across the full width
                 if hasGrindSettings {
-                    HStack(spacing: 6) {
+                    HStack {
                         // Grind degree
                         if let degree = bean.degreeOfGrinding {
                             VStack(alignment: .leading, spacing: 1) {
-                                Text("Mahlgrad")
+                                Text(String(localized: "grindSetting"))
                                     .font(.system(size: 7))
                                     .foregroundColor(.grindItCopyText)
                                 Text(String(format: "%.1f", degree))
@@ -40,10 +41,12 @@ struct BeanCardView: View {
                             }
                         }
 
+                        Spacer()
+
                         // Single shot
                         if let single = bean.singleShotDosis {
                             VStack(alignment: .leading, spacing: 1) {
-                                Text("Single")
+                                Text(String(localized: "single"))
                                     .font(.system(size: 7))
                                     .foregroundColor(.grindItCopyText)
                                 Text(String(format: "%.1fg", single))
@@ -52,10 +55,12 @@ struct BeanCardView: View {
                             }
                         }
 
+                        Spacer()
+
                         // Double shot
                         if let double = bean.doubleShotDosis {
                             VStack(alignment: .leading, spacing: 1) {
-                                Text("Double")
+                                Text(String(localized: "double"))
                                     .font(.system(size: 7))
                                     .foregroundColor(.grindItCopyText)
                                 Text(String(format: "%.1fg", double))
@@ -69,6 +74,7 @@ struct BeanCardView: View {
             }
         }
         .padding(.vertical, 4)
+        .padding(.trailing, 8)
     }
 
     private var hasGrindSettings: Bool {

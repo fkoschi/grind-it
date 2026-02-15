@@ -16,7 +16,7 @@ struct ContentView: View {
         NavigationStack {
             Group {
                 if isLoading {
-                    ProgressView("Loading beans...")
+                    ProgressView(String(localized: "loadingBeans"))
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .background(Color.grindItBackground)
                 } else if beans.isEmpty {
@@ -28,56 +28,52 @@ struct ContentView: View {
                             .frame(height: 80)
                             .padding(.bottom, 4)
 
-                        Text("No beans synced yet")
+                        Text(String(localized: "noBeansSynced"))
                             .font(.custom("TBJSodabery-LightOriginal", size: 16))
                             .foregroundColor(.primary)
                             .multilineTextAlignment(.center)
 
-                        Text("Add beans on your iPhone")
+                        Text(String(localized: "addBeansOnIphone"))
                             .font(.system(size: 10))
                             .foregroundColor(.grindItCopyText)
                             .multilineTextAlignment(.center)
-
-                        // Debug: Load test data
-                        Button("Load Test Data") {
-                            TestDataHelper.loadSampleBeans()
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .tint(.grindItPrimary)
-                        .padding(.top, 4)
                     }
                     .padding()
                 } else {
                     List {
                         // Last synced timestamp header
                         if let lastSync = lastSyncTime {
-                            Section {
-                                Text("Last synced: \(timeAgoString(from: lastSync))")
-                                    .font(.system(size: 10))
-                                    .foregroundColor(.grindItCopyText)
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                            }
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 4, trailing: 0))
+                            Text(String(localized: "lastSynced \(timeAgoString(from: lastSync))"))
+                                .font(.system(size: 10))
+                                .foregroundColor(.white.opacity(0.8))
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .listRowBackground(Color.clear)
+                                .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
                         }
 
                         ForEach(beans) { bean in
                             NavigationLink(destination: BeanDetailView(bean: bean)) {
                                 BeanCardView(bean: bean)
                             }
-                            .listRowBackground(Color.white)
+                            .listRowInsets(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .listRowBackground(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color.white)
+                                    .padding(.horizontal, 4)
+                            )
                         }
                     }
                     .listStyle(.plain)
                     .scrollContentBackground(.hidden)
-                    .background(Color.grindItBackground)
+                    .background(Color.grindItPrimary)
                     .refreshable {
                         await refreshBeans()
                     }
                 }
             }
-            .navigationTitle("Coffee Beans")
-            .toolbarBackground(Color.grindItBackground, for: .navigationBar)
+            .navigationTitle(String(localized: "grindIt"))
+            .toolbarBackground(Color.grindItPrimary, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
         }
         .onAppear(perform: loadBeans)
@@ -127,16 +123,16 @@ struct ContentView: View {
         let seconds = Int(Date().timeIntervalSince(date))
 
         if seconds < 60 {
-            return "just now"
+            return String(localized: "justNow")
         } else if seconds < 3600 {
             let minutes = seconds / 60
-            return "\(minutes) min\(minutes == 1 ? "" : "s") ago"
+            return String(localized: "minutesAgo \(minutes)")
         } else if seconds < 86400 {
             let hours = seconds / 3600
-            return "\(hours) hour\(hours == 1 ? "" : "s") ago"
+            return String(localized: "hoursAgo \(hours)")
         } else {
             let days = seconds / 86400
-            return "\(days) day\(days == 1 ? "" : "s") ago"
+            return String(localized: "daysAgo \(days)")
         }
     }
 }

@@ -23,16 +23,16 @@ struct BeanDetailView: View {
                 // Roast Composition
                 if bean.arabicaAmount != nil || bean.robustaAmount != nil {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Composition")
+                        Text(String(localized: "composition"))
                             .font(.system(size: 12, weight: .semibold))
                             .foregroundColor(.grindItCopyText)
 
                         if let arabica = bean.arabicaAmount {
-                            DetailRow(label: "Arabica", value: "\(arabica)%")
+                            DetailRow(label: String(localized: "arabica"), value: "\(arabica)%")
                         }
 
                         if let robusta = bean.robustaAmount {
-                            DetailRow(label: "Robusta", value: "\(robusta)%")
+                            DetailRow(label: String(localized: "robusta"), value: "\(robusta)%")
                         }
                     }
 
@@ -41,31 +41,31 @@ struct BeanDetailView: View {
 
                 // Grind Settings
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Grind Settings")
+                    Text(String(localized: "grindSettings"))
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundColor(.grindItCopyText)
 
                     if let degree = bean.degreeOfGrinding {
-                        DetailRow(label: "Mahlgrad", value: String(format: "%.1f", degree))
+                        DetailRow(label: String(localized: "grindSetting"), value: String(format: "%.1f", degree))
                     } else {
-                        Text("Not set")
+                        Text(String(localized: "notSet"))
                             .font(.system(size: 10))
                             .foregroundColor(.grindItCopyText)
                     }
 
                     if let single = bean.singleShotDosis {
-                        DetailRow(label: "Single Shot", value: String(format: "%.1fg", single))
+                        DetailRow(label: String(localized: "singleShot"), value: String(format: "%.1fg", single))
                     }
 
                     if let double = bean.doubleShotDosis {
-                        DetailRow(label: "Double Shot", value: String(format: "%.1fg", double))
+                        DetailRow(label: String(localized: "doubleShot"), value: String(format: "%.1fg", double))
                     }
                 }
             }
             .padding()
         }
         .background(Color.grindItBackground)
-        .navigationTitle("Details")
+        .navigationTitle(String(localized: "details"))
     }
 }
 
