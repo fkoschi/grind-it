@@ -1,0 +1,17 @@
+{
+  "name": "watch-connectivity",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {},
+  "dependencies": {
+    "expo-modules-core": "*"
+  },
+  "peerDependencies": {
+    "expo": "*"
+  },
+  "expo": {
+    "name": "watch-connectivity",
+    "platforms": ["ios"]
+  }
+}

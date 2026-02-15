@@ -12,7 +12,11 @@ web-build/
 
 # Native builds
 android
-ios
+
+ios/Pods/                                                                                                                                                                            
+ios/build/                                                                                                                                                                           
+ios/*.xcworkspace/                                                                                                                                                                   
+ios/**/*.xcuserdata/ 
 
 # macOS
 .DS_Store
