@@ -8,11 +8,14 @@ type State = {
   tasteFilter: number[];
   // Used to handle the BottomSheet
   editRoastery: boolean;
+  // Used to handle the roastery selection BottomSheet
+  selectRoastery: boolean;
   // Used to handle the BottomSheet
   editBeanTaste: { showSheet: boolean; type: "edit" | "add" };
 };
 type Action = {
   updateEditRoastery: (state: State["editRoastery"]) => void;
+  updateSelectRoastery: (state: State["selectRoastery"]) => void;
   updateEditBeanTaste: (state: State["editBeanTaste"]) => void;
 
   // Bean Taste
@@ -29,8 +32,10 @@ export const useBeanStore = create<State & Action>((set) => ({
   taste: [],
   tasteFilter: [],
   editRoastery: false,
+  selectRoastery: false,
   editBeanTaste: { showSheet: false, type: "add" },
   updateEditRoastery: (state) => set({ editRoastery: state }),
+  updateSelectRoastery: (state) => set({ selectRoastery: state }),
   updateEditBeanTaste: (state) => set({ editBeanTaste: state }),
 
   // Add an item to the taste array (ensuring uniqueness)

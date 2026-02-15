@@ -5,12 +5,10 @@ import { KeyboardAvoidingView, Platform } from "react-native";
 import { useTranslation } from "react-i18next";
 import {
   ActionButton,
-  AddIcon,
   Badge,
   CheckIcon,
   PercentageIcon,
   InputWithIcon,
-  Select as ThemedSelect,
   StepperInput,
 } from "@/components/ui";
 import { Text, Input, View, XStack, Button, ScrollView } from "tamagui";
@@ -24,6 +22,7 @@ import { useDatabase } from "@/provider/DatabaseProvider";
 import { Taste } from "@/types";
 import EditBean from "./bean/EditBean";
 import BeanHeaderLayout from "@/components/BeanHeaderLayout/BeanHeaderLayout";
+import { ChevronDown } from "@tamagui/lucide-icons";
 
 interface FormInput {
   name: string;
@@ -50,7 +49,7 @@ const AddBeanPage: FC = () => {
   const beanTaste = useBeanStore((state) => state.taste);
   const resetBeanState = useBeanStore((state) => state.clearBeanTaste);
   const removeBeanTaste = useBeanStore((state) => state.removeBeanTaste);
-  const updateEditRoastery = useBeanStore((state) => state.updateEditRoastery);
+  const updateSelectRoastery = useBeanStore((state) => state.updateSelectRoastery);
   const updateEditBeanTaste = useBeanStore((state) => state.updateEditBeanTaste);
 
   const { data: roasteries } = useLiveQuery(db.select().from(roasteryTable));
@@ -59,6 +58,8 @@ const AddBeanPage: FC = () => {
     handleSubmit,
     control,
     reset: resetForm,
+    setValue,
+    watch,
   } = useForm<FormInput>({
     resolver: zodResolver(insertSchema),
     defaultValues: {
@@ -121,8 +122,13 @@ const AddBeanPage: FC = () => {
     resetBeanState();
   }, [resetBeanState, resetForm]);
 
+  const selectedRoasteryId = watch("roastery");
+
   return (
-    <EditBean>
+    <EditBean
+      selectedRoasteryId={selectedRoasteryId}
+      onRoasterySelect={(id) => setValue("roastery", id)}
+    >
       <View flex={1}>
         <BeanHeaderLayout />
         <KeyboardAvoidingView
@@ -131,6 +137,49 @@ const AddBeanPage: FC = () => {
           keyboardVerticalOffset={16}
         >
           <ScrollView flex={1} padding="$6">
+            <View mb="$3">
+              <Controller
+                name="name"
+                control={control}
+                rules={{ required: "Name is required!" }}
+                render={({ field }) => (
+                  <Input
+                    placeholder="Name"
+                    keyboardType="default"
+                    onChangeText={field.onChange}
+                    borderRadius="$4"
+                    bgC="white"
+                    {...field}
+                  />
+                )}
+              />
+            </View>
+
+            <View mb="$3">
+              <Controller
+                name="roastery"
+                control={control}
+                render={({ field }) => {
+                  const selectedRoastery = roasteries?.find((r) => r.id === field.value);
+                  return (
+                    <Button
+                      bgC="white"
+                      borderRadius="$4"
+                      justifyContent="space-between"
+                      onPress={() => updateSelectRoastery(true)}
+                      pressStyle={{ bgC: "$screenBackground" }}
+                      size="$4"
+                      iconAfter={<ChevronDown size={16} color="$secondary" />}
+                    >
+                      <Text color={selectedRoastery ? "$secondary" : "$placeholderColor"}>
+                        {selectedRoastery?.name ?? t("addBean.roastery")}
+                      </Text>
+                    </Button>
+                  );
+                }}
+              />
+            </View>
+
             <XStack gap="$8" mb="$3">
               <Controller
                 name="arabicaAmount"
@@ -182,58 +231,6 @@ const AddBeanPage: FC = () => {
                   <StepperInput value={value} onChange={onChange} label="Double Shot" />
                 )}
               />
-            </XStack>
-
-            <View mb="$3">
-              <Controller
-                name="name"
-                control={control}
-                rules={{ required: "Name is required!" }}
-                render={({ field }) => (
-                  <Input
-                    placeholder="Name"
-                    keyboardType="default"
-                    onChangeText={field.onChange}
-                    borderRadius="$4"
-                    bgC="white"
-                    {...field}
-                  />
-                )}
-              />
-            </View>
-
-            <XStack flex={0} width="100%" justifyContent="center" alignItems="center" gap="$4">
-              <View flex={1}>
-                <Controller
-                  name="roastery"
-                  control={control}
-                  render={({ field, ...props }) => (
-                    <ThemedSelect
-                      label={t("addBean.roastery")}
-                      items={roasteries}
-                      onChange={field.onChange}
-                      value={field.value}
-                      {...props}
-                    />
-                  )}
-                />
-              </View>
-              <View>
-                <Button
-                  circular
-                  bgC="$secondary"
-                  height={32}
-                  width={32}
-                  minHeight={32}
-                  minWidth={32}
-                  onPress={() => updateEditRoastery(true)}
-                  pressStyle={{
-                    bgC: "$secondaryHover",
-                  }}
-                >
-                  <AddIcon size={18} />
-                </Button>
-              </View>
             </XStack>
 
             <View flex={0} mt="$4">

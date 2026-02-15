@@ -1,14 +1,26 @@
-import { AddRoasteryFrame, AddBeanTasteFrame, EditBeanTasteFrame } from "@/components";
+import {
+  AddRoasteryFrame,
+  AddBeanTasteFrame,
+  EditBeanTasteFrame,
+  SelectRoasteryFrame,
+} from "@/components";
 
 import { Sheet as BottomSheet } from "@/components/ui";
 import { useBeanStore } from "@/store/bean-store";
 import { FC, PropsWithChildren } from "react";
 import { View } from "tamagui";
 
-const EditBean: FC<PropsWithChildren> = ({ children }) => {
+interface EditBeanProps extends PropsWithChildren {
+  selectedRoasteryId?: number;
+  onRoasterySelect?: (id: number) => void;
+}
+
+const EditBean: FC<EditBeanProps> = ({ children, selectedRoasteryId, onRoasterySelect }) => {
   const editRoastery = useBeanStore((state) => state.editRoastery);
+  const selectRoastery = useBeanStore((state) => state.selectRoastery);
   const editTaste = useBeanStore((state) => state.editBeanTaste);
   const hideRoasterySheet = useBeanStore((state) => state.updateEditRoastery);
+  const hideSelectRoasterySheet = useBeanStore((state) => state.updateSelectRoastery);
   const hideTasteSheet = useBeanStore((state) => state.updateEditBeanTaste);
 
   return (
@@ -28,6 +40,27 @@ const EditBean: FC<PropsWithChildren> = ({ children }) => {
           <AddRoasteryFrame open={editRoastery} onFormSubmit={() => hideRoasterySheet(false)} />
         }
       />
+      {onRoasterySelect && (
+        <BottomSheet
+          sheetProps={{
+            open: selectRoastery,
+            modal: false,
+            zIndex: 200_000_000,
+            snapPointsMode: "percent",
+            dismissOnSnapToBottom: true,
+            animation: "medium",
+            snapPoints: [60],
+            onOpenChange: () => hideSelectRoasterySheet(false),
+          }}
+          frame={
+            <SelectRoasteryFrame
+              selectedRoasteryId={selectedRoasteryId}
+              onSelect={onRoasterySelect}
+              onClose={() => hideSelectRoasterySheet(false)}
+            />
+          }
+        />
+      )}
       <BottomSheet
         sheetProps={{
           open: editTaste.showSheet,
