@@ -15,6 +15,7 @@ Coffee enthusiasts who use Grind It often want quick access to their bean collec
 ## Capabilities
 
 ### New Capabilities
+
 - `watch-app-setup`: watchOS app target configuration, project structure, and build settings for the Apple Watch companion app
 - `watch-bean-display`: Display coffee beans in a card-based UI optimized for Apple Watch, showing essential bean details (name, roastery, grind settings)
 - `watch-data-sync`: Synchronize bean data from the iOS app's SQLite database to the Watch app for read-only access
@@ -26,17 +27,20 @@ None - this is an additive feature that doesn't modify existing iOS app capabili
 ## Impact
 
 **Affected Systems:**
+
 - Xcode project configuration (new watchOS target)
 - Build pipeline (EAS build configuration for Watch app)
 - Database access layer (shared access between iOS and watchOS)
 - Data providers (BeanDataProvider may need watchOS compatibility)
 
 **New Dependencies:**
+
 - watchOS SDK and SwiftUI for Watch interface
 - WatchConnectivity framework for iOS ↔ Watch communication
 - Shared database schema access between iOS and watchOS targets
 
 **No Impact:**
+
 - Existing iOS app functionality remains unchanged
 - No breaking changes to current user experience
 - Database schema remains the same (read-only access)

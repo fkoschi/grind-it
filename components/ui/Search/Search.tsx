@@ -3,12 +3,14 @@ import { Input, View } from "tamagui";
 import { Image } from "expo-image";
 import { Pressable } from "react-native";
 import ClearIcon from "../Icons/Clear";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   disabled?: boolean;
   onChangeText: (text: string) => void;
 }
 const Search: FC<Props> = ({ disabled = false, onChangeText }) => {
+  const { t } = useTranslation();
   const [search, setSearch] = useState<string>();
 
   const handleChangeText = (search: string) => {
@@ -43,7 +45,7 @@ const Search: FC<Props> = ({ disabled = false, onChangeText }) => {
         disabled={disabled}
         value={search}
         onChangeText={handleChangeText}
-        placeholder="Suche..."
+        placeholder={t("common.search")}
       />
       {showClear && (
         <View position="absolute" right={0}>

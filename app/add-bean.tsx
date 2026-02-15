@@ -2,6 +2,7 @@ import { beanTable, beanTasteAssociationTable, beanTasteTable, roasteryTable } f
 import React, { FC, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { KeyboardAvoidingView, Platform } from "react-native";
+import { useTranslation } from "react-i18next";
 import {
   ActionButton,
   AddIcon,
@@ -43,6 +44,7 @@ const insertSchema = z.object({
 });
 
 const AddBeanPage: FC = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const { db } = useDatabase();
   const beanTaste = useBeanStore((state) => state.taste);
@@ -207,7 +209,7 @@ const AddBeanPage: FC = () => {
                   control={control}
                   render={({ field, ...props }) => (
                     <ThemedSelect
-                      label="Rösterei"
+                      label={t("addBean.roastery")}
                       items={roasteries}
                       onChange={field.onChange}
                       value={field.value}
@@ -235,7 +237,7 @@ const AddBeanPage: FC = () => {
             </XStack>
 
             <View flex={0} mt="$4">
-              <Text fontSize="$6">Geschmack</Text>
+              <Text fontSize="$6">{t("addBean.taste")}</Text>
               {beanTaste && (
                 <View flex={0} flexDirection="row" gap="$2" pt="$3" flexWrap="wrap" mb="$4">
                   {beanTaste.map((taste: Taste, index) => (
@@ -267,7 +269,7 @@ const AddBeanPage: FC = () => {
                     backgroundColor: "$secondary",
                   }}
                 >
-                  Geschmack bearbeiten
+                  {t("addBean.editTaste")}
                 </Button>
               </View>
             </View>

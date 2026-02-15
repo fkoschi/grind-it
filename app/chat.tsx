@@ -10,8 +10,10 @@ import { fetch as expoFetch } from "expo/fetch";
 import { generateAPIUrl } from "@/utils";
 import Markdown from "react-native-markdown-display";
 import { ProFeatureOverlay } from "@/components/ui";
+import { useTranslation } from "react-i18next";
 
 const ChatPage: FC = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const scrollViewRef = useRef<RNScrollView>(null);
 
@@ -93,7 +95,7 @@ const ChatPage: FC = () => {
                     paddingBottom="$8"
                   >
                     <Text fontSize="$9" fontFamily="$sodabery" color="$primary">
-                      Brew Buddy
+                      {t("chat.title")}
                     </Text>
                     <Image
                       source={require("@/assets/images/no-data.png")}
@@ -115,9 +117,7 @@ const ChatPage: FC = () => {
                           },
                         }}
                       >
-                        {`Hi, ich bin dein Brew Buddy! Wie kann ich dir helfen?
-
-Du kannst mich alles fragen! Ich bin spezialisiert auf Kaffee und Siebträgerwissen.`}
+                        {t("chat.welcome")}
                       </Markdown>
                     </Chat.Message>
                   </YStack>

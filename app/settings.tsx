@@ -10,10 +10,12 @@ import { ThemedText } from "@/components/ui";
 import { useDataExport } from "@/hooks/useDataExport";
 import { useDataImport } from "@/hooks/useDataImport";
 import * as DocumentPicker from "expo-document-picker";
+import { useTranslation } from "react-i18next";
 
 import { version } from "../package.json";
 
 const SettingsPage: FC = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { exportData, isExporting } = useDataExport();
@@ -28,7 +30,7 @@ const SettingsPage: FC = () => {
       const jsonData = await exportData();
 
       if (!jsonData) {
-        Alert.alert("Export fehlgeschlagen", "Die Daten konnten nicht exportiert werden.");
+        Alert.alert(t("settings.export.failed.title"), t("settings.export.failed.message"));
         return;
       }
 
@@ -44,10 +46,10 @@ const SettingsPage: FC = () => {
       const shareOptions = Platform.select({
         ios: {
           url: file.uri,
-          message: "Grind It Daten Export",
+          message: t("settings.export.shareTitle"),
         },
         default: {
-          title: "Grind It Daten Export",
+          title: t("settings.export.shareTitle"),
           url: file.uri,
         },
       });
@@ -55,7 +57,7 @@ const SettingsPage: FC = () => {
       await Share.share(shareOptions);
     } catch (err) {
       console.error("Share error:", err);
-      Alert.alert("Fehler", "Beim Teilen ist ein Fehler aufgetreten.");
+      Alert.alert(t("settings.export.shareError.title"), t("settings.export.shareError.message"));
     } finally {
       setIsSharing(false);
     }
@@ -84,27 +86,33 @@ const SettingsPage: FC = () => {
         const beanCount = parsedData.beans?.length || 0;
 
         Alert.alert(
-          "Daten importieren",
-          `${beanCount} Bohne(n) gefunden. Möchtest du diese importieren? Vorhandene Duplikate werden übersprungen.`,
+          t("settings.import.confirm.title"),
+          t("settings.import.confirm.message", { count: beanCount }),
           [
             {
-              text: "Abbrechen",
+              text: t("common.cancel"),
               style: "cancel",
             },
             {
-              text: "Importieren",
+              text: t("settings.import.action"),
               onPress: async () => {
                 const importResult = await importData(fileContent, true);
 
                 if (importResult?.success) {
                   Alert.alert(
-                    "Import erfolgreich",
-                    `${importResult.beansCreated} Bohnen importiert.\n${importResult.beansSkipped} Duplikate übersprungen.`,
+                    t("settings.import.success.title"),
+                    t("settings.import.success.message", {
+                      created: importResult.beansCreated,
+                      skipped: importResult.beansSkipped,
+                    }),
                   );
                 } else if (importResult) {
                   Alert.alert(
-                    "Import mit Fehlern",
-                    `Importiert: ${importResult.beansCreated}\nFehler: ${importResult.errors.join("\n")}`,
+                    t("settings.import.partial.title"),
+                    t("settings.import.partial.message", {
+                      created: importResult.beansCreated,
+                      errors: importResult.errors.join("\n"),
+                    }),
                   );
                 }
               },
@@ -113,8 +121,8 @@ const SettingsPage: FC = () => {
         );
       } catch {
         Alert.alert(
-          "Fehler",
-          "Die Datei konnte nicht gelesen werden. Ist es eine gültige JSON-Datei?",
+          t("settings.import.invalidFile.title"),
+          t("settings.import.invalidFile.message"),
         );
       }
     } catch (err) {
@@ -124,7 +132,7 @@ const SettingsPage: FC = () => {
         // Ignore this specific error as it means the user just tapped too fast
         return;
       }
-      Alert.alert("Fehler", "Beim Importieren ist ein Fehler aufgetreten.");
+      Alert.alert(t("settings.import.error.title"), t("settings.import.error.message"));
     } finally {
       setIsPickingFile(false);
     }
@@ -153,7 +161,7 @@ const SettingsPage: FC = () => {
               iconAfter={ChevronRight}
               onPress={() => router.navigate("/roasteries/EditRoasteryPage")}
             >
-              Röstereien
+              {t("settings.roasteries")}
             </ListItem>
           </YGroup.Item>
           <Separator />
@@ -164,7 +172,7 @@ const SettingsPage: FC = () => {
               iconAfter={ChevronRight}
               onPress={() => router.navigate("/taste/EditTasteComponent")}
             >
-              Geschmack
+              {t("settings.taste")}
             </ListItem>
           </YGroup.Item>
         </YGroup>
@@ -178,7 +186,7 @@ const SettingsPage: FC = () => {
               disabled={isExporting || isSharing}
               opacity={isExporting || isSharing ? 0.5 : 1}
             >
-              Daten exportieren & teilen
+              {t("settings.exportData")}
             </ListItem>
           </YGroup.Item>
           <Separator />
@@ -191,7 +199,7 @@ const SettingsPage: FC = () => {
               disabled={isImporting || isPickingFile}
               opacity={isImporting || isPickingFile ? 0.5 : 1}
             >
-              Daten importieren
+              {t("settings.importData")}
             </ListItem>
           </YGroup.Item>
         </YGroup>

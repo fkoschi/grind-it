@@ -100,6 +100,7 @@ Located in `provider/`:
 - `BeanDataProvider` - Manages bean data loading and queries
 
 Provider hierarchy (from `app/App.tsx`):
+
 ```
 TamaguiProvider
   └─ DatabaseProvider
@@ -155,6 +156,7 @@ Chat interface in `app/chat.tsx` uses streaming responses.
 ### Git Hooks (Husky)
 
 Pre-commit hook runs:
+
 ```json
 {
   "*.{js,jsx,ts,tsx}": ["oxlint --fix", "oxfmt --write"]

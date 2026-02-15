@@ -13,6 +13,7 @@ import { KeyboardAvoidingView, Platform, Pressable } from "react-native";
 import { getFontSize, Input, ScrollView, Text, View, XStack } from "tamagui";
 import { selectBeanTasteById, selectFilteredBeanTasteSuggestion } from "@/db/queries";
 import { useAutoFocus } from "@/hooks/useAutoFocus";
+import { useTranslation } from "react-i18next";
 
 interface BeanTasteForm {
   flavorName: string;
@@ -22,6 +23,7 @@ interface EditBeanTasteFrameProps {
   open: boolean;
 }
 const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
+  const { t } = useTranslation();
   const { db } = useDatabase();
   const inputRef = useRef<Input>(null);
   const { id: beanId } = useLocalSearchParams();
@@ -123,7 +125,7 @@ const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
               fontSize={getFontSize("$8")}
               lineHeight={getFontSize("$8")}
             >
-              Aktuelle Auswahl:
+              {t("common.currentSelection")}
             </ThemedText>
             <XStack gap="$2" flexWrap="wrap" mt="$3">
               {!beanTasteData?.length && (
@@ -146,7 +148,7 @@ const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
           </View>
           <View mt="$4">
             <ThemedText fw={500} fontSize="$6" lineHeight="$2">
-              Vorschläge:
+              {t("common.suggestions")}
             </ThemedText>
             <XStack gap="$2" flexWrap="wrap" mt="$3">
               {beanSuggestionTasteData?.map(({ id: tasteId, flavor }, index) => (
@@ -177,7 +179,7 @@ const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
                   checkInput(text);
                 }}
                 onSubmitEditing={handleSubmit(onSubmit)}
-                returnKeyLabel="Fertig"
+                returnKeyLabel={t("common.done")}
                 submitBehavior="submit"
                 borderColor={duplicateError ? "$red10" : undefined}
               />
@@ -191,7 +193,7 @@ const EditBeanTasteFrame: FC<EditBeanTasteFrameProps> = ({ open }) => {
         </View>
         <View flex={0} ml="$3" height={48} justifyContent="center">
           <Pressable onPress={() => updateTasteSheet({ showSheet: false, type: "edit" })}>
-            <Text>Abbrechen</Text>
+            <Text>{t("common.cancel")}</Text>
           </Pressable>
         </View>
       </XStack>

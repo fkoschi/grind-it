@@ -17,6 +17,7 @@ import {
 } from "@/components/ui";
 import { useBeanStore } from "@/store/bean-store";
 import { Image } from "expo-image";
+import { useTranslation } from "react-i18next";
 
 export const PATH_NAME = "/bean/edit";
 
@@ -34,11 +35,12 @@ interface BeansTasteInputProps {
 }
 
 const BeansTasteInput: FC<BeansTasteInputProps> = ({ beanTasteData = [], onEditTaste }) => {
+  const { t } = useTranslation();
   const imageSource = require("@/assets/images/latte-art.png");
 
   return (
     <YStack gap="$1" mt="$2">
-      <Text fontSize="$4">Geschmack</Text>
+      <Text fontSize="$4">{t("editBean.taste")}</Text>
       {!beanTasteData.length && (
         <XStack flex={0} height="$8" justifyContent="center">
           <Image source={imageSource} style={{ width: 80, height: 80 }} />
@@ -62,7 +64,7 @@ const BeansTasteInput: FC<BeansTasteInputProps> = ({ beanTasteData = [], onEditT
             backgroundColor: "$secondary",
           }}
         >
-          Geschmack bearbeiten
+          {t("editBean.editTaste")}
         </Button>
       </View>
     </YStack>
@@ -70,6 +72,7 @@ const BeansTasteInput: FC<BeansTasteInputProps> = ({ beanTasteData = [], onEditT
 };
 
 const EditBeanPage: FC = () => {
+  const { t } = useTranslation();
   const { db } = useDatabase();
   const { control } = useForm<FormState>();
   const editTaste = useBeanStore((state) => state.editBeanTaste);
@@ -167,7 +170,7 @@ const EditBeanPage: FC = () => {
     <View>
       <XStack gap="$4">
         <View flex={1}>
-          <Label>Single Shot</Label>
+          <Label>{t("editBean.singleShot")}</Label>
         </View>
         <XStack flex={1} gap="$2">
           <Controller
@@ -188,7 +191,7 @@ const EditBeanPage: FC = () => {
       </XStack>
       <XStack gap="$4">
         <View flex={1}>
-          <Label>Double Shot</Label>
+          <Label>{t("editBean.doubleShot")}</Label>
         </View>
         <XStack flex={1} gap="$2">
           <Controller
@@ -212,7 +215,7 @@ const EditBeanPage: FC = () => {
 
   const BeanArabicaRobustaInput = () => (
     <XStack gap="$4">
-      <Label>Arabica / Robusta</Label>
+      <Label>{t("editBean.arabicaRobusta")}</Label>
       <XStack flex={1} gap="$2">
         <Controller
           name="arabicaAmount"
@@ -251,10 +254,10 @@ const EditBeanPage: FC = () => {
         render={({ field: _field, ...props }) => (
           <View>
             <XStack gap="$4" alignItems="center">
-              <Label minWidth={"$6"}>Rösterei</Label>
+              <Label minWidth={"$6"}>{t("editBean.roastery")}</Label>
               <View flex={1}>
                 <ThemedSelect
-                  label="Rösterei"
+                  label={t("editBean.roastery")}
                   items={roasteryData}
                   value={beanData?.[0]?.roastery ?? undefined}
                   onChange={handleRoasteryChange}

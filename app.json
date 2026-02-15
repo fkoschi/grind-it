@@ -44,9 +44,7 @@
       [
         "expo-font",
         {
-          "fonts": [
-            "./assets/fonts/TBJSodabery-Light.otf"
-          ]
+          "fonts": ["./assets/fonts/TBJSodabery-Light.otf"]
         }
       ],
       [
@@ -59,7 +57,8 @@
         }
       ],
       "expo-sqlite",
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true

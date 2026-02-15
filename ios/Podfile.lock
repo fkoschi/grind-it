@@ -252,6 +252,8 @@ PODS:
     - ExpoModulesCore
   - ExpoLinking (8.0.11):
     - ExpoModulesCore
+  - ExpoLocalization (17.0.8):
+    - ExpoModulesCore
   - ExpoModulesCore (3.0.29):
     - hermes-engine
     - RCTRequired
@@ -2458,6 +2460,7 @@ DEPENDENCIES:
   - "ExpoKeepAwake (from `../node_modules/.pnpm/expo-keep-awake@15.0.8_expo@54.0.31_react@19.1.0/node_modules/expo-keep-awake/ios`)"
   - "ExpoLinearGradient (from `../node_modules/.pnpm/expo-linear-gradient@15.0.8_expo@54.0.31_react-native@0.81.5_@babel+core@7.28.6_@types+_06bb19f0fb19d64c4c69255493c0b990/node_modules/expo-linear-gradient/ios`)"
   - "ExpoLinking (from `../node_modules/.pnpm/expo-linking@8.0.11_expo@54.0.31_react-native@0.81.5_@babel+core@7.28.6_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-linking/ios`)"
+  - "ExpoLocalization (from `../node_modules/.pnpm/expo-localization@17.0.8_expo@54.0.31_react@19.1.0/node_modules/expo-localization/ios`)"
   - "ExpoModulesCore (from `../node_modules/.pnpm/expo-modules-core@3.0.29_react-native@0.81.5_@babel+core@7.28.6_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core`)"
   - "ExpoSplashScreen (from `../node_modules/.pnpm/expo-splash-screen@31.0.13_expo@54.0.31/node_modules/expo-splash-screen/ios`)"
   - "ExpoSQLite (from `../node_modules/.pnpm/expo-sqlite@16.0.10_expo@54.0.31_react-native@0.81.5_@babel+core@7.28.6_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-sqlite/ios`)"
@@ -2600,6 +2603,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/.pnpm/expo-linear-gradient@15.0.8_expo@54.0.31_react-native@0.81.5_@babel+core@7.28.6_@types+_06bb19f0fb19d64c4c69255493c0b990/node_modules/expo-linear-gradient/ios"
   ExpoLinking:
     :path: "../node_modules/.pnpm/expo-linking@8.0.11_expo@54.0.31_react-native@0.81.5_@babel+core@7.28.6_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-linking/ios"
+  ExpoLocalization:
+    :path: "../node_modules/.pnpm/expo-localization@17.0.8_expo@54.0.31_react@19.1.0/node_modules/expo-localization/ios"
   ExpoModulesCore:
     :path: "../node_modules/.pnpm/expo-modules-core@3.0.29_react-native@0.81.5_@babel+core@7.28.6_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/expo-modules-core"
   ExpoSplashScreen:
@@ -2796,6 +2801,7 @@ SPEC CHECKSUMS:
   ExpoKeepAwake: 44bf6715bc1d2ddb17afe19d927cd039cda123f0
   ExpoLinearGradient: 814a21fc4056c3cf606e4f19e31e47074c5b5a86
   ExpoLinking: ebf543fd411d56375cb4eee07f6ab4e31c7ad959
+  ExpoLocalization: 6ac6f326210f0a3141ef6f58ab8f8f4ed003b485
   ExpoModulesCore: 77496909fd3c800f97f7f2007dd26aeac4bb3798
   ExpoSplashScreen: 72fbc6dd9d6404dd9d0725a56c9ac1383bc0b14f
   ExpoSQLite: 087db2057a7f1e9da38a8126f4388a324f9a4522

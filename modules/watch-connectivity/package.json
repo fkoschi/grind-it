@@ -12,6 +12,8 @@
   },
   "expo": {
     "name": "watch-connectivity",
-    "platforms": ["ios"]
+    "platforms": [
+      "ios"
+    ]
   }
 }

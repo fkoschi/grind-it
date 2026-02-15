@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import { Text, View, YStack, ViewProps } from "tamagui";
 import { Lock } from "@tamagui/lucide-icons";
 import ThemedText from "../Text/ThemedText";
+import { useTranslation } from "react-i18next";
 
 interface ProFeatureOverlayProps extends ViewProps {
   isPro?: boolean;
@@ -15,6 +16,7 @@ export const ProFeatureOverlay: FC<ProFeatureOverlayProps> = ({
   isPro = false,
   ...viewProps
 }) => {
+  const { t } = useTranslation();
   return (
     <View {...viewProps} flex={1}>
       <View flex={1} opacity={isPro ? 1 : 0.5}>
@@ -25,10 +27,10 @@ export const ProFeatureOverlay: FC<ProFeatureOverlayProps> = ({
           <YStack flex={1} gap="$4" p="$4" alignItems="center" mt="$12">
             <Lock size={32} color="$primary" />
             <ThemedText fontSize="$6" fw={600} textAlign="center">
-              Nur in der Pro Version
+              {t("pro.title")}
             </ThemedText>
             <Text textAlign="center" fontSize="$3" opacity={0.8}>
-              Upgrade auf Pro um dieses Feature zu nutzen.
+              {t("pro.subtitle")}
             </Text>
           </YStack>
         </BlurView>

@@ -6,6 +6,7 @@ import { CoffeeBean } from "@/types";
 import { DetailsPageInfoTab } from "./components/DetailsPage.InfoTab";
 import { DetailsPageDetailsTab } from "./components/DetailsPage.DetailsTab";
 import { useIsProUser } from "@/hooks/useIsProUser";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   beansData: CoffeeBean;
@@ -23,6 +24,7 @@ const DetailsPageComponent: FC<Props> = ({
   onAromaEditPress,
   onAromaInfoPress,
 }) => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<"info" | "details">("info");
   const isProUser = useIsProUser();
 
@@ -66,8 +68,8 @@ const DetailsPageComponent: FC<Props> = ({
         onValueChange={(value) => setActiveTab(value as "info" | "details")}
       >
         <Tabs.List marginHorizontal="$4">
-          <Tabs.Trigger value="info">Infos</Tabs.Trigger>
-          <Tabs.Trigger value="details">Aroma Rad</Tabs.Trigger>
+          <Tabs.Trigger value="info">{t("details.tabs.info")}</Tabs.Trigger>
+          <Tabs.Trigger value="details">{t("details.tabs.aromaWheel")}</Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content value="info">
           <DetailsPageInfoTab tastes={tastes} beansData={beansData} onDegreePress={onDegreePress} />
