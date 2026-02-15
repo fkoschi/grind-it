@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { ScrollView, Text, View, XStack, Button } from "tamagui";
 import { AromaSlider } from "@/components/ui";
+import { useTranslation } from "react-i18next";
 
 export interface AromaValues {
   aromaFruity: number;
@@ -21,6 +22,7 @@ interface EditAromaFrameProps {
 }
 
 const EditAromaFrame: FC<EditAromaFrameProps> = ({ initialValues, onSave, onCancel }) => {
+  const { t } = useTranslation();
   const [values, setValues] = useState<AromaValues>({
     aromaFruity: initialValues.aromaFruity ?? 0,
     aromaFloral: initialValues.aromaFloral ?? 0,
@@ -45,10 +47,10 @@ const EditAromaFrame: FC<EditAromaFrameProps> = ({ initialValues, onSave, onCanc
     <View flex={1} backgroundColor="$screenBackground">
       <View padding="$4" paddingBottom="$2">
         <Text fontSize="$6" fontWeight="bold" color="$copyText">
-          Aroma-Profil bearbeiten
+          {t("aroma.edit.title")}
         </Text>
         <Text fontSize="$3" color="$gray400" marginTop="$2">
-          Passe die Aromastärken für diese Bohne an (0-100)
+          {t("aroma.edit.subtitle")}
         </Text>
       </View>
 
@@ -62,47 +64,47 @@ const EditAromaFrame: FC<EditAromaFrameProps> = ({ initialValues, onSave, onCanc
       >
         <View gap="$4">
           <AromaSlider
-            label="Fruchtig"
+            label={t("aroma.fruity.name")}
             value={values.aromaFruity}
             onChange={(v: number) => updateValue("aromaFruity", v)}
           />
           <AromaSlider
-            label="Blumig"
+            label={t("aroma.floral.name")}
             value={values.aromaFloral}
             onChange={(v: number) => updateValue("aromaFloral", v)}
           />
           <AromaSlider
-            label="Süß"
+            label={t("aroma.sweet.name")}
             value={values.aromaSweet}
             onChange={(v: number) => updateValue("aromaSweet", v)}
           />
           <AromaSlider
-            label="Nussig/Kakao"
+            label={t("aroma.nutty.name")}
             value={values.aromaNutty}
             onChange={(v: number) => updateValue("aromaNutty", v)}
           />
           <AromaSlider
-            label="Gewürze"
+            label={t("aroma.spices.name")}
             value={values.aromaSpices}
             onChange={(v: number) => updateValue("aromaSpices", v)}
           />
           <AromaSlider
-            label="Röstig"
+            label={t("aroma.roasted.name")}
             value={values.aromaRoasted}
             onChange={(v: number) => updateValue("aromaRoasted", v)}
           />
           <AromaSlider
-            label="Grün/Vegetabil"
+            label={t("aroma.green.name")}
             value={values.aromaGreen}
             onChange={(v: number) => updateValue("aromaGreen", v)}
           />
           <AromaSlider
-            label="Sauer/Fermentiert"
+            label={t("aroma.sour.name")}
             value={values.aromaSour}
             onChange={(v: number) => updateValue("aromaSour", v)}
           />
           <AromaSlider
-            label="Andere"
+            label={t("aroma.other.name")}
             value={values.aromaOther}
             onChange={(v: number) => updateValue("aromaOther", v)}
           />
@@ -118,7 +120,7 @@ const EditAromaFrame: FC<EditAromaFrameProps> = ({ initialValues, onSave, onCanc
           onPress={onCancel}
           pressStyle={{ backgroundColor: "$gray300" }}
         >
-          Abbrechen
+          {t("common.cancel")}
         </Button>
         <Button
           flex={1}
@@ -128,7 +130,7 @@ const EditAromaFrame: FC<EditAromaFrameProps> = ({ initialValues, onSave, onCanc
           onPress={handleSave}
           pressStyle={{ backgroundColor: "$primaryHover" }}
         >
-          Speichern
+          {t("common.save")}
         </Button>
       </XStack>
     </View>

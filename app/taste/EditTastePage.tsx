@@ -11,11 +11,13 @@ import { useRouter } from "expo-router";
 import NoData from "@/components/NoData/NoData";
 import { Taste } from "@/types";
 import { AddTasteFrame } from "@/components";
+import { useTranslation } from "react-i18next";
 
 interface EditTastePageProps {
   data: Taste[];
 }
 const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
+  const { t } = useTranslation();
   const router = useRouter();
   const { db } = useDatabase();
   const [openSheet, setOpenSheet] = useState<boolean>(false);
@@ -66,13 +68,13 @@ const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
         </View>
         <View flex={1} justifyContent="flex-end" alignItems="center">
           <Text fontSize={32} c={"$white"} fontFamily="$sodabery" mb="$6">
-            Geschmack
+            {t("taste.title")}
           </Text>
         </View>
       </LinearGradient>
       <View flex={1} mt="$4" py="$6">
         {noData && (
-          <NoData variant={2} headline="Keine Daten!" copy="Erstelle deinen ersten Geschmack" />
+          <NoData variant={2} headline={t("common.noData")} copy={t("taste.noData.subtitle")} />
         )}
         {hasData && <DataView />}
         <View flex={0} style={{ position: "absolute", bottom: 0 }}>

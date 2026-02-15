@@ -5,8 +5,10 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { eq } from "drizzle-orm";
 import { Button, View, Text } from "tamagui";
 import { useBeansData } from "@/hooks/useBensData";
+import { useTranslation } from "react-i18next";
 
 export const BeanHeaderLayoutEdit = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const { db } = useDatabase();
   const { id: beanId } = useLocalSearchParams();
@@ -22,10 +24,10 @@ export const BeanHeaderLayoutEdit = () => {
     <View flex={1}>
       <View position="absolute" right={32} top={44}>
         <Alert
-          title="Bohne löschen"
-          cancelTitle="Abbrechen"
-          actionTitle="Löschen"
-          description="Soll die Bohne endgültig gelöscht werden?"
+          title={t("editBean.delete.title")}
+          cancelTitle={t("common.cancel")}
+          actionTitle={t("common.delete")}
+          description={t("editBean.delete.description")}
           onActionPress={handleDeleteBeanPress}
           alertTrigger={
             <Button flex={1} bgC={"rgba(255, 255, 255, 0.2)"} borderRadius="$radius.9" p="$3">

@@ -14,6 +14,7 @@ import { useDatabase } from "@/provider/DatabaseProvider";
 import { Taste } from "@/types";
 import { useAutoFocus } from "@/hooks/useAutoFocus";
 import { AddBeanTasteFrameSelection, AddBeanTasteFrameSuggestions } from "./components";
+import { useTranslation } from "react-i18next";
 
 interface AddTasteFormInput {
   name: string;
@@ -22,6 +23,7 @@ interface AddBeanTasteFrameProps {
   open: boolean;
 }
 const AddBeanTasteFrame: FC<AddBeanTasteFrameProps> = ({ open }) => {
+  const { t } = useTranslation();
   const { db } = useDatabase();
   const inputRef = useRef<Input>(null);
   const [value, setValue] = useState<string>("");
@@ -94,7 +96,7 @@ const AddBeanTasteFrame: FC<AddBeanTasteFrameProps> = ({ open }) => {
                   ref={inputRef}
                   onBlur={onBlur}
                   returnKeyType="done"
-                  returnKeyLabel="Fertig"
+                  returnKeyLabel={t("common.done")}
                   submitBehavior="submit"
                   onSubmitEditing={handleSubmit}
                   onChangeText={(text) => setValue(text)}
@@ -104,7 +106,7 @@ const AddBeanTasteFrame: FC<AddBeanTasteFrameProps> = ({ open }) => {
           </View>
           <View flex={0} ml="$3" justifyContent="center">
             <Pressable onPress={() => showTasteSheet({ showSheet: false, type: "add" })}>
-              <Text>Abbrechen</Text>
+              <Text>{t("common.cancel")}</Text>
             </Pressable>
           </View>
         </XStack>

@@ -8,6 +8,7 @@ import { useBeanStore } from "@/store/bean-store";
 import { queryBeansBySearchAndFilter } from "@/db/queries";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useTranslation } from "react-i18next";
 
 import NoData from "@/components/NoData/NoData";
 
@@ -51,9 +52,15 @@ interface HomePageProps {
   hasBeans: boolean;
 }
 const HomePage: FC<HomePageProps> = ({ data, search, filter, hasBeans }) => {
+  const { t } = useTranslation();
+
   if (!hasBeans) {
     return (
-      <NoData variant={1} headline="Keine Bohnen gefunden" copy="Erstelle deine erste Bohne." />
+      <NoData
+        variant={1}
+        headline={t("dashboard.noData.title")}
+        copy={t("dashboard.noData.subtitle")}
+      />
     );
   }
 

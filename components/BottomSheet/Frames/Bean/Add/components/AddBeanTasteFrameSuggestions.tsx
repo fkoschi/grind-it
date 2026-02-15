@@ -2,6 +2,7 @@ import { FC } from "react";
 import { ThemedText, FilterChip } from "@/components/ui";
 import { Taste } from "@/types";
 import { View } from "tamagui";
+import { useTranslation } from "react-i18next";
 
 interface AddBeanTasteFrameSuggestionsProps {
   tasteData: Taste[];
@@ -11,6 +12,7 @@ const AddBeanTasteFrameSuggestions: FC<AddBeanTasteFrameSuggestionsProps> = ({
   tasteData,
   onPress,
 }) => {
+  const { t } = useTranslation();
   const noData = tasteData?.length === 0;
 
   if (noData) {
@@ -20,7 +22,7 @@ const AddBeanTasteFrameSuggestions: FC<AddBeanTasteFrameSuggestionsProps> = ({
   return (
     <View flex={1}>
       <ThemedText fw={500} fontSize="$6" lineHeight="$2">
-        Vorschläge:
+        {t("common.suggestions")}
       </ThemedText>
       <View mt="$2" flex={1} flexDirection="row" gap="$2" flexWrap="wrap">
         {tasteData.map((taste: Taste) => (

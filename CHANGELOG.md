@@ -4,37 +4,32 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.10.1](https://github.com/fkoschi/grind-it/compare/v1.10.0...v1.10.1) (2026-02-15)
 
-
 ### 🐛 Bug Fixes
 
-* eas.json with correct scheme ([eeecc26](https://github.com/fkoschi/grind-it/commit/eeecc26feffbffc22dd76291cd5746cccebb3a73))
+- eas.json with correct scheme ([eeecc26](https://github.com/fkoschi/grind-it/commit/eeecc26feffbffc22dd76291cd5746cccebb3a73))
 
 ## [1.10.0](https://github.com/fkoschi/grind-it/compare/v1.9.0...v1.10.0) (2026-02-15)
 
-
 ### 🐛 Bug Fixes
 
-* Update iOS build workflow to use generic platform for simulator destination. ([106cc4f](https://github.com/fkoschi/grind-it/commit/106cc4f2b3b3b074f614d2fe5c891ca9cc9caf27))
-
+- Update iOS build workflow to use generic platform for simulator destination. ([106cc4f](https://github.com/fkoschi/grind-it/commit/106cc4f2b3b3b074f614d2fe5c891ca9cc9caf27))
 
 ### ✨ Features
 
-* add apple watch ([#24](https://github.com/fkoschi/grind-it/issues/24)) ([d8fc7b8](https://github.com/fkoschi/grind-it/commit/d8fc7b81577eb1dab710464ba027c5ebc2ada4ac))
+- add apple watch ([#24](https://github.com/fkoschi/grind-it/issues/24)) ([d8fc7b8](https://github.com/fkoschi/grind-it/commit/d8fc7b81577eb1dab710464ba027c5ebc2ada4ac))
 
 ## [1.9.0](https://github.com/fkoschi/grind-it/compare/v1.8.3...v1.9.0) (2026-01-18)
 
-
 ### 🐛 Bug Fixes
 
-* android build ([#17](https://github.com/fkoschi/grind-it/issues/17)) ([6baf120](https://github.com/fkoschi/grind-it/commit/6baf120f86ec4d4302b13de40032963474704c86))
-* data export functionality ([343166c](https://github.com/fkoschi/grind-it/commit/343166ca5b5d71cee482be14c28d7073d1bad77f))
-* font issues and refactor tamagui config ([#18](https://github.com/fkoschi/grind-it/issues/18)) ([3ec76ce](https://github.com/fkoschi/grind-it/commit/3ec76ceb16bf33702324138f2d493f0411c16752))
-
+- android build ([#17](https://github.com/fkoschi/grind-it/issues/17)) ([6baf120](https://github.com/fkoschi/grind-it/commit/6baf120f86ec4d4302b13de40032963474704c86))
+- data export functionality ([343166c](https://github.com/fkoschi/grind-it/commit/343166ca5b5d71cee482be14c28d7073d1bad77f))
+- font issues and refactor tamagui config ([#18](https://github.com/fkoschi/grind-it/issues/18)) ([3ec76ce](https://github.com/fkoschi/grind-it/commit/3ec76ceb16bf33702324138f2d493f0411c16752))
 
 ### ✨ Features
 
-* change add bean presentation ([62d19b6](https://github.com/fkoschi/grind-it/commit/62d19b6895b84c72d0274691c665937ac1835db0))
-* Implement data export and import capabilities, including new utilities, hooks, and UI integration. ([#10](https://github.com/fkoschi/grind-it/issues/10)) ([d9011ca](https://github.com/fkoschi/grind-it/commit/d9011ca04d139b156fd2df9c36bc9cc87816d3a6))
+- change add bean presentation ([62d19b6](https://github.com/fkoschi/grind-it/commit/62d19b6895b84c72d0274691c665937ac1835db0))
+- Implement data export and import capabilities, including new utilities, hooks, and UI integration. ([#10](https://github.com/fkoschi/grind-it/issues/10)) ([d9011ca](https://github.com/fkoschi/grind-it/commit/d9011ca04d139b156fd2df9c36bc9cc87816d3a6))
 
 ### [1.8.3](https://github.com/fkoschi/grind-it/compare/v1.8.2...v1.8.3) (2026-01-01)
 

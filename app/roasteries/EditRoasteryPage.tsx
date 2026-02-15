@@ -13,10 +13,12 @@ import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeabl
 import { ActionButton, AddIcon, DeleteOutlinedIcon, Sheet as BottomSheet } from "@/components/ui";
 import Reanimated, { SharedValue, useAnimatedStyle } from "react-native-reanimated";
 import { HapticTab } from "@/components/ui/HapticTab/HapticTab";
+import { useTranslation } from "react-i18next";
 
 import { AddRoasteryFrame } from "@/components";
 
 const EditRoasteries: FC = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const { db } = useDatabase();
   const [openSheet, setOpenSheet] = useState<boolean>(false);
@@ -45,7 +47,7 @@ const EditRoasteries: FC = () => {
       </View>
       <View flex={1} justifyContent="flex-end" alignItems="center">
         <Text fontSize={32} c={"$white"} fontFamily="$sodabery" mb="$6">
-          Röstereien
+          {t("roastery.title")}
         </Text>
       </View>
     </LinearGradient>
@@ -97,7 +99,7 @@ const EditRoasteries: FC = () => {
       <Header />
       <View flex={1} mt="$4" py="$6">
         {noData && (
-          <NoData variant={3} headline="Keine Daten!" copy="Erstelle deine erste Rösterei" />
+          <NoData variant={3} headline={t("common.noData")} copy={t("roastery.noData.subtitle")} />
         )}
         {hasData && <DataView />}
       </View>

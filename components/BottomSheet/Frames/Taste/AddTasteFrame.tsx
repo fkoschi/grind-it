@@ -8,6 +8,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { Pressable } from "react-native";
 import { Input, Text, View, XStack } from "tamagui";
 import { z } from "zod";
+import { useTranslation } from "react-i18next";
 
 interface AddTasteFrameProps {
   open?: boolean;
@@ -16,6 +17,7 @@ interface AddTasteFrameProps {
 }
 
 const AddTasteFrame: FC<AddTasteFrameProps> = ({ open, onCancel, onSave }) => {
+  const { t } = useTranslation();
   const { db } = useDatabase();
   const inputRef = useRef<Input>(null);
   const { duplicateError, checkInput, clearError } = useDuplicateCheck({
@@ -24,7 +26,7 @@ const AddTasteFrame: FC<AddTasteFrameProps> = ({ open, onCancel, onSave }) => {
   });
 
   const Taste = z.object({
-    taste: z.string().nonempty("Geschmack darf nicht leer sein"),
+    taste: z.string().nonempty(t("taste.validationEmpty")),
   });
   type TasteT = z.infer<typeof Taste>;
 
@@ -63,11 +65,10 @@ const AddTasteFrame: FC<AddTasteFrameProps> = ({ open, onCancel, onSave }) => {
   return (
     <View flex={1} p="$6">
       <Text fontSize={26} color={"$primary"} fontFamily="$sodabery">
-        Neuer Geschmack
+        {t("taste.addTitle")}
       </Text>
       <Text mt="$2" fontSize={12} color={"$copyText"}>
-        Dieser Geschmack wird unabhängig von einer Bohne erstellt und kann später zu beliebig vielen
-        Bohnen zugeordnet werden.
+        {t("taste.addDescription")}
       </Text>
 
       <XStack mt="$6">
@@ -85,7 +86,7 @@ const AddTasteFrame: FC<AddTasteFrameProps> = ({ open, onCancel, onSave }) => {
                 }}
                 onBlur={onBlur}
                 returnKeyType="done"
-                returnKeyLabel="Fertig"
+                returnKeyLabel={t("common.done")}
                 onEndEditing={handleSubmit(onSubmit)}
                 borderColor={duplicateError ? "$red10" : undefined}
               />
@@ -99,7 +100,7 @@ const AddTasteFrame: FC<AddTasteFrameProps> = ({ open, onCancel, onSave }) => {
         </View>
         <View flex={0} ml="$3" pt="$2.5">
           <Pressable onPress={handleCancel}>
-            <Text>Abbrechen</Text>
+            <Text>{t("common.cancel")}</Text>
           </Pressable>
         </View>
       </XStack>

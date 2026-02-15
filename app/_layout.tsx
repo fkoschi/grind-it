@@ -1,3 +1,4 @@
+import "@/i18n";
 import "@/polyfill";
 import App from "./App";
 import React from "react";

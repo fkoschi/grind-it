@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { XStack, Input, Button, View } from "tamagui";
 import { Send } from "@tamagui/lucide-icons";
+import { useTranslation } from "react-i18next";
 
 interface ChatInputProps {
   onSend: (message: string) => void;
@@ -8,6 +9,7 @@ interface ChatInputProps {
 }
 
 export const ChatInput = ({ onSend, isLoading }: ChatInputProps) => {
+  const { t } = useTranslation();
   const [message, setMessage] = useState("");
 
   const handleSend = () => {
@@ -31,7 +33,7 @@ export const ChatInput = ({ onSend, isLoading }: ChatInputProps) => {
           flex={1}
           unstyled // Removes default styles to blend in
           size="$4"
-          placeholder="Ask anything..."
+          placeholder={t("chat.inputPlaceholder")}
           placeholderTextColor="$gray2"
           value={message}
           onChangeText={setMessage}

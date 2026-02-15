@@ -8,6 +8,7 @@ import { AddIcon } from "@/components/ui/Icons";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { useAutoFocus } from "@/hooks/useAutoFocus";
 import { TextInput } from "react-native";
+import { useTranslation } from "react-i18next";
 
 interface AddRoasteryFormInput {
   name: string;
@@ -22,6 +23,7 @@ interface AddRoasteryFrameProps {
   onFormSubmit: () => void;
 }
 const AddRoasteryFrame: FC<AddRoasteryFrameProps> = ({ open, onFormSubmit }) => {
+  const { t } = useTranslation();
   const { db } = useDatabase();
   const inputRef = useRef<TextInput>(null);
 
@@ -52,7 +54,7 @@ const AddRoasteryFrame: FC<AddRoasteryFrameProps> = ({ open, onFormSubmit }) => 
   return (
     <View flex={1} p="$8">
       <Text fontSize="$8" mb="$4">
-        Rösterei anlegen
+        {t("roastery.addTitle")}
       </Text>
       <XStack gap="$2" alignItems="center">
         <View flex={1}>
@@ -89,7 +91,7 @@ const AddRoasteryFrame: FC<AddRoasteryFrameProps> = ({ open, onFormSubmit }) => 
       </XStack>
       {isRequiredError && (
         <Text mt="$2" color="$error" fontSize="$2">
-          Bitte geben Sie einen Namen ein!
+          {t("roastery.validation.nameRequired")}
         </Text>
       )}
     </View>
