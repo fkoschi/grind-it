@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.1](https://github.com/fkoschi/grind-it/compare/v1.10.1...v1.11.1) (2026-02-15)
+
+
+### 🐛 Bug Fixes
+
+* failing github action - ios build check ([a8c1b3b](https://github.com/fkoschi/grind-it/commit/a8c1b3b1b6d25713933d80706aed2545560e8f1b))
+* iOS build and store submission ([84badc4](https://github.com/fkoschi/grind-it/commit/84badc445b0f6a9511241f2b1461d777eb0b41a0))
+
+
+### ✨ Features
+
+* i18n ([#27](https://github.com/fkoschi/grind-it/issues/27)) ([6417ba8](https://github.com/fkoschi/grind-it/commit/6417ba8d3e6acada0abf6e572d5e104d09165c07))
+
 ## [1.11.0](https://github.com/fkoschi/grind-it/compare/v1.10.1...v1.11.0) (2026-02-15)
 
 
