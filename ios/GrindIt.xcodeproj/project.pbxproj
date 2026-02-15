@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,9 +18,21 @@
 		59613D3E2F313BF800F39C61 /* WatchConnectivityBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 59613D3C2F313BF800F39C61 /* WatchConnectivityBridge.m */; };
 		59613D3F2F313BF800F39C61 /* WatchConnectivityBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59613D3D2F313BF800F39C61 /* WatchConnectivityBridge.swift */; };
 		74BB7679B0D0FE37BE6B4E01 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E5CDBB18B525B915EE0C58 /* ExpoModulesProvider.swift */; };
+		983AE13BFD4967B42CC11E8E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D402000000000000B4 /* PrivacyInfo.xcprivacy */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		DEB18D7E019D493FA9BDF43E /* TBJSodabery-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5E2A229500E490F922EABE4 /* TBJSodabery-Light.otf */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
+		A1B2C3D401000000000000A1 /* GrindItWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D402000000000000A1 /* GrindItWatchApp.swift */; };
+		A1B2C3D401000000000000A2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D402000000000000A2 /* ContentView.swift */; };
+		A1B2C3D401000000000000A3 /* BeanCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D402000000000000A3 /* BeanCardView.swift */; };
+		A1B2C3D401000000000000A4 /* BeanDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D402000000000000A4 /* BeanDetailView.swift */; };
+		A1B2C3D401000000000000A5 /* TestDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D402000000000000A5 /* TestDataHelper.swift */; };
+		A1B2C3D401000000000000A6 /* SQLiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D402000000000000A6 /* SQLiteManager.swift */; };
+		A1B2C3D401000000000000A7 /* Color+GrindIt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D402000000000000A7 /* Color+GrindIt.swift */; };
+		A1B2C3D401000000000000A8 /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D402000000000000A8 /* WatchConnectivityManager.swift */; };
+		A1B2C3D401000000000000B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D402000000000000B1 /* Assets.xcassets */; };
+		A1B2C3D401000000000000B2 /* TBJSodabery-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D402000000000000B2 /* TBJSodabery-Light.otf */; };
+		A1B2C3D401000000000000B3 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D402000000000000B3 /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,11 +78,19 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = GrindIt/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* GrindIt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "GrindIt-Bridging-Header.h"; path = "GrindIt/GrindIt-Bridging-Header.h"; sourceTree = "<group>"; };
+		A1B2C3D402000000000000A1 /* GrindItWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrindItWatchApp.swift; sourceTree = "<group>"; };
+		A1B2C3D402000000000000A2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A1B2C3D402000000000000A3 /* BeanCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeanCardView.swift; sourceTree = "<group>"; };
+		A1B2C3D402000000000000A4 /* BeanDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeanDetailView.swift; sourceTree = "<group>"; };
+		A1B2C3D402000000000000A5 /* TestDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDataHelper.swift; sourceTree = "<group>"; };
+		A1B2C3D402000000000000A6 /* SQLiteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteManager.swift; sourceTree = "<group>"; };
+		A1B2C3D402000000000000A7 /* Color+GrindIt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+GrindIt.swift"; sourceTree = "<group>"; };
+		A1B2C3D402000000000000A8 /* WatchConnectivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityManager.swift; sourceTree = "<group>"; };
+		A1B2C3D402000000000000B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A1B2C3D402000000000000B2 /* TBJSodabery-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TBJSodabery-Light.otf"; sourceTree = "<group>"; };
+		A1B2C3D402000000000000B3 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		A1B2C3D402000000000000B4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		59613CE02F312B9900F39C61 /* GrindItWatch Watch App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "GrindItWatch Watch App"; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
@@ -201,6 +221,57 @@
 			name = GrindIt;
 			sourceTree = "<group>";
 		};
+		59613CE02F312B9900F39C61 /* GrindItWatch Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D402000000000000A1 /* GrindItWatchApp.swift */,
+				A1B2C3D402000000000000B1 /* Assets.xcassets */,
+				A1B2C3D4020000000000C001 /* Database */,
+				A1B2C3D4020000000000C002 /* Extensions */,
+				A1B2C3D4020000000000C003 /* Managers */,
+				A1B2C3D4020000000000C004 /* Views */,
+				A1B2C3D402000000000000B2 /* TBJSodabery-Light.otf */,
+				A1B2C3D402000000000000B3 /* Localizable.xcstrings */,
+				A1B2C3D402000000000000B4 /* PrivacyInfo.xcprivacy */,
+			);
+			path = "GrindItWatch Watch App";
+			sourceTree = "<group>";
+		};
+		A1B2C3D4020000000000C001 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D402000000000000A6 /* SQLiteManager.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4020000000000C002 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D402000000000000A7 /* Color+GrindIt.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4020000000000C003 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D402000000000000A8 /* WatchConnectivityManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4020000000000C004 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D402000000000000A2 /* ContentView.swift */,
+				A1B2C3D402000000000000A3 /* BeanCardView.swift */,
+				A1B2C3D402000000000000A4 /* BeanDetailView.swift */,
+				A1B2C3D402000000000000A5 /* TestDataHelper.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -240,9 +311,6 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				59613CE02F312B9900F39C61 /* GrindItWatch Watch App */,
-			);
 			name = "GrindItWatch Watch App";
 			packageProductDependencies = (
 				59613D052F312C9400F39C61 /* SQLite */,
@@ -279,7 +347,7 @@
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			packageReferences = (
-				59613D042F312C8900F39C61 /* XCRemoteSwiftPackageReference "SQLite" */,
+				59613D042F312C8900F39C61 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -308,6 +376,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				983AE13BFD4967B42CC11E8E /* PrivacyInfo.xcprivacy in Resources */,
+				A1B2C3D401000000000000B1 /* Assets.xcassets in Resources */,
+				A1B2C3D401000000000000B2 /* TBJSodabery-Light.otf in Resources */,
+				A1B2C3D401000000000000B3 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +533,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				59613D072F31326F00F39C61 /* BeanSchema.swift in Sources */,
+				A1B2C3D401000000000000A1 /* GrindItWatchApp.swift in Sources */,
+				A1B2C3D401000000000000A2 /* ContentView.swift in Sources */,
+				A1B2C3D401000000000000A3 /* BeanCardView.swift in Sources */,
+				A1B2C3D401000000000000A4 /* BeanDetailView.swift in Sources */,
+				A1B2C3D401000000000000A5 /* TestDataHelper.swift in Sources */,
+				A1B2C3D401000000000000A6 /* SQLiteManager.swift in Sources */,
+				A1B2C3D401000000000000A7 /* Color+GrindIt.swift in Sources */,
+				A1B2C3D401000000000000A8 /* WatchConnectivityManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,7 +873,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		59613D042F312C8900F39C61 /* XCRemoteSwiftPackageReference "SQLite" */ = {
+		59613D042F312C8900F39C61 /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
 			requirement = {
@@ -806,7 +886,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		59613D052F312C9400F39C61 /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 59613D042F312C8900F39C61 /* XCRemoteSwiftPackageReference "SQLite" */;
+			package = 59613D042F312C8900F39C61 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
 			productName = SQLite;
 		};
 /* End XCSwiftPackageProductDependency section */
