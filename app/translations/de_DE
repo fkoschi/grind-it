@@ -1,78 +1,69 @@
-{
-  "expo": {
-    "name": "Grind It",
-    "slug": "grind-it",
-    "version": "1.11.2",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "grind-it",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": false,
-      "bundleIdentifier": "com.fkoschi.grind-it",
-      "appStoreUrl": "https://apps.apple.com/de/app/grind-it/id6740140366",
-      "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.fkoschi.grindit",
-      "versionCode": 1
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      "expo-asset",
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#FFFFFF"
-        }
-      ],
-      [
-        "expo-font",
-        {
-          "fonts": [
-            "./assets/fonts/TBJSodabery-Light.otf"
-          ]
-        }
-      ],
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "compileSdkVersion": 36,
-            "targetSdkVersion": 36
-          }
-        }
-      ],
-      "expo-sqlite",
-      "expo-web-browser",
-      "expo-localization"
-    ],
-    "experiments": {
-      "typedRoutes": true
-    },
-    "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "ebe4c636-91d7-4418-b2d5-479eb08a4b41"
-      }
-    },
-    "owner": "funkyfelix"
+import "@/i18n";
+import "@/polyfill";
+import App from "./App";
+import React from "react";
+import { Stack } from "expo-router";
+import StorybookUI from "../.storybook";
+import { ToastViewport } from "@/components/ui/Toast";
+
+export default function RootLayout() {
+  if (process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === "true") {
+    return (
+      <App>
+        <StorybookUI />
+        <ToastViewport />
+      </App>
+    );
   }
+
+  return (
+    <App>
+      <Stack initialRouteName="index">
+        <Stack.Screen
+          name="index"
+          options={{
+            headerShown: false,
+            animation: "none",
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen
+          name="settings"
+          options={{
+            headerShown: false,
+            animation: "none",
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen
+          name="roasteries/EditRoasteryPage"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="taste/EditTasteComponent"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="add-bean"
+          options={{
+            headerShown: false,
+            presentation: "fullScreenModal",
+            animation: "slide_from_bottom",
+          }}
+        />
+        <Stack.Screen
+          name="chat"
+          options={{
+            headerShown: false,
+            presentation: "modal",
+          }}
+        />
+      </Stack>
+      <ToastViewport />
+    </App>
+  );
 }
