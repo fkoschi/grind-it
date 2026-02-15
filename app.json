@@ -2,7 +2,7 @@
   "expo": {
     "name": "Grind It",
     "slug": "grind-it",
-    "version": "1.10.1",
+    "version": "1.11.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "grind-it",
@@ -44,7 +44,9 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/TBJSodabery-Light.otf"]
+          "fonts": [
+            "./assets/fonts/TBJSodabery-Light.otf"
+          ]
         }
       ],
       [
