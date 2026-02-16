@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,7 @@
 		59613D072F31326F00F39C61 /* BeanSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59613CAB2F31297400F39C61 /* BeanSchema.swift */; };
 		59613D3E2F313BF800F39C61 /* WatchConnectivityBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 59613D3C2F313BF800F39C61 /* WatchConnectivityBridge.m */; };
 		59613D3F2F313BF800F39C61 /* WatchConnectivityBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59613D3D2F313BF800F39C61 /* WatchConnectivityBridge.swift */; };
+		599DD8CC2F43C718009CA5BB /* StoreKitConfig.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 599DD8CB2F43C718009CA5BB /* StoreKitConfig.storekit */; };
 		74BB7679B0D0FE37BE6B4E01 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E5CDBB18B525B915EE0C58 /* ExpoModulesProvider.swift */; };
 		983AE13BFD4967B42CC11E8E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D402000000000000B4 /* PrivacyInfo.xcprivacy */; };
 		A1B2C3D401000000000000A1 /* GrindItWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D402000000000000A1 /* GrindItWatchApp.swift */; };
@@ -68,6 +69,7 @@
 		59613CDF2F312B9900F39C61 /* GrindItWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GrindItWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		59613D3C2F313BF800F39C61 /* WatchConnectivityBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WatchConnectivityBridge.m; sourceTree = "<group>"; };
 		59613D3D2F313BF800F39C61 /* WatchConnectivityBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityBridge.swift; sourceTree = "<group>"; };
+		599DD8CB2F43C718009CA5BB /* StoreKitConfig.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreKitConfig.storekit; sourceTree = "<group>"; };
 		64C9AADBC112682B5AFF4BD7 /* Pods-GrindIt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GrindIt.release.xcconfig"; path = "Target Support Files/Pods-GrindIt/Pods-GrindIt.release.xcconfig"; sourceTree = "<group>"; };
 		75E5CDBB18B525B915EE0C58 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-GrindIt/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		A1B2C3D402000000000000A1 /* GrindItWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrindItWatchApp.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				599DD8CB2F43C718009CA5BB /* StoreKitConfig.storekit */,
 				59613CAC2F31297400F39C61 /* Shared */,
 				13B07FAE1A68108700A75B9A /* GrindIt */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -367,6 +370,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
+				599DD8CC2F43C718009CA5BB /* StoreKitConfig.storekit in Resources */,
 				DEB18D7E019D493FA9BDF43E /* TBJSodabery-Light.otf in Resources */,
 				2013FA1363629DA33C6AB078 /* PrivacyInfo.xcprivacy in Resources */,
 			);
@@ -459,10 +463,12 @@
 				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoFileSystem/ExpoFileSystem_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoLocalization/ExpoLocalization_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoSystemUI/ExpoSystemUI_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/PurchasesHybridCommon/PurchasesHybridCommon.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/RNCAsyncStorage/RNCAsyncStorage_resources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/RNSVG/RNSVGFilters.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/React-Core_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RevenueCat/RevenueCat.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage/SDWebImage.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/expo-dev-launcher/EXDevLauncher.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/expo-dev-menu/EXDevMenu.bundle",
@@ -476,10 +482,12 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoFileSystem_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoLocalization_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoSystemUI_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/PurchasesHybridCommon.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNCAsyncStorage_resources.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNSVGFilters.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-Core_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-cxxreact_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RevenueCat.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SDWebImage.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXDevLauncher.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXDevMenu.bundle",

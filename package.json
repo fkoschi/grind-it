@@ -86,6 +86,7 @@
     "react-native-get-random-values": "^2.0.0",
     "react-native-markdown-display": "^7.0.2",
     "react-native-polyfill-globals": "^3.1.0",
+    "react-native-purchases": "^9.9.0",
     "react-native-reanimated": "~4.1.1",
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.16.0",

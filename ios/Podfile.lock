@@ -332,6 +332,8 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
+  - PurchasesHybridCommon (17.37.0):
+    - RevenueCat (= 5.58.0)
   - RCTDeprecation (0.81.5)
   - RCTRequired (0.81.5)
   - RCTTypeSafety (0.81.5):
@@ -2097,6 +2099,7 @@ PODS:
     - React-utils (= 0.81.5)
     - ReactNativeDependencies
   - ReactNativeDependencies (0.81.5)
+  - RevenueCat (5.58.0)
   - RNCAsyncStorage (2.2.0):
     - hermes-engine
     - RCTRequired
@@ -2186,6 +2189,9 @@ PODS:
     - ReactNativeDependencies
     - RNWorklets
     - Yoga
+  - RNPurchases (9.9.0):
+    - PurchasesHybridCommon (= 17.37.0)
+    - React-Core
   - RNReanimated (4.1.6):
     - hermes-engine
     - RCTRequired
@@ -2542,6 +2548,7 @@ DEPENDENCIES:
   - "RNDateTimePicker (from `../node_modules/.pnpm/@react-native-community+datetimepicker@8.4.4_expo@54.0.31_react-native@0.81.5_@babel+co_82acc9c0848a0cf678c77b3bf9b1e8f9/node_modules/@react-native-community/datetimepicker`)"
   - "RNGestureHandler (from `../node_modules/.pnpm/react-native-gesture-handler@2.28.0_react-native@0.81.5_@babel+core@7.28.6_@types+react_d46c38bfd6a30a92726fb77a1f1e6887/node_modules/react-native-gesture-handler`)"
   - "RNLiveMarkdown (from `../node_modules/.pnpm/@expensify+react-native-live-markdown@0.1.320_expensify-common@2.0.169_react-native-wor_e7141511091ad457832eaef6b7b830dd/node_modules/@expensify/react-native-live-markdown`)"
+  - "RNPurchases (from `../node_modules/.pnpm/react-native-purchases@9.9.0_react-native-web@0.21.2_react-dom@19.1.0_react@19.1.0__rea_f561ab845819ff9f750b697863c4c304/node_modules/react-native-purchases`)"
   - "RNReanimated (from `../node_modules/.pnpm/react-native-reanimated@4.1.6_@babel+core@7.28.6_react-native-worklets@0.5.2_@babel+cor_9953073956d7fbbb2cfdb1b980c9908a/node_modules/react-native-reanimated`)"
   - "RNScreens (from `../node_modules/.pnpm/react-native-screens@4.16.0_react-native@0.81.5_@babel+core@7.28.6_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-screens`)"
   - "RNSVG (from `../node_modules/.pnpm/react-native-svg@15.12.1_react-native@0.81.5_@babel+core@7.28.6_@types+react@19.1.17_react@19.1.0__react@19.1.0/node_modules/react-native-svg`)"
@@ -2555,6 +2562,8 @@ SPEC REPOS:
     - libdav1d
     - libwebp
     - lottie-ios
+    - PurchasesHybridCommon
+    - RevenueCat
     - SDWebImage
     - SDWebImageAVIFCoder
     - SDWebImageSVGCoder
@@ -2766,6 +2775,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/.pnpm/react-native-gesture-handler@2.28.0_react-native@0.81.5_@babel+core@7.28.6_@types+react_d46c38bfd6a30a92726fb77a1f1e6887/node_modules/react-native-gesture-handler"
   RNLiveMarkdown:
     :path: "../node_modules/.pnpm/@expensify+react-native-live-markdown@0.1.320_expensify-common@2.0.169_react-native-wor_e7141511091ad457832eaef6b7b830dd/node_modules/@expensify/react-native-live-markdown"
+  RNPurchases:
+    :path: "../node_modules/.pnpm/react-native-purchases@9.9.0_react-native-web@0.21.2_react-dom@19.1.0_react@19.1.0__rea_f561ab845819ff9f750b697863c4c304/node_modules/react-native-purchases"
   RNReanimated:
     :path: "../node_modules/.pnpm/react-native-reanimated@4.1.6_@babel+core@7.28.6_react-native-worklets@0.5.2_@babel+cor_9953073956d7fbbb2cfdb1b980c9908a/node_modules/react-native-reanimated"
   RNScreens:
@@ -2815,6 +2826,7 @@ SPEC CHECKSUMS:
   libwebp: 02b23773aedb6ff1fd38cec7a77b81414c6842a8
   lottie-ios: a881093fab623c467d3bce374367755c272bdd59
   lottie-react-native: bb71dad3f6d44ff2f234d46b6d684a443623f728
+  PurchasesHybridCommon: 5e012ecbd932092af743a8cec6bf55b605f2d89d
   RCTDeprecation: 943572d4be82d480a48f4884f670135ae30bf990
   RCTRequired: 8f3cfc90cc25cf6e420ddb3e7caaaabc57df6043
   RCTTypeSafety: 16a4144ca3f959583ab019b57d5633df10b5e97c
@@ -2882,10 +2894,12 @@ SPEC CHECKSUMS:
   ReactCodegen: 88a1f4643f15841573f833b895bfa2a0c6cb4e7f
   ReactCommon: e6e232202a447d353e5531f2be82f50f47cbaa9a
   ReactNativeDependencies: 71ce9c28beb282aa720ea7b46980fff9669f428a
+  RevenueCat: 88bb4229115b2badcce0e5a97f3dd8cc952b38c8
   RNCAsyncStorage: e85a99325df9eb0191a6ee2b2a842644c7eb29f4
   RNDateTimePicker: 6fdd63f5d1e0f21faf4cc8674957c52958a7efae
   RNGestureHandler: 6a488ce85c88e82d8610db1108daf04e9b2d5162
   RNLiveMarkdown: 4ba4ab36b28cb0109ecc34697a9312d71c454ba5
+  RNPurchases: 1b024f4867ab4c25faec1463bcad6ccdf3256250
   RNReanimated: 7a5a91c8b30a3925d13aeef7f93c6401dc206c0b
   RNScreens: dd61bc3a3e6f6901ad833efa411917d44827cf51
   RNSVG: 2825ee146e0f6a16221e852299943e4cceef4528

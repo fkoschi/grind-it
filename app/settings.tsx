@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Avatar, Text, ListItem, View, YGroup, Separator, Spinner } from "tamagui";
-import { ChevronRight, Share2, Upload } from "@tamagui/lucide-icons";
+import { ChevronRight, Crown, RotateCcw, Share2, Upload } from "@tamagui/lucide-icons";
 import { useRouter } from "expo-router";
 import { Share, Alert, Platform } from "react-native";
 import { File, Paths } from "expo-file-system";
@@ -9,6 +9,7 @@ import TabBar from "@/components/Navigation/TabBar";
 import { ThemedText } from "@/components/ui";
 import { useDataExport } from "@/hooks/useDataExport";
 import { useDataImport } from "@/hooks/useDataImport";
+import { usePurchase } from "@/provider/PurchaseProvider";
 import * as DocumentPicker from "expo-document-picker";
 import { useTranslation } from "react-i18next";
 
@@ -22,7 +23,25 @@ const SettingsPage: FC = () => {
   const [isSharing, setIsSharing] = useState(false);
 
   const { importData, isImporting } = useDataImport();
+  const { isPro, restorePurchases } = usePurchase();
   const [isPickingFile, setIsPickingFile] = useState(false);
+  const [isRestoring, setIsRestoring] = useState(false);
+
+  const handleRestore = async () => {
+    setIsRestoring(true);
+    try {
+      const restored = await restorePurchases();
+      if (restored) {
+        Alert.alert(t("upgrade.restore.success.title"), t("upgrade.restore.success.message"));
+      } else {
+        Alert.alert(t("upgrade.restore.empty.title"), t("upgrade.restore.empty.message"));
+      }
+    } catch {
+      Alert.alert(t("upgrade.error.title"), t("upgrade.error.message"));
+    } finally {
+      setIsRestoring(false);
+    }
+  };
 
   const handleShareData = async () => {
     setIsSharing(true);
@@ -176,6 +195,33 @@ const SettingsPage: FC = () => {
             </ListItem>
           </YGroup.Item>
         </YGroup>
+        {!isPro && (
+          <YGroup p="$4">
+            <YGroup.Item>
+              <ListItem
+                pressTheme
+                bgC="$white"
+                iconAfter={Crown}
+                onPress={() => router.push("/upgrade")}
+              >
+                {t("settings.upgradePro")}
+              </ListItem>
+            </YGroup.Item>
+            <Separator />
+            <YGroup.Item>
+              <ListItem
+                pressTheme
+                bgC="$white"
+                iconAfter={isRestoring ? Spinner : RotateCcw}
+                onPress={handleRestore}
+                disabled={isRestoring}
+                opacity={isRestoring ? 0.5 : 1}
+              >
+                {t("settings.restorePurchases")}
+              </ListItem>
+            </YGroup.Item>
+          </YGroup>
+        )}
         <YGroup p="$4">
           <YGroup.Item>
             <ListItem

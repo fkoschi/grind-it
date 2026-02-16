@@ -203,6 +203,9 @@ importers:
       react-native-polyfill-globals:
         specifier: ^3.1.0
         version: 3.1.0(base-64@1.0.0)(react-native-fetch-api@3.0.0)(react-native-get-random-values@2.0.0(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.1.17)(react@19.1.0)))(react-native-url-polyfill@3.0.0(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.1.17)(react@19.1.0)))(text-encoding@0.7.0)(web-streams-polyfill@3.3.3)
+      react-native-purchases:
+        specifier: ^9.9.0
+        version: 9.9.0(react-native-web@0.21.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
       react-native-reanimated:
         specifier: ~4.1.1
         version: 4.1.6(@babel/core@7.28.6)(react-native-worklets@0.5.2(@babel/core@7.28.6)(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
@@ -2266,6 +2269,15 @@ packages:
 
   '@react-navigation/routers@7.5.3':
     resolution: {integrity: sha512-1tJHg4KKRJuQ1/EvJxatrMef3NZXEPzwUIUZ3n1yJ2t7Q97siwRtbynRpQG9/69ebbtiZ8W3ScOZF/OmhvM4Rg==}
+
+  '@revenuecat/purchases-js-hybrid-mappings@17.37.0':
+    resolution: {integrity: sha512-hRmVpdqsB8wIOoxjnlcplFU0gyo0h69iZJCs75OQEpdfhQll+mlcjy15/1rvRnQe2BFBWI/Xeu5AR1dMwt1YBw==}
+
+  '@revenuecat/purchases-js@1.25.1':
+    resolution: {integrity: sha512-RAW+iyBVgS7qiuSb2uWvzojkIdwxeIwiP1fGs+Wz8AiDu87KrQPga0PdZVQ0GlniMDb9lnhIzZFnHQkui7tuyQ==}
+
+  '@revenuecat/purchases-typescript-internal@17.37.0':
+    resolution: {integrity: sha512-W409qJpuZ6ec6GCymQcDUL3eK8BiWLYk5feDmfv88Eb6jBCwNjifgKISCR/MdVIZwC36ZNXmV4pkPZd+Mrjh+w==}
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -6154,6 +6166,16 @@ packages:
       text-encoding: '*'
       web-streams-polyfill: '*'
 
+  react-native-purchases@9.9.0:
+    resolution: {integrity: sha512-tXpkGiOPal/G4+vxxu2dZFkARWqyQ4cQbH1Z1InBhrNwKyybzQC4f5Ufd1YeQaYOMwWrDOFtU7S4/vmeK/aQNg==}
+    peerDependencies:
+      react: '>= 16.6.3'
+      react-native: '>= 0.73.0'
+      react-native-web: '*'
+    peerDependenciesMeta:
+      react-native-web:
+        optional: true
+
   react-native-reanimated@4.1.6:
     resolution: {integrity: sha512-F+ZJBYiok/6Jzp1re75F/9aLzkgoQCOh4yxrnwATa8392RvM3kx+fiXXFvwcgE59v48lMwd9q0nzF1oJLXpfxQ==}
     peerDependencies:
@@ -9465,6 +9487,14 @@ snapshots:
   '@react-navigation/routers@7.5.3':
     dependencies:
       nanoid: 3.3.11
+
+  '@revenuecat/purchases-js-hybrid-mappings@17.37.0':
+    dependencies:
+      '@revenuecat/purchases-js': 1.25.1
+
+  '@revenuecat/purchases-js@1.25.1': {}
+
+  '@revenuecat/purchases-typescript-internal@17.37.0': {}
 
   '@sinclair/typebox@0.27.8': {}
 
@@ -14454,6 +14484,15 @@ snapshots:
       react-native-url-polyfill: 3.0.0(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.1.17)(react@19.1.0))
       text-encoding: 0.7.0
       web-streams-polyfill: 3.3.3
+
+  react-native-purchases@9.9.0(react-native-web@0.21.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0):
+    dependencies:
+      '@revenuecat/purchases-js-hybrid-mappings': 17.37.0
+      '@revenuecat/purchases-typescript-internal': 17.37.0
+      react: 19.1.0
+      react-native: 0.81.5(@babel/core@7.28.6)(@types/react@19.1.17)(react@19.1.0)
+    optionalDependencies:
+      react-native-web: 0.21.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
 
   react-native-reanimated@4.1.6(@babel/core@7.28.6)(react-native-worklets@0.5.2(@babel/core@7.28.6)(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.5(@babel/core@7.28.6)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0):
     dependencies:
