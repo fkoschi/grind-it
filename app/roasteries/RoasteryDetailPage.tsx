@@ -4,7 +4,7 @@ import { useDatabase } from "@/provider/DatabaseProvider";
 import { eq } from "drizzle-orm";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { Button, Input, ScrollView, Text, View, XStack, YStack } from "tamagui";
-import { Pressable, Linking } from "react-native";
+import { KeyboardAvoidingView, Platform, Pressable, Linking } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useRoasteryDetails } from "@/hooks/useRoasteryDetails";
@@ -17,7 +17,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ActionButton, SaveIcon } from "@/components/ui";
 import Sheet from "@/components/ui/Sheet/Sheet";
 import GooglePlacesFrame from "@/components/BottomSheet/Frames/Roastery/GooglePlacesFrame";
-import RoasteryLogo from "@/components/ui/RoasteryLogo/RoasteryLogo";
 import StaticMap from "@/components/ui/StaticMap/StaticMap";
 
 const editSchema = z.object({
@@ -130,81 +129,20 @@ const RoasteryDetailPage: FC = () => {
         </View>
       </LinearGradient>
 
-      <ScrollView flex={1} py="$6" px="$6">
-        <YStack gap="$4" pb="$12">
-          {/* Map — driven from form state so it updates immediately on address change */}
-          {(watch("latitude") ?? roastery.latitude) != null &&
-            (watch("longitude") ?? roastery.longitude) != null && (
-              <StaticMap
-                latitude={(watch("latitude") ?? roastery.latitude)!}
-                longitude={(watch("longitude") ?? roastery.longitude)!}
-                height={180}
-                onPress={handleOpenMaps}
-              />
-            )}
-
-          {/* Name */}
-          <XStack gap="$3" alignItems="center" justifyContent="center">
-            {!!roastery.website && <RoasteryLogo websiteUrl={roastery.website} size={56} />}
-            <YStack gap="$2" flex={1}>
-              <ThemedText fw={600} fontSize={12} color="$copyText">
-                {t("common.name")}
-              </ThemedText>
-              <Controller
-                name="name"
-                control={control}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <Input
-                    borderWidth={0}
-                    bgC="white"
-                    borderRadius="$4"
-                    value={value}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    size="$4"
-                  />
-                )}
-              />
-            </YStack>
-          </XStack>
-
-          {/* Rating */}
-          <YStack gap="$2">
-            <ThemedText fw={600} fontSize={12} color="$copyText">
-              {t("roastery.rating")}
-            </ThemedText>
-            <XStack gap="$3" alignItems="center">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <Pressable
-                  key={star}
-                  onPress={() => setValue("rating", star, { shouldDirty: true })}
-                >
-                  <Star
-                    size={28}
-                    color={star <= currentRating ? "#E89E3F" : "#D9D9D9"}
-                    fill={star <= currentRating ? "#E89E3F" : "transparent"}
-                  />
-                </Pressable>
-              ))}
-              {currentRating > 0 && (
-                <Pressable onPress={() => setValue("rating", 0, { shouldDirty: true })}>
-                  <ThemedText fw={400} fontSize={12} color="$copyText">
-                    {t("roastery.clearRating")}
-                  </ThemedText>
-                </Pressable>
-              )}
-            </XStack>
-          </YStack>
-
-          {/* Website */}
-          <YStack gap="$2">
-            <ThemedText fw={600} fontSize={12} color="$copyText">
-              {t("roastery.website")}
-            </ThemedText>
-            <XStack gap="$2" alignItems="center">
-              <View flex={1}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView flex={1} py="$6" px="$6">
+          <YStack gap="$4" pb="$12">
+            {/* Name */}
+            <XStack gap="$3" alignItems="center" justifyContent="center">
+              <YStack gap="$2" flex={1}>
+                <ThemedText fw={600} fontSize={12} color="$copyText">
+                  {t("common.name")}
+                </ThemedText>
                 <Controller
-                  name="website"
+                  name="name"
                   control={control}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <Input
@@ -214,70 +152,135 @@ const RoasteryDetailPage: FC = () => {
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}
-                      keyboardType="url"
-                      autoCapitalize="none"
-                      placeholder="https://..."
                       size="$4"
                     />
                   )}
                 />
-              </View>
-              {!!watch("website") && (
-                <Button
-                  circular
-                  size="$3"
-                  bgC="$secondary"
-                  onPress={handleOpenWebsite}
-                  pressStyle={{ bgC: "$secondaryHover" }}
-                >
-                  <Globe size={16} color="white" />
-                </Button>
-              )}
+              </YStack>
             </XStack>
-          </YStack>
 
-          {/* Address */}
-          <YStack gap="$2">
-            <ThemedText fw={600} fontSize={12} color="$copyText">
-              {t("roastery.address")}
-            </ThemedText>
-            <XStack gap="$2" alignItems="center">
-              <Button
-                unstyled
-                flex={1}
-                bgC="white"
-                borderRadius="$4"
-                px="$3"
-                py="$3"
-                minHeight={44}
-                justifyContent="center"
-                alignItems="flex-start"
-                onPress={() => setShowAddressSheet(true)}
-                pressStyle={{ opacity: 0.7 }}
-              >
-                <ThemedText
-                  fw={400}
-                  fontSize={14}
-                  color={watch("address") ? "$secondary" : "$placeholderColor"}
-                >
-                  {watch("address") || t("roastery.addressPlaceholder")}
-                </ThemedText>
-              </Button>
-              {!!watch("address") && (
-                <Button
-                  circular
-                  size="$3"
-                  bgC="$primary"
+            {/* Rating */}
+            <YStack gap="$2">
+              <ThemedText fw={600} fontSize={12} color="$copyText">
+                {t("roastery.rating")}
+              </ThemedText>
+              <XStack gap="$3" alignItems="center">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Pressable
+                    key={star}
+                    onPress={() => setValue("rating", star, { shouldDirty: true })}
+                  >
+                    <Star
+                      size={28}
+                      color={star <= currentRating ? "#E89E3F" : "#D9D9D9"}
+                      fill={star <= currentRating ? "#E89E3F" : "transparent"}
+                    />
+                  </Pressable>
+                ))}
+                {currentRating > 0 && (
+                  <Pressable onPress={() => setValue("rating", 0, { shouldDirty: true })}>
+                    <ThemedText fw={400} fontSize={12} color="$copyText">
+                      {t("roastery.clearRating")}
+                    </ThemedText>
+                  </Pressable>
+                )}
+              </XStack>
+            </YStack>
+
+            {/* Website */}
+            <YStack gap="$2">
+              <ThemedText fw={600} fontSize={12} color="$copyText">
+                {t("roastery.website")}
+              </ThemedText>
+              <XStack gap="$2" alignItems="center">
+                <View flex={1}>
+                  <Controller
+                    name="website"
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <Input
+                        borderWidth={0}
+                        bgC="white"
+                        borderRadius="$4"
+                        value={value}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        keyboardType="url"
+                        autoCapitalize="none"
+                        placeholder="https://..."
+                        size="$4"
+                      />
+                    )}
+                  />
+                </View>
+                {!!watch("website") && (
+                  <Button
+                    circular
+                    size="$3"
+                    bgC="$secondary"
+                    onPress={handleOpenWebsite}
+                    pressStyle={{ bgC: "$secondaryHover" }}
+                  >
+                    <Globe size={16} color="white" />
+                  </Button>
+                )}
+              </XStack>
+            </YStack>
+
+            {/* Map — driven from form state so it updates immediately on address change */}
+            {(watch("latitude") ?? roastery.latitude) != null &&
+              (watch("longitude") ?? roastery.longitude) != null && (
+                <StaticMap
+                  latitude={(watch("latitude") ?? roastery.latitude)!}
+                  longitude={(watch("longitude") ?? roastery.longitude)!}
+                  height={180}
                   onPress={handleOpenMaps}
-                  pressStyle={{ bgC: "$primaryHover" }}
-                >
-                  <MapPin size={16} color="white" />
-                </Button>
+                />
               )}
-            </XStack>
+
+            {/* Address */}
+            <YStack gap="$2">
+              <ThemedText fw={600} fontSize={12} color="$copyText">
+                {t("roastery.address")}
+              </ThemedText>
+              <XStack gap="$2" alignItems="center">
+                <Button
+                  unstyled
+                  flex={1}
+                  bgC="white"
+                  borderRadius="$4"
+                  px="$3"
+                  py="$3"
+                  minHeight={44}
+                  justifyContent="center"
+                  alignItems="flex-start"
+                  onPress={() => setShowAddressSheet(true)}
+                  pressStyle={{ opacity: 0.7 }}
+                >
+                  <ThemedText
+                    fw={400}
+                    fontSize={14}
+                    color={watch("address") ? "$secondary" : "$placeholderColor"}
+                  >
+                    {watch("address") || t("roastery.addressPlaceholder")}
+                  </ThemedText>
+                </Button>
+                {!!watch("address") && (
+                  <Button
+                    circular
+                    size="$3"
+                    bgC="$primary"
+                    onPress={handleOpenMaps}
+                    pressStyle={{ bgC: "$primaryHover" }}
+                  >
+                    <MapPin size={16} color="white" />
+                  </Button>
+                )}
+              </XStack>
+            </YStack>
           </YStack>
-        </YStack>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
 
       {isDirty && (
         <ActionButton
