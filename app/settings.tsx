@@ -176,6 +176,19 @@ const SettingsPage: FC = () => {
             </ListItem>
           </YGroup.Item>
         </YGroup>
+
+        <YGroup p="$4">
+          <YGroup.Item>
+            <ListItem
+              pressTheme
+              bgC="$white"
+              iconAfter={ChevronRight}
+              onPress={() => router.push("/chat")}
+            >
+              {t("settings.chat")}
+            </ListItem>
+          </YGroup.Item>
+        </YGroup>
         <YGroup p="$4">
           <YGroup.Item>
             <ListItem

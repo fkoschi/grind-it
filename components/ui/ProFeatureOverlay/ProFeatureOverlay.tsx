@@ -23,8 +23,8 @@ export const ProFeatureOverlay: FC<ProFeatureOverlayProps> = ({
         {children}
       </View>
       {!isPro && (
-        <BlurView intensity={15} style={[StyleSheet.absoluteFill]}>
-          <YStack flex={1} gap="$4" p="$4" alignItems="center" mt="$12">
+        <BlurView intensity={40} tint="light" style={[StyleSheet.absoluteFill]}>
+          <YStack flex={1} gap="$4" p="$4" alignItems="center" justifyContent="center">
             <Lock size={32} color="$primary" />
             <ThemedText fontSize="$6" fw={600} textAlign="center">
               {t("pro.title")}

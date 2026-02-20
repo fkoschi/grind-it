@@ -1,27 +1,86 @@
-import { FC, useRef, useEffect } from "react";
+import { FC, useRef, useEffect, useMemo } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView as RNScrollView, Image } from "react-native";
 import { View, YStack, Text, Button, ScrollView } from "tamagui";
 import { useRouter } from "expo-router";
 import { ChevronDown } from "@tamagui/lucide-icons";
 import { Chat } from "@/components/Chat";
 import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport } from "ai";
-import { fetch as expoFetch } from "expo/fetch";
-import { generateAPIUrl } from "@/utils";
+import {
+  ChatTransport,
+  UIMessage,
+  UIMessageChunk,
+  createUIMessageStream,
+  convertToModelMessages,
+  streamText,
+} from "ai";
+import { apple } from "@react-native-ai/apple";
 import Markdown from "react-native-markdown-display";
 import { ProFeatureOverlay } from "@/components/ui";
 import { useTranslation } from "react-i18next";
 
+class AppleChatTransport implements ChatTransport<UIMessage> {
+  private readonly systemPrompt: string;
+
+  constructor(systemPrompt: string) {
+    this.systemPrompt = systemPrompt;
+  }
+
+  async sendMessages({
+    messages,
+    abortSignal,
+  }: Parameters<ChatTransport<UIMessage>["sendMessages"]>[0]): Promise<
+    ReadableStream<UIMessageChunk>
+  > {
+    if (!apple.isAvailable()) {
+      throw new Error(
+        "Apple Intelligence is not available on this device. " +
+          "Please ensure you are running on a physical iPhone with iOS 26+, " +
+          "Apple Intelligence is enabled in Settings → Apple Intelligence & Siri, " +
+          "and the language model has finished downloading.",
+      );
+    }
+
+    const modelMessages = await convertToModelMessages(messages);
+
+    const stream = createUIMessageStream({
+      execute: async ({ writer }) => {
+        const result = streamText({
+          model: apple(),
+          system: this.systemPrompt,
+          messages: modelMessages,
+          abortSignal,
+        });
+
+        writer.merge(result.toUIMessageStream());
+      },
+      onError: (error) => {
+        console.error("Apple LLM error:", error);
+        return error instanceof Error ? error.message : String(error);
+      },
+    });
+
+    return stream;
+  }
+
+  async reconnectToStream(): Promise<ReadableStream<UIMessageChunk> | null> {
+    return null;
+  }
+}
+
 const ChatPage: FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const scrollViewRef = useRef<RNScrollView>(null);
 
+  const transport = useMemo(
+    () => new AppleChatTransport(t("chat.systemPrompt")),
+    // Recreate when language changes so the system prompt is always in the right language
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [i18n.language],
+  );
+
   const { messages, error, sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({
-      fetch: expoFetch as unknown as typeof globalThis.fetch,
-      api: generateAPIUrl("/api/chat"),
-    }),
+    transport,
     onError: (error) => console.error(error, "ERROR"),
   });
 
@@ -34,45 +93,37 @@ const ChatPage: FC = () => {
     }
   }, [messages]);
 
-  if (error) {
-    return (
-      <View flex={1} backgroundColor="$screenBackground" padding="$4">
-        <Text color="$red10">Error: {error.message}</Text>
-      </View>
-    );
-  }
-
   return (
-    <ProFeatureOverlay>
-      <View flex={1} backgroundColor="$screenBackground">
+    <View flex={1} backgroundColor="$screenBackground">
+      {/* Header with Logo and Close Button — always rendered above the PRO overlay */}
+      <YStack
+        paddingHorizontal="$4"
+        paddingTop="$3"
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <Image
+          source={require("@/assets/images/icon.png")}
+          style={{ width: 40, height: 40 }}
+          resizeMode="contain"
+        />
+        <Button
+          size="$3"
+          circular
+          icon={ChevronDown}
+          onPress={() => router.back()}
+          backgroundColor="transparent"
+        />
+      </YStack>
+
+      <ProFeatureOverlay>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={{ flex: 1 }}
           keyboardVerticalOffset={48}
         >
           <YStack flex={1}>
-            {/* Header with Logo and Close Button */}
-            <YStack
-              paddingHorizontal="$4"
-              paddingTop="$3"
-              flexDirection="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Image
-                source={require("@/assets/images/icon.png")}
-                style={{ width: 40, height: 40 }}
-                resizeMode="contain"
-              />
-              <Button
-                size="$3"
-                circular
-                icon={ChevronDown}
-                onPress={() => router.back()}
-                backgroundColor="transparent"
-              />
-            </YStack>
-
             {/* Chat Messages */}
             <ScrollView
               ref={scrollViewRef}
@@ -237,12 +288,27 @@ const ChatPage: FC = () => {
               </Chat.Root>
             </ScrollView>
 
+            {/* Inline error banner */}
+            {error && (
+              <YStack
+                paddingHorizontal="$4"
+                paddingVertical="$3"
+                backgroundColor="$red2"
+                borderTopWidth={1}
+                borderTopColor="$red6"
+              >
+                <Text color="$red10" fontSize="$3" lineHeight="$3">
+                  {error.message}
+                </Text>
+              </YStack>
+            )}
+
             {/* Input */}
             <Chat.Input onSend={(text) => sendMessage({ text })} isLoading={status !== "ready"} />
           </YStack>
         </KeyboardAvoidingView>
-      </View>
-    </ProFeatureOverlay>
+      </ProFeatureOverlay>
+    </View>
   );
 };
 

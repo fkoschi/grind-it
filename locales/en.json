@@ -19,6 +19,7 @@
 
   "settings.roasteries": "Roasteries",
   "settings.taste": "Taste",
+  "settings.chat": "Brew Buddy",
   "settings.exportData": "Export & share data",
   "settings.importData": "Import data",
   "settings.export.failed.title": "Export failed",
@@ -73,6 +74,7 @@
   "roastery.validation.nameRequired": "Please enter a name!",
 
   "chat.title": "Brew Buddy",
+  "chat.systemPrompt": "You are Brew Buddy, a friendly and knowledgeable coffee assistant inside the Grind It app — a tool for home baristas to track their coffee beans and grind settings. Help the user with anything coffee-related: grind settings, brewing techniques, bean origins, roast profiles, espresso extraction, milk frothing, aroma profiles, and equipment maintenance. Give practical, concise advice. Do not redirect to external websites. Respond in the same language the user writes in.",
   "chat.welcome": "Hi, I'm your Brew Buddy! How can I help you?\n\nYou can ask me anything! I specialize in coffee and espresso machine knowledge.",
   "chat.inputPlaceholder": "Ask anything...",
 
