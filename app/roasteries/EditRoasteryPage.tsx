@@ -74,14 +74,19 @@ const EditRoasteries: FC = () => {
 
   const DataView = () => (
     <ScrollView>
-      <YGroup>
+      <YGroup gap="$1">
         {data.map((roastery, index) => (
           <ReanimatedSwipeable
             key={index}
             renderRightActions={(prog, drag) => RightAction(drag, roastery.id)}
           >
             <YGroup.Item>
-              <ListItem circular py="$4">
+              <ListItem
+                circular
+                py="$4"
+                pressStyle={{ bgC: "$screenBackground" }}
+                onPress={() => router.navigate(`/roasteries/${roastery.id}/detail`)}
+              >
                 {roastery.name}
               </ListItem>
             </YGroup.Item>

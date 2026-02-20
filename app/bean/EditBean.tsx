@@ -13,9 +13,15 @@ import { View } from "tamagui";
 interface EditBeanProps extends PropsWithChildren {
   selectedRoasteryId?: number;
   onRoasterySelect?: (id: number) => void;
+  onRoasteryCreated?: (id: number) => void;
 }
 
-const EditBean: FC<EditBeanProps> = ({ children, selectedRoasteryId, onRoasterySelect }) => {
+const EditBean: FC<EditBeanProps> = ({
+  children,
+  selectedRoasteryId,
+  onRoasterySelect,
+  onRoasteryCreated,
+}) => {
   const editRoastery = useBeanStore((state) => state.editRoastery);
   const selectRoastery = useBeanStore((state) => state.selectRoastery);
   const editTaste = useBeanStore((state) => state.editBeanTaste);
@@ -37,7 +43,14 @@ const EditBean: FC<EditBeanProps> = ({ children, selectedRoasteryId, onRoasteryS
           onOpenChange: () => hideRoasterySheet(false),
         }}
         frame={
-          <AddRoasteryFrame open={editRoastery} onFormSubmit={() => hideRoasterySheet(false)} />
+          <AddRoasteryFrame
+            open={editRoastery}
+            onFormSubmit={(newId) => {
+              hideRoasterySheet(false);
+              onRoasterySelect?.(newId);
+              onRoasteryCreated?.(newId);
+            }}
+          />
         }
       />
       {onRoasterySelect && (

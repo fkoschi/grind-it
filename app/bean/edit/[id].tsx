@@ -6,15 +6,8 @@ import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { beanTable, beanTasteAssociationTable, beanTasteTable, roasteryTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import {
-  AddIcon,
-  PercentageIcon,
-  Badge,
-  InputWithIcon,
-  LoadingScreen,
-  Select as ThemedSelect,
-  StepperInput,
-} from "@/components/ui";
+import { PercentageIcon, Badge, InputWithIcon, LoadingScreen, StepperInput } from "@/components/ui";
+import { ChevronDown } from "@tamagui/lucide-icons";
 import { useBeanStore } from "@/store/bean-store";
 import { Image } from "expo-image";
 import { useTranslation } from "react-i18next";
@@ -77,7 +70,7 @@ const EditBeanPage: FC = () => {
   const { control } = useForm<FormState>();
   const editTaste = useBeanStore((state) => state.editBeanTaste);
   const showTasteSheet = useBeanStore((state) => state.updateEditBeanTaste);
-  const showRoasterySheet = useBeanStore((state) => state.updateEditRoastery);
+  const showSelectRoasterySheet = useBeanStore((state) => state.updateSelectRoastery);
   const { id: beanId } = useLocalSearchParams();
 
   const { data: beanData } = useLiveQuery(
@@ -120,12 +113,6 @@ const EditBeanPage: FC = () => {
     await db
       .update(beanTable)
       .set({ robustaAmount: Number(amount) })
-      .where(eq(beanTable.id, Number(beanId)));
-  };
-  const handleRoasteryChange = async (value: number) => {
-    await db
-      .update(beanTable)
-      .set({ roastery: value })
       .where(eq(beanTable.id, Number(beanId)));
   };
 
@@ -246,43 +233,27 @@ const EditBeanPage: FC = () => {
       </XStack>
     </XStack>
   );
+  const selectedRoastery = roasteryData?.find((r) => r.id === beanData?.[0]?.roastery);
+
   const BeanRoasteryInput = () => (
-    <>
-      <Controller
-        name="roastery"
-        control={control}
-        render={({ field: _field, ...props }) => (
-          <View>
-            <XStack gap="$4" alignItems="center">
-              <Label minWidth={"$6"}>{t("editBean.roastery")}</Label>
-              <View flex={1}>
-                <ThemedSelect
-                  label={t("editBean.roastery")}
-                  items={roasteryData}
-                  value={beanData?.[0]?.roastery ?? undefined}
-                  onChange={handleRoasteryChange}
-                  {...props}
-                />
-              </View>
-              <Button
-                bgC="$secondary"
-                circular
-                minWidth={32}
-                width={32}
-                minHeight={32}
-                height={32}
-                pressStyle={{
-                  bgC: "$secondaryHover",
-                }}
-                onPress={() => showRoasterySheet(true)}
-              >
-                <AddIcon size={18} />
-              </Button>
-            </XStack>
-          </View>
-        )}
-      />
-    </>
+    <XStack gap="$4" alignItems="center">
+      <Label minWidth={"$6"}>{t("editBean.roastery")}</Label>
+      <View flex={1}>
+        <Button
+          bgC="white"
+          borderRadius="$4"
+          justifyContent="space-between"
+          onPress={() => showSelectRoasterySheet(true)}
+          pressStyle={{ bgC: "$screenBackground" }}
+          size="$4"
+          iconAfter={<ChevronDown size={16} color="$secondary" />}
+        >
+          <Text color={selectedRoastery ? "$secondary" : "$placeholderColor"}>
+            {selectedRoastery?.name ?? t("editBean.roastery")}
+          </Text>
+        </Button>
+      </View>
+    </XStack>
   );
 
   if (beanData.length === 0) {
