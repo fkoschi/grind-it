@@ -20,7 +20,7 @@ const insertSchema = z.object({
 
 interface AddRoasteryFrameProps {
   open: boolean;
-  onFormSubmit: () => void;
+  onFormSubmit: (newRoasteryId: number) => void;
 }
 const AddRoasteryFrame: FC<AddRoasteryFrameProps> = ({ open, onFormSubmit }) => {
   const { t } = useTranslation();
@@ -36,15 +36,15 @@ const AddRoasteryFrame: FC<AddRoasteryFrameProps> = ({ open, onFormSubmit }) => 
 
   const onSubmit = async (data: AddRoasteryFormInput) => {
     try {
-      await db.insert(roasteryTable).values({
-        name: data.name,
-      });
+      const result = await db
+        .insert(roasteryTable)
+        .values({ name: data.name })
+        .returning({ id: roasteryTable.id });
+      reset();
+      onFormSubmit(result[0].id);
     } catch (error) {
       console.error("Error inserting roastery", error);
     }
-
-    onFormSubmit();
-    reset();
   };
 
   useAutoFocus(inputRef, open);
@@ -52,9 +52,12 @@ const AddRoasteryFrame: FC<AddRoasteryFrameProps> = ({ open, onFormSubmit }) => 
   const isRequiredError = errors?.name?.type === "invalid_type";
 
   return (
-    <View flex={1} p="$8">
-      <Text fontSize="$8" mb="$4">
+    <View flex={1} p="$4">
+      <Text fontSize="$8" mb="$2">
         {t("roastery.addTitle")}
+      </Text>
+      <Text fontSize="$3" c="$copyText" mb="$4">
+        {t("roastery.addSubtitle")}
       </Text>
       <XStack gap="$2" alignItems="center">
         <View flex={1}>

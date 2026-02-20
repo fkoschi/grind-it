@@ -3,6 +3,11 @@ import { int, real, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 export const roasteryTable = sqliteTable("roastery_table", {
   id: int().primaryKey({ autoIncrement: true }),
   name: text().notNull(),
+  website: text(),
+  address: text(),
+  latitude: real(),
+  longitude: real(),
+  rating: int(),
 });
 
 export const beanTasteTable = sqliteTable("bean_taste_table", {

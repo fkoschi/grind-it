@@ -1,19 +1,17 @@
 import { FC, useState } from "react";
 import { roasteryTable } from "@/db/schema";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { Text, ListItem, ScrollView, View, YGroup } from "tamagui";
-import { eq } from "drizzle-orm";
-import { Image } from "expo-image";
+import { Text, ScrollView, View, XStack, YStack } from "tamagui";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import NoData from "@/components/NoData/NoData";
-import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
-import { ActionButton, AddIcon, DeleteOutlinedIcon, Sheet as BottomSheet } from "@/components/ui";
-import Reanimated, { SharedValue, useAnimatedStyle } from "react-native-reanimated";
-import { HapticTab } from "@/components/ui/HapticTab/HapticTab";
+import { ActionButton, AddIcon, Sheet as BottomSheet } from "@/components/ui";
+import { Star } from "@tamagui/lucide-icons";
+import { Image } from "expo-image";
 import { useTranslation } from "react-i18next";
+import RoasteryLogo from "@/components/ui/RoasteryLogo/RoasteryLogo";
 
 import { AddRoasteryFrame } from "@/components";
 
@@ -23,10 +21,6 @@ const EditRoasteries: FC = () => {
   const { db } = useDatabase();
   const [openSheet, setOpenSheet] = useState<boolean>(false);
   const { data } = useLiveQuery(db.select().from(roasteryTable));
-
-  const handleDelete = async (id: number) => {
-    await db.delete(roasteryTable).where(eq(roasteryTable.id, id));
-  };
 
   const Header = () => (
     <LinearGradient
@@ -53,41 +47,50 @@ const EditRoasteries: FC = () => {
     </LinearGradient>
   );
 
-  const RightAction = (drag: SharedValue<number>, roasteryId: number) => {
-    const animatedStyle = useAnimatedStyle(() => ({
-      width: Math.max(40, drag.value * -1),
-      backgroundColor: "#CD5B5B",
-      justifyContent: "center",
-      alignItems: "flex-end",
-      borderTopRightRadius: 12,
-      borderBottomRightRadius: 12,
-    }));
-
-    return (
-      <Reanimated.View style={animatedStyle}>
-        <HapticTab mr="$1" onPress={() => handleDelete(roasteryId)} style={{ padding: 8 }}>
-          <DeleteOutlinedIcon size={18} color="white" />
-        </HapticTab>
-      </Reanimated.View>
-    );
-  };
-
   const DataView = () => (
-    <ScrollView>
-      <YGroup>
-        {data.map((roastery, index) => (
-          <ReanimatedSwipeable
-            key={index}
-            renderRightActions={(prog, drag) => RightAction(drag, roastery.id)}
+    <ScrollView px="$2">
+      <YStack gap="$3" pb="$12">
+        {data.map((roastery) => (
+          <Pressable
+            key={roastery.id}
+            onPress={() => router.navigate(`/roasteries/${roastery.id}/detail`)}
           >
-            <YGroup.Item>
-              <ListItem circular py="$4">
-                {roastery.name}
-              </ListItem>
-            </YGroup.Item>
-          </ReanimatedSwipeable>
+            <XStack
+              backgroundColor="white"
+              borderRadius="$8"
+              py="$4"
+              px="$3"
+              alignItems="center"
+              gap="$3"
+              style={{
+                shadowOffset: { width: 0, height: 2 },
+                elevation: 4,
+                shadowOpacity: 0.1,
+                shadowRadius: 2,
+              }}
+            >
+              {!!roastery.website && <RoasteryLogo websiteUrl={roastery.website} size={40} />}
+              <YStack flex={1} gap="$1">
+                <Text fontSize={16} numberOfLines={1}>
+                  {roastery.name}
+                </Text>
+                {!!roastery.address && (
+                  <Text fontSize={10} color="$placeholderColor" numberOfLines={1}>
+                    {roastery.address}
+                  </Text>
+                )}
+                {!!roastery.rating && roastery.rating > 0 && (
+                  <XStack gap="$1" mt="$1">
+                    {Array.from({ length: roastery.rating }).map((_, i) => (
+                      <Star key={i} size={14} color="#E89E3F" fill="#E89E3F" />
+                    ))}
+                  </XStack>
+                )}
+              </YStack>
+            </XStack>
+          </Pressable>
         ))}
-      </YGroup>
+      </YStack>
     </ScrollView>
   );
 
