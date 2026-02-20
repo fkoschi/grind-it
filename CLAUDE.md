@@ -38,6 +38,30 @@ eas build --platform ios --profile production            # Production build
 eas build --platform ios --profile production --auto-submit  # Build and submit to TestFlight
 ```
 
+## Commit Convention
+
+**Always use semantic (conventional) commits.** Every commit message must follow this format:
+
+```
+<type>(<optional scope>): <short description>
+```
+
+Allowed types:
+- `feat:` — New feature or capability
+- `fix:` — Bug fix
+- `refactor:` — Code change that neither fixes a bug nor adds a feature
+- `chore:` — Build process, tooling, dependency updates
+- `docs:` — Documentation only
+- `style:` — Formatting, whitespace (no code change)
+- `test:` — Adding or updating tests
+- `perf:` — Performance improvement
+
+Rules:
+- Use imperative mood in the subject line ("add", "fix", "update", not "added", "fixes", "updated")
+- Keep the subject line under 72 characters
+- Use the body for details when the change is non-trivial
+- Append `!` after the type for breaking changes: `feat!:` or `fix!:`
+
 ## Release Process
 
 This project uses conventional commits for automated versioning:
