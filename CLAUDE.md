@@ -266,6 +266,24 @@ Located in `.env` and `.env.local` (gitignored):
 
 Never commit these files.
 
+## Pull Request Workflow
+
+Every feature or bug fix PR **must** include a simulator screenshot. Follow this process:
+
+1. **Take a screenshot** from the iOS simulator using the MCP `ios-simulator` tool:
+   ```
+   mcp__ios-simulator__screenshot → .github/screenshots/<descriptive-name>.png
+   ```
+2. **Commit** the code changes and the screenshot together.
+3. **Push** the branch and **create/update the PR** with:
+   - A concise title and summary of the changes
+   - The screenshot embedded using a raw GitHub URL:
+     ```
+     ![Description](https://raw.githubusercontent.com/fkoschi/grind-it/<branch>/.github/screenshots/<name>.png)
+     ```
+
+Screenshots live in `.github/screenshots/` and are committed to the repo so they render in PR descriptions.
+
 ## CI/CD
 
 GitHub Actions workflows in `.github/workflows/`:

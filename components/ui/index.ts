@@ -19,3 +19,4 @@ export * from "./Toast";
 export * from "./ProFeatureOverlay/ProFeatureOverlay";
 export * from "./Chat";
 export { default as AromaSlider } from "./AromaSlider/AromaSlider";
+export { default as BrewBuddyCard } from "./BrewBuddyCard/BrewBuddyCard";

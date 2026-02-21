@@ -6,7 +6,7 @@ import { useRouter } from "expo-router";
 import { Share, Alert, Platform } from "react-native";
 import { File, Paths } from "expo-file-system";
 import TabBar from "@/components/Navigation/TabBar";
-import { ThemedText } from "@/components/ui";
+import { ThemedText, BrewBuddyCard } from "@/components/ui";
 import { useDataExport } from "@/hooks/useDataExport";
 import { useDataImport } from "@/hooks/useDataImport";
 import * as DocumentPicker from "expo-document-picker";
@@ -205,19 +205,9 @@ const SettingsPage: FC = () => {
           </YGroup.Item>
         </YGroup>
 
-        <YGroup p="$4">
-          <YGroup.Item>
-            <ListItem
-              pressTheme
-              bgC="$primary"
-              color="$white"
-              textAlign="center"
-              onPress={() => router.push("/chat")}
-            >
-              {t("settings.chat")}
-            </ListItem>
-          </YGroup.Item>
-        </YGroup>
+        <View p="$4">
+          <BrewBuddyCard onPress={() => router.push("/chat")} />
+        </View>
       </View>
       <TabBar />
     </View>
