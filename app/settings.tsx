@@ -182,18 +182,6 @@ const SettingsPage: FC = () => {
             <ListItem
               pressTheme
               bgC="$white"
-              iconAfter={ChevronRight}
-              onPress={() => router.push("/chat")}
-            >
-              {t("settings.chat")}
-            </ListItem>
-          </YGroup.Item>
-        </YGroup>
-        <YGroup p="$4">
-          <YGroup.Item>
-            <ListItem
-              pressTheme
-              bgC="$white"
               iconAfter={isExporting || isSharing ? Spinner : Share2}
               onPress={handleShareData}
               disabled={isExporting || isSharing}
@@ -213,6 +201,20 @@ const SettingsPage: FC = () => {
               opacity={isImporting || isPickingFile ? 0.5 : 1}
             >
               {t("settings.importData")}
+            </ListItem>
+          </YGroup.Item>
+        </YGroup>
+
+        <YGroup p="$4">
+          <YGroup.Item>
+            <ListItem
+              pressTheme
+              bgC="$primary"
+              color="$white"
+              textAlign="center"
+              onPress={() => router.push("/chat")}
+            >
+              {t("settings.chat")}
             </ListItem>
           </YGroup.Item>
         </YGroup>

@@ -77,6 +77,10 @@
   "chat.systemPrompt": "You are Brew Buddy, a friendly and knowledgeable coffee assistant inside the Grind It app — a tool for home baristas to track their coffee beans and grind settings. Help the user with anything coffee-related: grind settings, brewing techniques, bean origins, roast profiles, espresso extraction, milk frothing, aroma profiles, and equipment maintenance. Give practical, concise advice. Do not redirect to external websites. Respond in the same language the user writes in.",
   "chat.welcome": "Hi, I'm your Brew Buddy! How can I help you?\n\nYou can ask me anything! I specialize in coffee and espresso machine knowledge.",
   "chat.inputPlaceholder": "Ask anything...",
+  "chat.unavailable.android": "Brew Buddy requires Apple Intelligence, which is only available on iPhone.",
+  "chat.unavailable.ios": "Brew Buddy requires Apple Intelligence. Please make sure you're on a supported iPhone, Apple Intelligence is enabled in Settings, and the language model has finished downloading.",
+  "chat.error.generic": "Something went wrong. Please try again.",
+  "chat.error.contextWindow": "The conversation is too long. Please start a new chat.",
 
   "pro.title": "Pro version only",
   "pro.subtitle": "Upgrade to Pro to use this feature.",
