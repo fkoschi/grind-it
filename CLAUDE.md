@@ -156,6 +156,7 @@ Located in `hooks/`:
 - `useDuplicateCheck.ts` - Check for duplicate bean names
 - `useDataExport.ts` / `useDataImport.ts` - Database backup/restore
 - `useKeyboardIsVisible.ts` - Keyboard visibility state
+- `useKeyboard.ts` - Keyboard height tracking for modal screens
 - `useIsBottomSheetActive.ts` - Bottom sheet active state
 - `useBackButtonTrigger.ts` - Android back button handling
 
@@ -175,7 +176,33 @@ The app has two AI integration paths:
 1. **OpenAI API** - Via Vercel AI SDK for chat functionality
 2. **Apple Intelligence** - Via `@react-native-ai/apple` for on-device AI
 
-Chat interface in `app/chat.tsx` uses streaming responses.
+Chat interface in `app/chat.tsx` uses streaming responses via a custom `AppleChatTransport` that implements the Vercel AI SDK `ChatTransport` interface.
+
+#### Apple Foundation Models — Known Issues & Constraints
+
+**Simulator does NOT work.** Apple's on-device Foundation Models require:
+- A **physical iPhone** running **iOS 26+**
+- **Apple Intelligence enabled** in Settings > Apple Intelligence & Siri
+- The on-device model **fully downloaded** (background download after enabling)
+
+Running on the simulator will produce `FoundationModels.LanguageModelSession.GenerationError -1`. This is expected — not a code bug.
+
+**Known error codes** (`LanguageModelSession.GenerationError`):
+
+| Error | Meaning | Fix |
+|---|---|---|
+| `GenerationError -1` | Internal OS-level error (`ModelManagerError 1026`). Known Apple framework bug. | Restart device, or toggle Apple Intelligence off/on in Settings. |
+| `guardrailViolation` | Safety guardrails triggered by prompt or response content. | Rephrase the prompt to avoid restricted topics. |
+| `exceededContextWindowSize` | Exceeded the **4,096 token** hard context window limit. | Prune older messages before sending. No way to increase this limit. |
+| `rateLimited` | Too many requests in a short period. | Add backoff/retry logic. |
+| `assetsUnavailable` | Model assets not downloaded or corrupted. | Check Settings > Apple Intelligence, restart device. |
+| `unsupportedLanguageOrLocale` | Unsupported language requested. | Use English or a supported locale. |
+
+**Context window management:** The `@react-native-ai/apple` package creates a new `LanguageModelSession` per request and replays the full conversation history via a `Transcript` object. This means the system prompt + all messages are re-sent every time. The 4,096 token budget is consumed fast (~3-4 chars/token for English). After ~10-15 exchanges, you'll hit the limit. Consider implementing message pruning (sliding window) in the transport's `sendMessages` before converting messages.
+
+**Known package bugs** (`@react-native-ai/apple`):
+- Context window overflow can crash the app instead of throwing a catchable error ([GitHub #125](https://github.com/callstackincubator/ai/issues/125))
+- First token in streamed responses can come back as literal `"null"` string ([GitHub #128](https://github.com/callstackincubator/ai/issues/128))
 
 ### Git Hooks (Husky)
 
@@ -227,6 +254,22 @@ Tests use Jest with jest-expo preset. Run tests in watch mode by default.
 
 ## Platform-Specific Notes
 
+### Keyboard Handling in Modals
+
+**`KeyboardAvoidingView` does NOT work reliably in iOS modals** (screens with `presentation: "modal"` in expo-router). It cannot correctly calculate the modal's offset from the screen top, so the input gets hidden behind the keyboard regardless of `keyboardVerticalOffset`.
+
+**Always use the `useKeyboardHeight` hook** from `hooks/useKeyboard.ts`. Never inline keyboard listener logic directly in components.
+
+```typescript
+import { useKeyboardHeight } from "@/hooks/useKeyboard";
+
+const keyboardHeight = useKeyboardHeight();
+```
+
+Then apply `paddingBottom={keyboardHeight}` on the content container. The hook handles platform differences internally (`keyboardWillShow`/`keyboardWillHide` on iOS, `keyboardDidShow`/`keyboardDidHide` on Android).
+
+This is used in `app/chat.tsx` and should be used for any future screens that need keyboard-aware layout.
+
 ### iOS
 
 - Builds configured in `ios/` directory
@@ -246,6 +289,24 @@ Located in `.env` and `.env.local` (gitignored):
 - Other service credentials
 
 Never commit these files.
+
+## Pull Request Workflow
+
+Every feature or bug fix PR **must** include a simulator screenshot. Follow this process:
+
+1. **Take a screenshot** from the iOS simulator using the MCP `ios-simulator` tool:
+   ```
+   mcp__ios-simulator__screenshot → .github/screenshots/<descriptive-name>.png
+   ```
+2. **Commit** the code changes and the screenshot together.
+3. **Push** the branch and **create/update the PR** with:
+   - A concise title and summary of the changes
+   - The screenshot embedded using a raw GitHub URL:
+     ```
+     ![Description](https://raw.githubusercontent.com/fkoschi/grind-it/<branch>/.github/screenshots/<name>.png)
+     ```
+
+Screenshots live in `.github/screenshots/` and are committed to the repo so they render in PR descriptions.
 
 ## CI/CD
 

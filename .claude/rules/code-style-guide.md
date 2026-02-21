@@ -1,0 +1,3 @@
+- Keep the prop count as small as possible by focusing on proper composition of components.
+- Using `any` is never a solution. Always investigate for a proper TypeScript type.
+- Don't add comments to the code. Especially not inside JSX.
