@@ -14,7 +14,8 @@
       "appStoreUrl": "https://apps.apple.com/de/app/grind-it/id6740140366",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
-      }
+      },
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {

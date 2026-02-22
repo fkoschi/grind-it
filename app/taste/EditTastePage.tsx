@@ -2,8 +2,8 @@ import { beanTasteAssociationTable, beanTasteTable } from "@/db/schema";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { Image } from "expo-image";
 import React, { FC, useState } from "react";
-import { Text, ScrollView, View, XGroup } from "tamagui";
-import { AddIcon, ActionButton, Sheet as BottomSheet, Badge } from "@/components/ui";
+import { Text, ScrollView, View } from "tamagui";
+import { AddIcon, ActionButton, Sheet as BottomSheet, TasteCard } from "@/components/ui";
 import { eq } from "drizzle-orm";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { Pressable } from "react-native";
@@ -31,14 +31,16 @@ const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
   };
 
   const DataView = () => (
-    <ScrollView>
-      <XGroup gap="$2">
+    <ScrollView px="$2">
+      <View gap="$2" pb="$12">
         {data.map((taste) => (
-          <View key={taste.flavor} alignSelf="flex-start" mb="$2">
-            <Badge title={taste.flavor} withButton onPress={() => deleteTaste(taste.id)} />
-          </View>
+          <TasteCard.Root key={taste.id}>
+            <TasteCard.Icon />
+            <TasteCard.Label name={taste.flavor} />
+            <TasteCard.Delete onPress={() => deleteTaste(taste.id)} />
+          </TasteCard.Root>
         ))}
-      </XGroup>
+      </View>
     </ScrollView>
   );
 
@@ -49,7 +51,7 @@ const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
     <View flex={1}>
       <LinearGradient
         height={"$14"}
-        colors={["#FFDAAB", "#E89E3F"]}
+        colors={["#C8DBC9", "#8BAA91"]}
         borderBottomLeftRadius="$12"
         borderBottomRightRadius="$12"
         start={[0, 1]}
@@ -81,8 +83,8 @@ const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
           <ActionButton
             icon={<AddIcon />}
             onPress={() => setOpenSheet(true)}
-            bgC="$primary"
-            pressStyle={{ backgroundColor: "$primaryHover" }}
+            bgC="$accentSage"
+            pressStyle={{ opacity: 0.8 }}
           />
         </View>
       </View>

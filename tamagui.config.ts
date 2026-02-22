@@ -20,6 +20,10 @@ export const tokens = createTokens({
     gray3: "#CCCCCC",
     gray4: "#E5E5E5",
     gray5: "#181818",
+    accentTerracotta: "#D4876C",
+    accentSage: "#8BAA91",
+    accentAmber: "#D4A647",
+    accentMauve: "#B08EA2",
   },
 });
 

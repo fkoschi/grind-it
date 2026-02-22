@@ -5,6 +5,7 @@ import { View } from "tamagui";
 interface RoasteryLogoProps {
   websiteUrl: string;
   size?: number;
+  greyscale?: boolean;
 }
 
 const extractDomain = (url: string): string | null => {
@@ -16,7 +17,7 @@ const extractDomain = (url: string): string | null => {
   }
 };
 
-const RoasteryLogo: FC<RoasteryLogoProps> = ({ websiteUrl, size = 64 }) => {
+const RoasteryLogo: FC<RoasteryLogoProps> = ({ websiteUrl, size = 64, greyscale = false }) => {
   const [hasError, setHasError] = useState(false);
 
   const domain = extractDomain(websiteUrl);
@@ -24,7 +25,7 @@ const RoasteryLogo: FC<RoasteryLogoProps> = ({ websiteUrl, size = 64 }) => {
 
   if (!domain || !token || hasError) return null;
 
-  const logoUrl = `https://img.logo.dev/${domain}?token=${token}&size=128&format=png&retina=true&greyscale=false`;
+  const logoUrl = `https://img.logo.dev/${domain}?token=${token}&size=128&format=png&retina=true&greyscale=${greyscale}`;
 
   return (
     <View
