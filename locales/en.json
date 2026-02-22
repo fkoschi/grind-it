@@ -18,10 +18,14 @@
   "dashboard.searchNoResult.subtitle": "No beans found for your search. Try a different search term.",
 
   "settings.roasteries": "Roasteries",
+  "settings.roasteries.description": "Manage your coffee roasteries",
   "settings.taste": "Taste",
+  "settings.taste.description": "Manage your taste profiles",
   "settings.chat": "Brew Buddy",
   "settings.exportData": "Export & share data",
+  "settings.exportData.description": "Export and share your bean data",
   "settings.importData": "Import data",
+  "settings.importData.description": "Import beans from a backup file",
   "settings.export.failed.title": "Export failed",
   "settings.export.failed.message": "The data could not be exported.",
   "settings.export.shareTitle": "Grind It Data Export",
@@ -82,6 +86,8 @@
   "roastery.addressSearchPlaceholder": "e.g. The Barn, Berlin",
   "roastery.addressNoResults": "No results found. Try a different search.",
   "roastery.addressSearchError": "Could not search address. Please try again.",
+  "roastery.delete.title": "Delete roastery",
+  "roastery.delete.description": "Are you sure you want to permanently delete this roastery?",
   "roastery.openInMaps": "Open in Maps",
 
   "chat.card.description": "Your personal coffee assistant",

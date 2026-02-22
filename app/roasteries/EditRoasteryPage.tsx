@@ -1,17 +1,16 @@
 import { FC, useState } from "react";
 import { roasteryTable } from "@/db/schema";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { Text, ScrollView, View, XStack, YStack } from "tamagui";
+import { desc } from "drizzle-orm";
+import { Text, ScrollView, View } from "tamagui";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import NoData from "@/components/NoData/NoData";
-import { ActionButton, AddIcon, Sheet as BottomSheet } from "@/components/ui";
-import { Star } from "@tamagui/lucide-icons";
+import { ActionButton, AddIcon, RoasteryCard, Sheet as BottomSheet } from "@/components/ui";
 import { Image } from "expo-image";
 import { useTranslation } from "react-i18next";
-import RoasteryLogo from "@/components/ui/RoasteryLogo/RoasteryLogo";
 
 import { AddRoasteryFrame } from "@/components";
 
@@ -20,7 +19,9 @@ const EditRoasteries: FC = () => {
   const router = useRouter();
   const { db } = useDatabase();
   const [openSheet, setOpenSheet] = useState<boolean>(false);
-  const { data } = useLiveQuery(db.select().from(roasteryTable));
+  const { data } = useLiveQuery(
+    db.select().from(roasteryTable).orderBy(desc(roasteryTable.rating)),
+  );
 
   const Header = () => (
     <LinearGradient
@@ -49,48 +50,19 @@ const EditRoasteries: FC = () => {
 
   const DataView = () => (
     <ScrollView px="$2">
-      <YStack gap="$3" pb="$12">
+      <View gap="$3" pb="$12">
         {data.map((roastery) => (
-          <Pressable
+          <RoasteryCard.Root
             key={roastery.id}
             onPress={() => router.navigate(`/roasteries/${roastery.id}/detail`)}
           >
-            <XStack
-              backgroundColor="white"
-              borderRadius="$8"
-              py="$4"
-              px="$3"
-              alignItems="center"
-              gap="$3"
-              style={{
-                shadowOffset: { width: 0, height: 2 },
-                elevation: 4,
-                shadowOpacity: 0.1,
-                shadowRadius: 2,
-              }}
-            >
-              {!!roastery.website && <RoasteryLogo websiteUrl={roastery.website} size={40} />}
-              <YStack flex={1} gap="$1">
-                <Text fontSize={16} numberOfLines={1}>
-                  {roastery.name}
-                </Text>
-                {!!roastery.address && (
-                  <Text fontSize={10} color="$placeholderColor" numberOfLines={1}>
-                    {roastery.address}
-                  </Text>
-                )}
-                {!!roastery.rating && roastery.rating > 0 && (
-                  <XStack gap="$1" mt="$1">
-                    {Array.from({ length: roastery.rating }).map((_, i) => (
-                      <Star key={i} size={14} color="#E89E3F" fill="#E89E3F" />
-                    ))}
-                  </XStack>
-                )}
-              </YStack>
-            </XStack>
-          </Pressable>
+            <RoasteryCard.Icon />
+            <RoasteryCard.Info name={roastery.name} address={roastery.address} />
+            <RoasteryCard.Rating rating={roastery.rating} />
+            <RoasteryCard.Bg websiteUrl={roastery.website} />
+          </RoasteryCard.Root>
         ))}
-      </YStack>
+      </View>
     </ScrollView>
   );
 

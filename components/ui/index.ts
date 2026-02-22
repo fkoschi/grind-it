@@ -20,3 +20,6 @@ export * from "./ProFeatureOverlay/ProFeatureOverlay";
 export * from "./Chat";
 export { default as AromaSlider } from "./AromaSlider/AromaSlider";
 export { default as BrewBuddyCard } from "./BrewBuddyCard/BrewBuddyCard";
+export { RoasteryCard } from "./RoasteryCard";
+export { SettingsCard } from "./SettingsCard";
+export { TasteCard } from "./TasteCard";

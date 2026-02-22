@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { roasteryTable } from "@/db/schema";
+import { beanTable, roasteryTable } from "@/db/schema";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { eq } from "drizzle-orm";
 import { LinearGradient } from "tamagui/linear-gradient";
@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ActionButton, SaveIcon } from "@/components/ui";
+import { ActionButton, Alert, DeleteOutlinedIcon, SaveIcon } from "@/components/ui";
 import Sheet from "@/components/ui/Sheet/Sheet";
 import GooglePlacesFrame from "@/components/BottomSheet/Frames/Roastery/GooglePlacesFrame";
 import StaticMap from "@/components/ui/StaticMap/StaticMap";
@@ -103,13 +103,20 @@ const RoasteryDetailPage: FC = () => {
     setShowAddressSheet(false);
   };
 
+  const handleDeleteRoastery = async () => {
+    if (!roastery) return;
+    await db.update(beanTable).set({ roastery: null }).where(eq(beanTable.roastery, roastery.id));
+    await db.delete(roasteryTable).where(eq(roasteryTable.id, roastery.id));
+    router.back();
+  };
+
   if (!roastery) return null;
 
   return (
     <View flex={1} bgC="$screenBackground">
       <LinearGradient
         height={"$14"}
-        colors={["#FFDAAB", "#E89E3F"]}
+        colors={["#F2D0C2", "#D4876C"]}
         borderBottomLeftRadius="$12"
         borderBottomRightRadius="$12"
         start={[0, 1]}
@@ -122,6 +129,20 @@ const RoasteryDetailPage: FC = () => {
         >
           <ChevronDown size={28} color="white" />
         </Pressable>
+        <View position="absolute" right={32} top={topInset + 12}>
+          <Alert
+            title={t("roastery.delete.title")}
+            cancelTitle={t("common.cancel")}
+            actionTitle={t("common.delete")}
+            description={t("roastery.delete.description")}
+            onActionPress={handleDeleteRoastery}
+            alertTrigger={
+              <Button flex={1} bgC="rgba(255, 255, 255, 0.2)" borderRadius="$radius.9" p="$3">
+                <DeleteOutlinedIcon size={16} color="#CD5B5B" />
+              </Button>
+            }
+          />
+        </View>
         <View flex={1} justifyContent="flex-end" alignItems="center" gap="$3" mb="$6">
           <Text fontSize={32} lineHeight={40} c="$white" fontFamily="$sodabery">
             {roastery.name}
@@ -217,9 +238,9 @@ const RoasteryDetailPage: FC = () => {
                   <Button
                     circular
                     size="$3"
-                    bgC="$secondary"
+                    bgC="$accentTerracotta"
                     onPress={handleOpenWebsite}
-                    pressStyle={{ bgC: "$secondaryHover" }}
+                    pressStyle={{ opacity: 0.8 }}
                   >
                     <Globe size={16} color="white" />
                   </Button>
@@ -234,6 +255,7 @@ const RoasteryDetailPage: FC = () => {
                   latitude={(watch("latitude") ?? roastery.latitude)!}
                   longitude={(watch("longitude") ?? roastery.longitude)!}
                   height={180}
+                  theme="warm"
                   onPress={handleOpenMaps}
                 />
               )}
@@ -260,6 +282,7 @@ const RoasteryDetailPage: FC = () => {
                   <ThemedText
                     fw={400}
                     fontSize={14}
+                    numberOfLines={1}
                     color={watch("address") ? "$secondary" : "$placeholderColor"}
                   >
                     {watch("address") || t("roastery.addressPlaceholder")}
@@ -269,9 +292,9 @@ const RoasteryDetailPage: FC = () => {
                   <Button
                     circular
                     size="$3"
-                    bgC="$primary"
+                    bgC="$accentTerracotta"
                     onPress={handleOpenMaps}
-                    pressStyle={{ bgC: "$primaryHover" }}
+                    pressStyle={{ opacity: 0.8 }}
                   >
                     <MapPin size={16} color="white" />
                   </Button>
