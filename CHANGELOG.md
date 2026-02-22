@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0](https://github.com/fkoschi/grind-it/compare/v1.11.3...v1.12.0) (2026-02-22)
+
+
+### ✨ Features
+
+* redesign Brew Buddy as a card on settings page ([#29](https://github.com/fkoschi/grind-it/issues/29)) ([743459c](https://github.com/fkoschi/grind-it/commit/743459c864f5f2929d8877cc428f363d0378814c))
+
 ### [1.11.3](https://github.com/fkoschi/grind-it/compare/v1.11.2...v1.11.3) (2026-02-20)
 
 
