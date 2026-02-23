@@ -7,9 +7,9 @@
 
 ### Database
 
-- [ ] **DB-01**: User can save one espresso machine/brew device with manufacturer, name, and type
-- [ ] **DB-02**: User can save one grinder with manufacturer and name
-- [ ] **DB-03**: Machine type is selected from a comprehensive enum covering all brew methods (14 types: manual_lever, spring_lever, semi_automatic, automatic, super_automatic, capsule_pod, moka_pot, pour_over, french_press, aeropress, siphon, cold_brew, turkish, other)
+- [x] **DB-01**: User can save one espresso machine/brew device with manufacturer, name, and type
+- [x] **DB-02**: User can save one grinder with manufacturer and name
+- [x] **DB-03**: Machine type is selected from a comprehensive enum covering all brew methods (14 types: manual_lever, spring_lever, semi_automatic, automatic, super_automatic, capsule_pod, moka_pot, pour_over, french_press, aeropress, siphon, cold_brew, turkish, other)
 - [ ] **DB-04**: Grinder profile is hidden when machine type is super_automatic or capsule_pod
 
 ### UI
@@ -61,9 +61,9 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DB-01 | Phase 1 | Pending |
-| DB-02 | Phase 1 | Pending |
-| DB-03 | Phase 1 | Pending |
+| DB-01 | Phase 1 | Complete |
+| DB-02 | Phase 1 | Complete |
+| DB-03 | Phase 1 | Complete |
 | DB-04 | Phase 2 | Pending |
 | UI-01 | Phase 3 | Pending |
 | UI-02 | Phase 2 | Pending |

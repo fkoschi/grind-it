@@ -10,27 +10,27 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 1 of 5 (Database Schema)
-Plan: 0 of ? in current phase
-Status: Ready to plan
-Last activity: 2026-02-23 — Roadmap created
+Plan: 1 of 1 in current phase
+Status: Phase 1 complete
+Last activity: 2026-02-23 — Completed 01-01-PLAN.md
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██░░░░░░░░] 20%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: -
-- Total execution time: 0 hours
+- Total plans completed: 1
+- Average duration: 2 min
+- Total execution time: 0.03 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01-database-schema | 1 | 2 min | 2 min |
 
 **Recent Trend:**
-- Last 5 plans: -
+- Last 5 plans: 2 min
 - Trend: -
 
 *Updated after each plan completion*
@@ -45,6 +45,8 @@ Recent decisions affecting current work:
 - [Roadmap]: 5-phase structure derived from requirement dependencies (schema -> CRUD -> settings -> chat -> export)
 - [Roadmap]: Combined machine + grinder on one screen (few data points, avoids duplicate screens)
 - [Roadmap]: Phases 3, 4, 5 all depend on Phase 2 but are independent of each other
+- [01-01]: MachineType uses const object + type extraction pattern (idiomatic TypeScript enum alternative)
+- [01-01]: INTEGRATED_GRINDER_TYPES identifies super_automatic and capsule_pod as grinder-integrated types
 
 ### Pending Todos
 
@@ -59,5 +61,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-23
-Stopped at: Roadmap created, ready to plan Phase 1
+Stopped at: Completed 01-01-PLAN.md (equipment schema)
 Resume file: None
