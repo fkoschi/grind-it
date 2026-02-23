@@ -28,10 +28,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   1. App boots without error after migration adds machine_table and grinder_table to SQLite
   2. Machine type enum covers all 14 brew methods (manual_lever through other) as TypeScript constants
   3. Machine row stores manufacturer, name, and type; grinder row stores manufacturer and name
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 01-01: TBD
+- [ ] 01-01-PLAN.md -- Define schema tables (machineTable, grinderTable), MachineType enum, generate and register migration
 
 ### Phase 2: Equipment Detail Screen
 **Goal**: Users can view, create, and edit their machine and grinder from a single combined screen
@@ -93,7 +93,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Database Schema | 0/? | Not started | - |
+| 1. Database Schema | 0/1 | Not started | - |
 | 2. Equipment Detail Screen | 0/? | Not started | - |
 | 3. Settings Integration | 0/? | Not started | - |
 | 4. Brew Buddy Integration | 0/? | Not started | - |
