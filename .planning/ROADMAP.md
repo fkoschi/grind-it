@@ -42,10 +42,10 @@ Plans:
   2. User can save a grinder profile by entering manufacturer and name on the same screen below the machine section
   3. When user selects super_automatic or capsule_pod as machine type, the grinder section disappears but previously saved grinder data is preserved in the database
   4. Screen layout follows bean detail page patterns (header image area, form fields below)
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 02-01: TBD
+- [ ] 02-01-PLAN.md -- Equipment data hook, combined screen with grouped type picker, conditional grinder, upsert save, route registration
 
 ### Phase 3: Settings Integration
 **Goal**: Users can discover and navigate to equipment management from the settings page
