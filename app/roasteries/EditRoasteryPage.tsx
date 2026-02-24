@@ -5,12 +5,13 @@ import { desc } from "drizzle-orm";
 import { Text, ScrollView, View } from "tamagui";
 import { useDatabase } from "@/provider/DatabaseProvider";
 import { LinearGradient } from "tamagui/linear-gradient";
-import { Pressable } from "react-native";
+import { Animated, Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import NoData from "@/components/NoData/NoData";
 import { ActionButton, AddIcon, RoasteryCard, Sheet as BottomSheet } from "@/components/ui";
 import { Image } from "expo-image";
 import { useTranslation } from "react-i18next";
+import { useStaggeredReveal } from "@/hooks/useStaggeredReveal";
 
 import { AddRoasteryFrame } from "@/components";
 
@@ -22,6 +23,7 @@ const EditRoasteries: FC = () => {
   const { data } = useLiveQuery(
     db.select().from(roasteryTable).orderBy(desc(roasteryTable.rating)),
   );
+  const { getAnimatedStyle } = useStaggeredReveal({ itemCount: data.length });
 
   const Header = () => (
     <LinearGradient
@@ -51,16 +53,15 @@ const EditRoasteries: FC = () => {
   const DataView = () => (
     <ScrollView px="$2">
       <View gap="$3" pb="$12">
-        {data.map((roastery) => (
-          <RoasteryCard.Root
-            key={roastery.id}
-            onPress={() => router.navigate(`/roasteries/${roastery.id}/detail`)}
-          >
-            <RoasteryCard.Icon />
-            <RoasteryCard.Info name={roastery.name} address={roastery.address} />
-            <RoasteryCard.Rating rating={roastery.rating} />
-            <RoasteryCard.Bg websiteUrl={roastery.website} />
-          </RoasteryCard.Root>
+        {data.map((roastery, index) => (
+          <Animated.View key={roastery.id} style={getAnimatedStyle(index)}>
+            <RoasteryCard.Root onPress={() => router.navigate(`/roasteries/${roastery.id}/detail`)}>
+              <RoasteryCard.Icon />
+              <RoasteryCard.Info name={roastery.name} address={roastery.address} />
+              <RoasteryCard.Rating rating={roastery.rating} />
+              <RoasteryCard.Bg websiteUrl={roastery.website} />
+            </RoasteryCard.Root>
+          </Animated.View>
         ))}
       </View>
     </ScrollView>
