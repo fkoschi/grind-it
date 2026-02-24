@@ -109,6 +109,8 @@
   "chat.unavailable.ios": "Brew Buddy requires Apple Intelligence. Please make sure you're on a supported iPhone, Apple Intelligence is enabled in Settings, and the language model has finished downloading.",
   "chat.error.generic": "Something went wrong. Please try again.",
   "chat.error.contextWindow": "The conversation is too long. Please start a new chat.",
+  "chat.error.appleUnavailable": "Apple Intelligence is not available on this device. Please ensure you're on a supported iPhone, Apple Intelligence is enabled in Settings, and the language model has finished downloading.",
+  "chat.equipment.context": "User equipment: {{summary}}. Use this to tailor hardware advice.",
 
   "pro.title": "Pro version only",
   "pro.subtitle": "Upgrade to Pro to use this feature.",
