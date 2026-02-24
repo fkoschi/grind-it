@@ -3,12 +3,13 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Avatar, ScrollView, Spinner, Text, View } from "tamagui";
 import { Coffee, Droplets, Share2, Store, Upload } from "@tamagui/lucide-icons";
 import { useRouter } from "expo-router";
-import { Share, Alert, Platform } from "react-native";
+import { Share, Alert, Platform, Animated } from "react-native";
 import { File, Paths } from "expo-file-system";
 import TabBar from "@/components/Navigation/TabBar";
 import { BrewBuddyCard, SettingsCard, ThemedText } from "@/components/ui";
 import { useDataExport } from "@/hooks/useDataExport";
 import { useDataImport } from "@/hooks/useDataImport";
+import { useStaggeredReveal } from "@/hooks/useStaggeredReveal";
 import * as DocumentPicker from "expo-document-picker";
 import { useTranslation } from "react-i18next";
 import Svg, { Path as SvgPath, Circle, Rect } from "react-native-svg";
@@ -194,6 +195,7 @@ const SettingsPage: FC = () => {
 
   const isExportLoading = isExporting || isSharing;
   const isImportLoading = isImporting || isPickingFile;
+  const { getAnimatedStyle } = useStaggeredReveal({ itemCount: 6 });
 
   return (
     <View bgC={"$screenBackground"} flex={1}>
@@ -212,80 +214,92 @@ const SettingsPage: FC = () => {
         </View>
 
         <View p="$4" gap="$3" mt="$4">
-          <SettingsCard.Root onPress={() => router.navigate("/roasteries/EditRoasteryPage")}>
-            <SettingsCard.Icon color="$accentTerracotta">
-              <Store size={24} color="$accentTerracotta" />
-            </SettingsCard.Icon>
-            <SettingsCard.Content
-              title={t("settings.roasteries")}
-              subtitle={t("settings.roasteries.description")}
-            />
-            <SettingsCard.Bg>
-              <RoasteriesBg />
-            </SettingsCard.Bg>
-          </SettingsCard.Root>
+          <Animated.View style={getAnimatedStyle(0)}>
+            <SettingsCard.Root onPress={() => router.navigate("/roasteries/EditRoasteryPage")}>
+              <SettingsCard.Icon color="$accentTerracotta">
+                <Store size={24} color="$accentTerracotta" />
+              </SettingsCard.Icon>
+              <SettingsCard.Content
+                title={t("settings.roasteries")}
+                subtitle={t("settings.roasteries.description")}
+              />
+              <SettingsCard.Bg>
+                <RoasteriesBg />
+              </SettingsCard.Bg>
+            </SettingsCard.Root>
+          </Animated.View>
 
-          <SettingsCard.Root onPress={() => router.navigate("/taste/EditTasteComponent")}>
-            <SettingsCard.Icon color="$accentSage">
-              <Droplets size={24} color="$accentSage" />
-            </SettingsCard.Icon>
-            <SettingsCard.Content
-              title={t("settings.taste")}
-              subtitle={t("settings.taste.description")}
-            />
-            <SettingsCard.Bg>
-              <TasteBg />
-            </SettingsCard.Bg>
-          </SettingsCard.Root>
+          <Animated.View style={getAnimatedStyle(1)}>
+            <SettingsCard.Root onPress={() => router.navigate("/taste/EditTasteComponent")}>
+              <SettingsCard.Icon color="$accentSage">
+                <Droplets size={24} color="$accentSage" />
+              </SettingsCard.Icon>
+              <SettingsCard.Content
+                title={t("settings.taste")}
+                subtitle={t("settings.taste.description")}
+              />
+              <SettingsCard.Bg>
+                <TasteBg />
+              </SettingsCard.Bg>
+            </SettingsCard.Root>
+          </Animated.View>
 
-          <SettingsCard.Root onPress={() => router.navigate("/equipment")}>
-            <SettingsCard.Icon color="$accentAmber">
-              <Coffee size={24} color="$accentAmber" />
-            </SettingsCard.Icon>
-            <SettingsCard.Content
-              title={t("settings.equipment")}
-              subtitle={t("settings.equipment.description")}
-            />
-            <SettingsCard.Bg>
-              <EquipmentBg />
-            </SettingsCard.Bg>
-          </SettingsCard.Root>
+          <Animated.View style={getAnimatedStyle(2)}>
+            <SettingsCard.Root onPress={() => router.navigate("/equipment")}>
+              <SettingsCard.Icon color="$accentAmber">
+                <Coffee size={24} color="$accentAmber" />
+              </SettingsCard.Icon>
+              <SettingsCard.Content
+                title={t("settings.equipment")}
+                subtitle={t("settings.equipment.description")}
+              />
+              <SettingsCard.Bg>
+                <EquipmentBg />
+              </SettingsCard.Bg>
+            </SettingsCard.Root>
+          </Animated.View>
 
-          <SettingsCard.Root onPress={handleShareData} disabled={isExportLoading}>
-            <SettingsCard.Icon color="$accentAmber">
-              {isExportLoading ? (
-                <Spinner size="small" color="$accentAmber" />
-              ) : (
-                <Share2 size={24} color="$accentAmber" />
-              )}
-            </SettingsCard.Icon>
-            <SettingsCard.Content
-              title={t("settings.exportData")}
-              subtitle={t("settings.exportData.description")}
-            />
-            <SettingsCard.Bg>
-              <ExportBg />
-            </SettingsCard.Bg>
-          </SettingsCard.Root>
+          <Animated.View style={getAnimatedStyle(3)}>
+            <SettingsCard.Root onPress={handleShareData} disabled={isExportLoading}>
+              <SettingsCard.Icon color="$accentAmber">
+                {isExportLoading ? (
+                  <Spinner size="small" color="$accentAmber" />
+                ) : (
+                  <Share2 size={24} color="$accentAmber" />
+                )}
+              </SettingsCard.Icon>
+              <SettingsCard.Content
+                title={t("settings.exportData")}
+                subtitle={t("settings.exportData.description")}
+              />
+              <SettingsCard.Bg>
+                <ExportBg />
+              </SettingsCard.Bg>
+            </SettingsCard.Root>
+          </Animated.View>
 
-          <SettingsCard.Root onPress={handleImportData} disabled={isImportLoading}>
-            <SettingsCard.Icon color="$accentMauve">
-              {isImportLoading ? (
-                <Spinner size="small" color="$accentMauve" />
-              ) : (
-                <Upload size={24} color="$accentMauve" />
-              )}
-            </SettingsCard.Icon>
-            <SettingsCard.Content
-              title={t("settings.importData")}
-              subtitle={t("settings.importData.description")}
-            />
-            <SettingsCard.Bg>
-              <ImportBg />
-            </SettingsCard.Bg>
-          </SettingsCard.Root>
+          <Animated.View style={getAnimatedStyle(4)}>
+            <SettingsCard.Root onPress={handleImportData} disabled={isImportLoading}>
+              <SettingsCard.Icon color="$accentMauve">
+                {isImportLoading ? (
+                  <Spinner size="small" color="$accentMauve" />
+                ) : (
+                  <Upload size={24} color="$accentMauve" />
+                )}
+              </SettingsCard.Icon>
+              <SettingsCard.Content
+                title={t("settings.importData")}
+                subtitle={t("settings.importData.description")}
+              />
+              <SettingsCard.Bg>
+                <ImportBg />
+              </SettingsCard.Bg>
+            </SettingsCard.Root>
+          </Animated.View>
 
-          <BrewBuddyCard onPress={() => router.push("/chat")} />
+          <Animated.View style={getAnimatedStyle(5)}>
+            <BrewBuddyCard onPress={() => router.push("/chat")} />
+          </Animated.View>
         </View>
       </ScrollView>
       <TabBar />

@@ -6,12 +6,13 @@ import { Text, ScrollView, View } from "tamagui";
 import { AddIcon, ActionButton, Sheet as BottomSheet, TasteCard } from "@/components/ui";
 import { eq } from "drizzle-orm";
 import { LinearGradient } from "tamagui/linear-gradient";
-import { Pressable } from "react-native";
+import { Animated, Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import NoData from "@/components/NoData/NoData";
 import { Taste } from "@/types";
 import { AddTasteFrame } from "@/components";
 import { useTranslation } from "react-i18next";
+import { useStaggeredReveal } from "@/hooks/useStaggeredReveal";
 
 interface EditTastePageProps {
   data: Taste[];
@@ -21,6 +22,7 @@ const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
   const router = useRouter();
   const { db } = useDatabase();
   const [openSheet, setOpenSheet] = useState<boolean>(false);
+  const { getAnimatedStyle } = useStaggeredReveal({ itemCount: data.length });
 
   const deleteTaste = async (tasteId: number) => {
     await db
@@ -33,12 +35,14 @@ const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
   const DataView = () => (
     <ScrollView px="$2">
       <View gap="$2" pb="$12">
-        {data.map((taste) => (
-          <TasteCard.Root key={taste.id}>
-            <TasteCard.Icon />
-            <TasteCard.Label name={taste.flavor} />
-            <TasteCard.Delete onPress={() => deleteTaste(taste.id)} />
-          </TasteCard.Root>
+        {data.map((taste, index) => (
+          <Animated.View key={taste.id} style={getAnimatedStyle(index)}>
+            <TasteCard.Root>
+              <TasteCard.Icon />
+              <TasteCard.Label name={taste.flavor} />
+              <TasteCard.Delete onPress={() => deleteTaste(taste.id)} />
+            </TasteCard.Root>
+          </Animated.View>
         ))}
       </View>
     </ScrollView>
