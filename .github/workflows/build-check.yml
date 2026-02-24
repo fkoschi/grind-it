@@ -62,14 +62,22 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
+      - name: 🧰 Setup Ruby (for CocoaPods)
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+
       - name: 📦 Install dependencies
         run: pnpm install
 
       - name: 📦 Install CocoaPods
+        run: sudo gem install cocoapods -N
+
+      - name: 📦 Install CocoaPods
         run: |
           cd ios
-          pod install
+          pod install --repo-update
 
       - name: 🛠 Build iOS (Debug)
         run: |
-          xcodebuild -workspace ios/*.xcworkspace -scheme GrindIt -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build CODE_SIGNING_ALLOWED=NO
+          xcodebuild -workspace ios/GrindIt.xcworkspace -target GrindIt -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 15' build CODE_SIGNING_ALLOWED=NO
