@@ -1,13 +1,14 @@
 import { FC, useEffect, useMemo, useRef } from "react";
-import { Platform, ScrollView as RNScrollView } from "react-native";
+import { Modal, Platform, ScrollView as RNScrollView } from "react-native";
 import { ScrollView, View, YStack } from "tamagui";
 import { useRouter } from "expo-router";
 import { useChat } from "@ai-sdk/react";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { useTranslation } from "react-i18next";
 import { apple } from "@react-native-ai/apple";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Chat } from "@/components/Chat";
-import { ProFeatureOverlay, Sheet as BottomSheet } from "@/components/ui";
+import { ProFeatureOverlay } from "@/components/ui";
 import {
   ChatEmptyState,
   ChatErrorBanner,
@@ -166,38 +167,39 @@ const ChatPage: FC = () => {
         </ProFeatureOverlay>
       </LinearGradient>
 
-      <BottomSheet
-        sheetProps={{
-          open: isAiConfigSheetOpen,
-          onOpenChange: setIsAiConfigSheetOpen,
-          modal: false,
-          zIndex: 200_000_000,
-          snapPointsMode: "percent",
-          snapPoints: [75],
-          dismissOnSnapToBottom: true,
-        }}
-        frame={
-          <ChatAiConfigSheet
-            provider={provider}
-            hasOpenAiApiKey={hasOpenAiApiKey}
-            hasClaudeApiKey={hasClaudeApiKey}
-            openAiApiKeyInput={openAiApiKeyInput}
-            claudeApiKeyInput={claudeApiKeyInput}
-            isSavingOpenAiKey={isSavingOpenAiKey}
-            isSavingClaudeKey={isSavingClaudeKey}
-            isDeletingOpenAiKey={isDeletingOpenAiKey}
-            isDeletingClaudeKey={isDeletingClaudeKey}
-            onProviderChange={handleProviderChange}
-            onOpenAiApiKeyInputChange={setOpenAiApiKeyInput}
-            onClaudeApiKeyInputChange={setClaudeApiKeyInput}
-            onSaveOpenAiApiKey={handleSaveOpenAiApiKey}
-            onSaveClaudeApiKey={handleSaveClaudeApiKey}
-            onDeleteOpenAiApiKey={handleDeleteOpenAiApiKey}
-            onDeleteClaudeApiKey={handleDeleteClaudeApiKey}
-            t={t}
-          />
-        }
-      />
+      <Modal
+        visible={isAiConfigSheetOpen}
+        animationType="slide"
+        presentationStyle="fullScreen"
+        onRequestClose={() => setIsAiConfigSheetOpen(false)}
+      >
+        <SafeAreaProvider>
+          <SafeAreaView style={{ flex: 1 }} edges={["top", "bottom"]}>
+            <View flex={1} backgroundColor="$screenBackground">
+              <ChatAiConfigSheet
+                provider={provider}
+                hasOpenAiApiKey={hasOpenAiApiKey}
+                hasClaudeApiKey={hasClaudeApiKey}
+                openAiApiKeyInput={openAiApiKeyInput}
+                claudeApiKeyInput={claudeApiKeyInput}
+                isSavingOpenAiKey={isSavingOpenAiKey}
+                isSavingClaudeKey={isSavingClaudeKey}
+                isDeletingOpenAiKey={isDeletingOpenAiKey}
+                isDeletingClaudeKey={isDeletingClaudeKey}
+                onProviderChange={handleProviderChange}
+                onOpenAiApiKeyInputChange={setOpenAiApiKeyInput}
+                onClaudeApiKeyInputChange={setClaudeApiKeyInput}
+                onSaveOpenAiApiKey={handleSaveOpenAiApiKey}
+                onSaveClaudeApiKey={handleSaveClaudeApiKey}
+                onDeleteOpenAiApiKey={handleDeleteOpenAiApiKey}
+                onDeleteClaudeApiKey={handleDeleteClaudeApiKey}
+                onClose={() => setIsAiConfigSheetOpen(false)}
+                t={t}
+              />
+            </View>
+          </SafeAreaView>
+        </SafeAreaProvider>
+      </Modal>
     </View>
   );
 };

@@ -63,25 +63,9 @@ export const useChatAiConfig = ({ t }: UseChatAiConfigParams) => {
 
   const handleProviderChange = useCallback(
     async (nextProvider: AiProvider) => {
-      if (nextProvider === "openai" && !hasOpenAiApiKey) {
-        Alert.alert(
-          t("settings.ai.errors.missingKey.title"),
-          t("settings.ai.errors.missingKey.message"),
-        );
-        return;
-      }
-
-      if (nextProvider === "claude" && !hasClaudeApiKey) {
-        Alert.alert(
-          t("settings.ai.errors.missingClaudeKey.title"),
-          t("settings.ai.errors.missingClaudeKey.message"),
-        );
-        return;
-      }
-
       await setProvider(nextProvider);
     },
-    [hasClaudeApiKey, hasOpenAiApiKey, setProvider, t],
+    [setProvider],
   );
 
   const handleSaveOpenAiApiKey = useCallback(async () => {
