@@ -56,6 +56,12 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen
+          name="equipment/index"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="add-bean"
           options={{
             headerShown: false,
