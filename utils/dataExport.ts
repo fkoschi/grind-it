@@ -1,8 +1,15 @@
 import { ExpoSQLiteDatabase } from "drizzle-orm/expo-sqlite";
-import { beanTable, beanTasteAssociationTable, beanTasteTable, roasteryTable } from "@/db/schema";
+import {
+  beanTable,
+  beanTasteAssociationTable,
+  beanTasteTable,
+  grinderTable,
+  machineTable,
+  roasteryTable,
+} from "@/db/schema";
 import { eq } from "drizzle-orm";
 
-export const EXPORT_VERSION = "1.0.0";
+export const EXPORT_VERSION = "1.1.0";
 
 export interface ExportedBean {
   name: string;
@@ -25,10 +32,23 @@ export interface ExportedBean {
   tastes: string[];
 }
 
+export interface ExportedMachine {
+  manufacturer: string | null;
+  name: string | null;
+  type: string | null;
+}
+
+export interface ExportedGrinder {
+  manufacturer: string | null;
+  name: string | null;
+}
+
 export interface ExportedData {
   version: string;
   exportDate: string;
   beans: ExportedBean[];
+  machine?: ExportedMachine | null;
+  grinder?: ExportedGrinder | null;
 }
 
 export const exportAllData = async (db: ExpoSQLiteDatabase): Promise<string> => {
@@ -87,7 +107,27 @@ export const exportAllData = async (db: ExpoSQLiteDatabase): Promise<string> => 
     version: EXPORT_VERSION,
     exportDate: new Date().toISOString(),
     beans: exportedBeans,
+    machine: null,
+    grinder: null,
   };
+
+  const machineRows = await db.select().from(machineTable);
+  const grinderRows = await db.select().from(grinderTable);
+
+  exportData.machine = machineRows[0]
+    ? {
+        manufacturer: machineRows[0].manufacturer ?? null,
+        name: machineRows[0].name ?? null,
+        type: machineRows[0].type ?? null,
+      }
+    : null;
+
+  exportData.grinder = grinderRows[0]
+    ? {
+        manufacturer: grinderRows[0].manufacturer ?? null,
+        name: grinderRows[0].name ?? null,
+      }
+    : null;
 
   return JSON.stringify(exportData, null, 2);
 };

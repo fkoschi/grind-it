@@ -19,12 +19,51 @@ import { ProFeatureOverlay } from "@/components/ui";
 import { useTranslation } from "react-i18next";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { useKeyboardHeight } from "@/hooks/useKeyboard";
+import { useEquipmentData } from "@/hooks/useEquipmentData";
+
+const normalizeLabel = (value?: string | null) => (value ? value.replace(/_/g, " ") : "");
+
+const buildEquipmentContext = (
+  machine?: { manufacturer?: string | null; name?: string | null; type?: string | null },
+  grinder?: { manufacturer?: string | null; name?: string | null },
+) => {
+  const machineLabel = [machine?.manufacturer, machine?.name].filter(Boolean).join(" ");
+  const machineType = normalizeLabel(machine?.type);
+  const machineSummary =
+    machineLabel || machineType ? `machine ${machineLabel || machineType}`.trim() : "";
+
+  const grinderLabel = [grinder?.manufacturer, grinder?.name].filter(Boolean).join(" ");
+  const grinderSummary = grinderLabel ? `grinder ${grinderLabel}` : "";
+
+  const summary = [machineSummary, grinderSummary].filter(Boolean).join("; ");
+  if (!summary) return null;
+
+  return `User equipment: ${summary}. Use this to tailor hardware advice.`;
+};
+
+const buildEquipmentWelcome = (
+  machine?: { manufacturer?: string | null; name?: string | null; type?: string | null },
+  grinder?: { manufacturer?: string | null; name?: string | null },
+) => {
+  const machineLabel = [machine?.manufacturer, machine?.name].filter(Boolean).join(" ");
+  const machineType = normalizeLabel(machine?.type);
+  const machineSummary =
+    machineLabel || machineType ? `machine ${machineLabel || machineType}`.trim() : "";
+
+  const grinderLabel = [grinder?.manufacturer, grinder?.name].filter(Boolean).join(" ");
+  const grinderSummary = grinderLabel ? `grinder ${grinderLabel}` : "";
+
+  const summary = [machineSummary, grinderSummary].filter(Boolean).join(", ");
+  return summary || null;
+};
 
 class AppleChatTransport implements ChatTransport<UIMessage> {
   private readonly systemPrompt: string;
+  private readonly getEquipmentContext: () => string | null;
 
-  constructor(systemPrompt: string) {
+  constructor(systemPrompt: string, getEquipmentContext: () => string | null) {
     this.systemPrompt = systemPrompt;
+    this.getEquipmentContext = getEquipmentContext;
   }
 
   async sendMessages({
@@ -44,11 +83,16 @@ class AppleChatTransport implements ChatTransport<UIMessage> {
 
     const modelMessages = await convertToModelMessages(messages);
 
+    const equipmentContext = this.getEquipmentContext();
+    const systemPrompt = equipmentContext
+      ? `${this.systemPrompt}\n\n${equipmentContext}`
+      : this.systemPrompt;
+
     const stream = createUIMessageStream({
       execute: async ({ writer }) => {
         const result = streamText({
           model: apple(),
-          system: this.systemPrompt,
+          system: systemPrompt,
           messages: modelMessages,
           abortSignal,
         });
@@ -87,14 +131,24 @@ const ChatPage: FC = () => {
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const scrollViewRef = useRef<RNScrollView>(null);
+  const { machine, grinder } = useEquipmentData();
 
   const unavailableReason = useMemo(() => getUnavailableReason(), []);
 
+  const equipmentContext = useMemo(
+    () => buildEquipmentContext(machine, grinder),
+    [machine, grinder],
+  );
+  const equipmentWelcome = useMemo(
+    () => buildEquipmentWelcome(machine, grinder),
+    [machine, grinder],
+  );
+
   const transport = useMemo(
-    () => new AppleChatTransport(t("chat.systemPrompt")),
+    () => new AppleChatTransport(t("chat.systemPrompt"), () => equipmentContext),
     // Recreate when language changes so the system prompt is always in the right language
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [i18n.language],
+    [i18n.language, equipmentContext],
   );
 
   const { messages, error, sendMessage, status } = useChat({
@@ -178,7 +232,11 @@ const ChatPage: FC = () => {
                         },
                       }}
                     >
-                      {t("chat.welcome")}
+                      {equipmentWelcome
+                        ? `${t("chat.welcome")}\n\n${t("chat.welcomeEquipmentLine", {
+                            equipment: equipmentWelcome,
+                          })}`
+                        : t("chat.welcome")}
                     </Markdown>
                   </Chat.Message>
                 </YStack>

@@ -1,5 +1,13 @@
 import { ExpoSQLiteDatabase } from "drizzle-orm/expo-sqlite";
-import { beanTable, beanTasteAssociationTable, beanTasteTable, roasteryTable } from "@/db/schema";
+import {
+  beanTable,
+  beanTasteAssociationTable,
+  beanTasteTable,
+  grinderTable,
+  machineTable,
+  MachineType,
+  roasteryTable,
+} from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { ExportedData, EXPORT_VERSION } from "./dataExport";
 import { calculateSimilarity } from "./fuzzyMatch";
@@ -22,6 +30,8 @@ export interface DuplicateInfo {
 
 const SIMILARITY_THRESHOLD = 85;
 
+const SUPPORTED_VERSIONS = ["1.0.0", "1.1.0"];
+
 const validateImportData = (data: unknown): ExportedData => {
   if (!data || typeof data !== "object") {
     throw new Error("Invalid import data format");
@@ -33,7 +43,7 @@ const validateImportData = (data: unknown): ExportedData => {
     throw new Error("Missing required fields in import data");
   }
 
-  if (exportData.version !== EXPORT_VERSION) {
+  if (!SUPPORTED_VERSIONS.includes(exportData.version)) {
     throw new Error(
       `Incompatible export version. Expected ${EXPORT_VERSION}, got ${exportData.version}`,
     );
@@ -41,6 +51,9 @@ const validateImportData = (data: unknown): ExportedData => {
 
   return exportData as ExportedData;
 };
+
+const normalizeEquipmentField = (value?: string | null) => value ?? "";
+const normalizeMachineType = (value?: string | null) => value ?? MachineType.SEMI_AUTOMATIC;
 
 const findOrCreateRoastery = async (
   db: ExpoSQLiteDatabase,
@@ -129,6 +142,42 @@ export const importData = async (
 
     const roasteryStats = { created: 0 };
     const tasteStats = { created: 0 };
+
+    if (validatedData.machine) {
+      await db
+        .insert(machineTable)
+        .values({
+          id: 1,
+          manufacturer: normalizeEquipmentField(validatedData.machine.manufacturer),
+          name: normalizeEquipmentField(validatedData.machine.name),
+          type: normalizeMachineType(validatedData.machine.type),
+        })
+        .onConflictDoUpdate({
+          target: machineTable.id,
+          set: {
+            manufacturer: normalizeEquipmentField(validatedData.machine.manufacturer),
+            name: normalizeEquipmentField(validatedData.machine.name),
+            type: normalizeMachineType(validatedData.machine.type),
+          },
+        });
+    }
+
+    if (validatedData.grinder) {
+      await db
+        .insert(grinderTable)
+        .values({
+          id: 1,
+          manufacturer: normalizeEquipmentField(validatedData.grinder.manufacturer),
+          name: normalizeEquipmentField(validatedData.grinder.name),
+        })
+        .onConflictDoUpdate({
+          target: grinderTable.id,
+          set: {
+            manufacturer: normalizeEquipmentField(validatedData.grinder.manufacturer),
+            name: normalizeEquipmentField(validatedData.grinder.name),
+          },
+        });
+    }
 
     for (const beanData of validatedData.beans) {
       try {
