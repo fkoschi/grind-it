@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-02-23)
 
 **Core value:** Users get concrete, hardware-aware coffee advice from Brew Buddy tailored to the exact machine and grinder they own.
-**Current focus:** Phase 1 - Database Schema
+**Current focus:** Phase 2 - Equipment Detail Screen
 
 ## Current Position
 
-Phase: 1 of 5 (Database Schema)
+Phase: 2 of 5 (Equipment Detail Screen)
 Plan: 1 of 1 in current phase
-Status: Phase 1 complete
-Last activity: 2026-02-23 — Completed 01-01-PLAN.md
+Status: Phase 2 plans complete, pending verification
+Last activity: 2026-02-24 — Completed 02-01-PLAN.md
 
-Progress: [██░░░░░░░░] 20%
+Progress: [████░░░░░░] 40%
 
 ## Performance Metrics
 
@@ -47,6 +47,9 @@ Recent decisions affecting current work:
 - [Roadmap]: Phases 3, 4, 5 all depend on Phase 2 but are independent of each other
 - [01-01]: MachineType uses const object + type extraction pattern (idiomatic TypeScript enum alternative)
 - [01-01]: INTEGRATED_GRINDER_TYPES identifies super_automatic and capsule_pod as grinder-integrated types
+- [02-01]: Default machine type is semi_automatic (most common, avoids empty-state validation)
+- [02-01]: Always upsert grinder row regardless of machine type visibility (preserves data per DATA-03)
+- [02-01]: Direct Tamagui Select for machine type picker (ThemedSelect incompatible with string values)
 
 ### Pending Todos
 
@@ -60,6 +63,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-23
-Stopped at: Completed 01-01-PLAN.md (equipment schema)
+Last session: 2026-02-24
+Stopped at: Completed 02-01-PLAN.md (equipment detail screen)
 Resume file: None
