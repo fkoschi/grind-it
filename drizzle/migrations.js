@@ -11,6 +11,7 @@ import m0006 from "./0006_foamy_gauntlet.sql";
 import m0007 from "./0007_lonely_sandman.sql";
 import m0008 from "./0008_broken_dexter_bennett.sql";
 import m0009 from "./0009_add_equipment_tables.sql";
+import m0010 from "./0010_cold_adam_destine.sql";
 
 export default {
   journal,
@@ -25,5 +26,6 @@ export default {
     m0007,
     m0008,
     m0009,
+    m0010,
   },
 };

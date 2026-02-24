@@ -1,129 +1,69 @@
-import { FC, useRef, useEffect, useMemo } from "react";
+import { FC, useEffect, useMemo, useRef } from "react";
 import { Platform, ScrollView as RNScrollView } from "react-native";
-import { View, YStack, ScrollView } from "tamagui";
+import { ScrollView, View, YStack } from "tamagui";
 import { useRouter } from "expo-router";
-import { Chat } from "@/components/Chat";
 import { useChat } from "@ai-sdk/react";
-import {
-  ChatTransport,
-  UIMessage,
-  UIMessageChunk,
-  createUIMessageStream,
-  convertToModelMessages,
-  streamText,
-} from "ai";
-import { apple } from "@react-native-ai/apple";
-import { ProFeatureOverlay } from "@/components/ui";
-import { useTranslation } from "react-i18next";
 import { LinearGradient } from "tamagui/linear-gradient";
-import { useKeyboardHeight } from "@/hooks/useKeyboard";
-import { useEquipmentData } from "@/hooks/useEquipmentData";
+import { useTranslation } from "react-i18next";
+import { apple } from "@react-native-ai/apple";
+import { Chat } from "@/components/Chat";
+import { ProFeatureOverlay, Sheet as BottomSheet } from "@/components/ui";
 import {
-  ChatHeader,
   ChatEmptyState,
   ChatErrorBanner,
+  ChatHeader,
   ChatMessageList,
   ChatUnavailableBanner,
 } from "@/components/Chat/ChatScreenParts";
+import { useDatabase } from "@/provider/DatabaseProvider";
+import { useEquipmentData } from "@/hooks/useEquipmentData";
+import { useKeyboardHeight } from "@/hooks/useKeyboard";
+import { ChatAiConfigSheet } from "@/features/chat/components/ChatAiConfigSheet";
+import { useChatAiConfig } from "@/features/chat/hooks/useChatAiConfig";
+import { useChatKnowledgeBase } from "@/features/chat/hooks/useChatKnowledgeBase";
+import { ProviderChatTransport } from "@/features/chat/transport/ProviderChatTransport";
+import { getChatErrorMessage } from "@/features/chat/utils/chatHelpers";
+import { buildEquipmentSummary } from "@/features/chat/utils/promptHelpers";
 
-const normalizeLabel = (value?: string | null) => (value ? value.replace(/_/g, " ") : "");
-
-const buildEquipmentSummary = (
-  machine: { manufacturer?: string | null; name?: string | null; type?: string | null } | null,
-  grinder: { manufacturer?: string | null; name?: string | null } | null,
-  labels: { machine: string; grinder: string },
-  separator: string,
-) => {
-  const machineLabel = [machine?.manufacturer, machine?.name].filter(Boolean).join(" ");
-  const machineType = normalizeLabel(machine?.type);
-  const machineValue = machineLabel || machineType;
-  const machineSummary = machineValue ? `${labels.machine} ${machineValue}`.trim() : "";
-
-  const grinderLabel = [grinder?.manufacturer, grinder?.name].filter(Boolean).join(" ");
-  const grinderSummary = grinderLabel ? `${labels.grinder} ${grinderLabel}` : "";
-
-  const summary = [machineSummary, grinderSummary].filter(Boolean).join(separator);
-  return summary || null;
-};
-
-class AppleChatTransport implements ChatTransport<UIMessage> {
-  private readonly systemPrompt: string;
-  private readonly getEquipmentContext: () => string | null;
-  private readonly unavailableMessage: string;
-
-  constructor(options: {
-    systemPrompt: string;
-    getEquipmentContext: () => string | null;
-    unavailableMessage: string;
-  }) {
-    this.systemPrompt = options.systemPrompt;
-    this.getEquipmentContext = options.getEquipmentContext;
-    this.unavailableMessage = options.unavailableMessage;
-  }
-
-  async sendMessages({
-    messages,
-    abortSignal,
-  }: Parameters<ChatTransport<UIMessage>["sendMessages"]>[0]): Promise<
-    ReadableStream<UIMessageChunk>
-  > {
-    if (!apple.isAvailable()) {
-      throw new Error(this.unavailableMessage);
-    }
-
-    const modelMessages = await convertToModelMessages(messages);
-
-    const equipmentContext = this.getEquipmentContext();
-    const systemPrompt = equipmentContext
-      ? `${this.systemPrompt}\n\n${equipmentContext}`
-      : this.systemPrompt;
-
-    const stream = createUIMessageStream({
-      execute: async ({ writer }) => {
-        const result = streamText({
-          model: apple(),
-          system: systemPrompt,
-          messages: modelMessages,
-          abortSignal,
-        });
-
-        writer.merge(result.toUIMessageStream());
-      },
-      onError: (error) => {
-        console.error(error);
-        return error instanceof Error ? error.message : String(error);
-      },
-    });
-
-    return stream;
-  }
-
-  async reconnectToStream(): Promise<ReadableStream<UIMessageChunk> | null> {
-    return null;
-  }
-}
-
-function getUnavailableReason(): "android" | "ios" | null {
+const getOnDeviceUnavailableReason = (): "android" | "ios" | null => {
   if (Platform.OS !== "ios") return "android";
   if (!apple.isAvailable()) return "ios";
   return null;
-}
-
-function getErrorMessage(error: Error, t: (key: string) => string): string {
-  const msg = error.message.toLowerCase();
-  if (msg.includes("context window") || msg.includes("exceededcontextwindowsize")) {
-    return t("chat.error.contextWindow");
-  }
-  return t("chat.error.generic");
-}
+};
 
 const ChatPage: FC = () => {
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const scrollViewRef = useRef<RNScrollView>(null);
   const { machine, grinder } = useEquipmentData();
+  const { db } = useDatabase();
 
-  const unavailableReason = useMemo(() => getUnavailableReason(), []);
+  const keyboardHeight = useKeyboardHeight();
+  const onDeviceUnavailableReason = useMemo(() => getOnDeviceUnavailableReason(), []);
+
+  const {
+    provider,
+    hasOpenAiApiKey,
+    hasClaudeApiKey,
+    isAiConfigSheetOpen,
+    setIsAiConfigSheetOpen,
+    openAiApiKeyInput,
+    claudeApiKeyInput,
+    isSavingOpenAiKey,
+    isSavingClaudeKey,
+    isDeletingOpenAiKey,
+    isDeletingClaudeKey,
+    setOpenAiApiKeyInput,
+    setClaudeApiKeyInput,
+    getProviderConfig,
+    handleProviderChange,
+    handleSaveOpenAiApiKey,
+    handleSaveClaudeApiKey,
+    handleDeleteOpenAiApiKey,
+    handleDeleteClaudeApiKey,
+  } = useChatAiConfig({ t });
+
+  const { getRagPromptContext } = useChatKnowledgeBase(db);
 
   const equipmentLabels = useMemo(
     () => ({
@@ -132,14 +72,17 @@ const ChatPage: FC = () => {
     }),
     [i18n.language],
   );
+
   const equipmentSummary = useMemo(
     () => buildEquipmentSummary(machine, grinder, equipmentLabels, "; "),
     [machine, grinder, equipmentLabels],
   );
+
   const equipmentWelcome = useMemo(
     () => buildEquipmentSummary(machine, grinder, equipmentLabels, ", "),
     [machine, grinder, equipmentLabels],
   );
+
   const equipmentContext = useMemo(
     () => (equipmentSummary ? t("chat.equipment.context", { summary: equipmentSummary }) : null),
     [equipmentSummary, i18n.language],
@@ -154,46 +97,49 @@ const ChatPage: FC = () => {
         : t("chat.welcome"),
     [equipmentWelcome, i18n.language],
   );
-  const appleUnavailableMessage = useMemo(() => t("chat.error.appleUnavailable"), [i18n.language]);
-  const systemPrompt = useMemo(() => t("chat.systemPrompt"), [i18n.language]);
 
   const transport = useMemo(
     () =>
-      new AppleChatTransport({
-        systemPrompt,
+      new ProviderChatTransport({
+        systemPrompt: t("chat.systemPrompt"),
         getEquipmentContext: () => equipmentContext,
-        unavailableMessage: appleUnavailableMessage,
+        getRagPromptContext,
+        getProviderConfig,
+        unavailableMessage: t("chat.error.appleUnavailable"),
+        missingOpenAiKeyMessage: t("chat.error.openAiMissingKey"),
+        missingClaudeKeyMessage: t("chat.error.claudeMissingKey"),
       }),
-    // Recreate when language changes so the system prompt is always in the right language
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [systemPrompt, equipmentContext, appleUnavailableMessage],
+    [equipmentContext, getProviderConfig, getRagPromptContext, i18n.language],
   );
 
   const { messages, error, sendMessage, status } = useChat({
     transport,
-    onError: (error) => console.error(error),
+    onError: (transportError: Error) => console.error(transportError),
   });
 
-  const keyboardHeight = useKeyboardHeight();
-
-  // Auto-scroll to bottom when messages change
   useEffect(() => {
-    if (messages.length > 0) {
-      setTimeout(() => {
-        scrollViewRef.current?.scrollToEnd({ animated: true });
-      }, 100);
-    }
+    if (messages.length === 0) return;
+
+    setTimeout(() => {
+      scrollViewRef.current?.scrollToEnd({ animated: true });
+    }, 100);
   }, [messages]);
+
+  const openAiUnavailable = provider === "openai" && !hasOpenAiApiKey ? "openaiNoKey" : null;
+  const claudeUnavailable = provider === "claude" && !hasClaudeApiKey ? "claudeNoKey" : null;
+  const onDeviceUnavailable = provider === "on-device" ? onDeviceUnavailableReason : null;
+  const activeUnavailableReason = onDeviceUnavailable ?? openAiUnavailable ?? claudeUnavailable;
 
   return (
     <View flex={1} backgroundColor="$screenBackground">
       <LinearGradient flex={1} colors={["#FFFFFF", "#F5E6D0"]} start={[0, 0]} end={[0, 1]}>
-        {/* Header with Logo and Close Button — always rendered above the PRO overlay */}
-        <ChatHeader onClose={() => router.back()} />
+        <ChatHeader
+          onClose={() => router.back()}
+          onOpenConfig={() => setIsAiConfigSheetOpen(true)}
+        />
 
         <ProFeatureOverlay isPro={true}>
           <YStack flex={1} bgC="transparent" paddingBottom={keyboardHeight}>
-            {/* Chat Messages */}
             <ScrollView
               ref={scrollViewRef}
               flex={1}
@@ -202,29 +148,56 @@ const ChatPage: FC = () => {
                 flexGrow: 1,
               }}
             >
-              {/* Empty State */}
               {messages.length === 0 && <ChatEmptyState message={welcomeMessage} />}
-
-              {/* Unavailability Banner */}
-              {unavailableReason && (
-                <ChatUnavailableBanner message={t(`chat.unavailable.${unavailableReason}`)} />
+              {activeUnavailableReason && (
+                <ChatUnavailableBanner message={t(`chat.unavailable.${activeUnavailableReason}`)} />
               )}
-
               <ChatMessageList messages={messages} />
             </ScrollView>
 
-            {/* Inline error banner */}
-            {error && <ChatErrorBanner message={getErrorMessage(error, t)} />}
+            {error && <ChatErrorBanner message={getChatErrorMessage(error, t)} />}
 
-            {/* Input */}
             <Chat.Input
               onSend={(text) => sendMessage({ text })}
               isLoading={status !== "ready"}
-              disabled={unavailableReason !== null}
+              disabled={activeUnavailableReason !== null}
             />
           </YStack>
         </ProFeatureOverlay>
       </LinearGradient>
+
+      <BottomSheet
+        sheetProps={{
+          open: isAiConfigSheetOpen,
+          onOpenChange: setIsAiConfigSheetOpen,
+          modal: false,
+          zIndex: 200_000_000,
+          snapPointsMode: "percent",
+          snapPoints: [75],
+          dismissOnSnapToBottom: true,
+        }}
+        frame={
+          <ChatAiConfigSheet
+            provider={provider}
+            hasOpenAiApiKey={hasOpenAiApiKey}
+            hasClaudeApiKey={hasClaudeApiKey}
+            openAiApiKeyInput={openAiApiKeyInput}
+            claudeApiKeyInput={claudeApiKeyInput}
+            isSavingOpenAiKey={isSavingOpenAiKey}
+            isSavingClaudeKey={isSavingClaudeKey}
+            isDeletingOpenAiKey={isDeletingOpenAiKey}
+            isDeletingClaudeKey={isDeletingClaudeKey}
+            onProviderChange={handleProviderChange}
+            onOpenAiApiKeyInputChange={setOpenAiApiKeyInput}
+            onClaudeApiKeyInputChange={setClaudeApiKeyInput}
+            onSaveOpenAiApiKey={handleSaveOpenAiApiKey}
+            onSaveClaudeApiKey={handleSaveClaudeApiKey}
+            onDeleteOpenAiApiKey={handleDeleteOpenAiApiKey}
+            onDeleteClaudeApiKey={handleDeleteClaudeApiKey}
+            t={t}
+          />
+        }
+      />
     </View>
   );
 };
