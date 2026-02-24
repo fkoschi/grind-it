@@ -80,4 +80,4 @@ jobs:
 
       - name: 🛠 Build iOS (Debug)
         run: |
-          xcodebuild -workspace ios/GrindIt.xcworkspace -target GrindIt -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 15' build CODE_SIGNING_ALLOWED=NO
+          xcodebuild -workspace ios/GrindIt.xcworkspace -scheme GrindIt -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 15' build CODE_SIGNING_ALLOWED=NO -skipMacroValidation
