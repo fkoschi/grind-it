@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo, useRef } from "react";
 import { Modal, Platform, ScrollView as RNScrollView } from "react-native";
 import { ScrollView, View, YStack } from "tamagui";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useChat } from "@ai-sdk/react";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { useTranslation } from "react-i18next";
@@ -25,6 +25,7 @@ import { useChatKnowledgeBase } from "@/features/chat/hooks/useChatKnowledgeBase
 import { ProviderChatTransport } from "@/features/chat/transport/ProviderChatTransport";
 import { getChatErrorMessage } from "@/features/chat/utils/chatHelpers";
 import { buildEquipmentSummary } from "@/features/chat/utils/promptHelpers";
+import { useBeanChatContext } from "@/features/chat/hooks/useBeanChatContext";
 
 const getOnDeviceUnavailableReason = (): "android" | "ios" | null => {
   if (Platform.OS !== "ios") return "android";
@@ -38,6 +39,8 @@ const ChatPage: FC = () => {
   const scrollViewRef = useRef<RNScrollView>(null);
   const { machine, grinder } = useEquipmentData();
   const { db } = useDatabase();
+  const { beanId } = useLocalSearchParams<{ beanId?: string }>();
+  const beanContext = useBeanChatContext(beanId ? Number(beanId) : undefined);
 
   const keyboardHeight = useKeyboardHeight();
   const onDeviceUnavailableReason = useMemo(() => getOnDeviceUnavailableReason(), []);
@@ -104,13 +107,14 @@ const ChatPage: FC = () => {
       new ProviderChatTransport({
         systemPrompt: t("chat.systemPrompt"),
         getEquipmentContext: () => equipmentContext,
+        getBeanContext: () => beanContext,
         getRagPromptContext,
         getProviderConfig,
         unavailableMessage: t("chat.error.appleUnavailable"),
         missingOpenAiKeyMessage: t("chat.error.openAiMissingKey"),
         missingClaudeKeyMessage: t("chat.error.claudeMissingKey"),
       }),
-    [equipmentContext, getProviderConfig, getRagPromptContext, i18n.language],
+    [equipmentContext, beanContext, getProviderConfig, getRagPromptContext, i18n.language],
   );
 
   const { messages, error, sendMessage, status } = useChat({
