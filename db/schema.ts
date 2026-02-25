@@ -84,3 +84,22 @@ export const grinderTable = sqliteTable("grinder_table", {
   manufacturer: text().notNull(),
   name: text().notNull(),
 });
+
+export const kbChunksTable = sqliteTable("kb_chunks", {
+  id: text().primaryKey(),
+  fileId: text().notNull(),
+  heading: text().notNull(),
+  topic: text().notNull(),
+  language: text().notNull(),
+  tags: text().notNull(), // JSON-encoded string[]
+  text: text().notNull(),
+});
+
+export const kbEmbeddingsTable = sqliteTable("kb_embeddings", {
+  id: text().primaryKey(),
+  chunkId: text()
+    .notNull()
+    .references(() => kbChunksTable.id),
+  model: text().notNull(),
+  embedding: text().notNull(), // JSON-encoded number[]
+});

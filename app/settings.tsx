@@ -215,6 +215,10 @@ const SettingsPage: FC = () => {
 
         <View p="$4" gap="$3" mt="$4">
           <Animated.View style={getAnimatedStyle(0)}>
+            <BrewBuddyCard onPress={() => router.push("/chat")} />
+          </Animated.View>
+
+          <Animated.View style={getAnimatedStyle(1)}>
             <SettingsCard.Root onPress={() => router.navigate("/roasteries/EditRoasteryPage")}>
               <SettingsCard.Icon color="$accentTerracotta">
                 <Store size={24} color="$accentTerracotta" />
@@ -229,7 +233,7 @@ const SettingsPage: FC = () => {
             </SettingsCard.Root>
           </Animated.View>
 
-          <Animated.View style={getAnimatedStyle(1)}>
+          <Animated.View style={getAnimatedStyle(2)}>
             <SettingsCard.Root onPress={() => router.navigate("/taste/EditTasteComponent")}>
               <SettingsCard.Icon color="$accentSage">
                 <Droplets size={24} color="$accentSage" />
@@ -244,7 +248,7 @@ const SettingsPage: FC = () => {
             </SettingsCard.Root>
           </Animated.View>
 
-          <Animated.View style={getAnimatedStyle(2)}>
+          <Animated.View style={getAnimatedStyle(3)}>
             <SettingsCard.Root onPress={() => router.navigate("/equipment")}>
               <SettingsCard.Icon color="$accentAmber">
                 <Coffee size={24} color="$accentAmber" />
@@ -259,7 +263,7 @@ const SettingsPage: FC = () => {
             </SettingsCard.Root>
           </Animated.View>
 
-          <Animated.View style={getAnimatedStyle(3)}>
+          <Animated.View style={getAnimatedStyle(4)}>
             <SettingsCard.Root onPress={handleShareData} disabled={isExportLoading}>
               <SettingsCard.Icon color="$accentAmber">
                 {isExportLoading ? (
@@ -278,7 +282,7 @@ const SettingsPage: FC = () => {
             </SettingsCard.Root>
           </Animated.View>
 
-          <Animated.View style={getAnimatedStyle(4)}>
+          <Animated.View style={getAnimatedStyle(5)}>
             <SettingsCard.Root onPress={handleImportData} disabled={isImportLoading}>
               <SettingsCard.Icon color="$accentMauve">
                 {isImportLoading ? (
@@ -295,10 +299,6 @@ const SettingsPage: FC = () => {
                 <ImportBg />
               </SettingsCard.Bg>
             </SettingsCard.Root>
-          </Animated.View>
-
-          <Animated.View style={getAnimatedStyle(5)}>
-            <BrewBuddyCard onPress={() => router.push("/chat")} />
           </Animated.View>
         </View>
       </ScrollView>

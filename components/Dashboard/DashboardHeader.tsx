@@ -7,6 +7,8 @@ import Search from "../ui/Search/Search";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { beanTasteTable } from "@/db/schema";
 import { useDatabase } from "@/provider/DatabaseProvider";
+import { useRouter } from "expo-router";
+import { MessageCircle } from "@tamagui/lucide-icons";
 
 const StyledFilterButton = styled(Button, {
   bgC: "#664F3F",
@@ -27,6 +29,7 @@ interface Props {
   onChangeText: (text: string) => void;
 }
 const DashboardHeader: FC<Props> = ({ onChangeText }) => {
+  const router = useRouter();
   const { db } = useDatabase();
   const [showFilter, setShowFilter] = useState<boolean>(false);
 
@@ -49,7 +52,7 @@ const DashboardHeader: FC<Props> = ({ onChangeText }) => {
       >
         <XStack mb="$3" columnGap="$2" alignItems="center">
           <Search onChangeText={onChangeText} />
-          <View flex={0} justifyContent="flex-end">
+          <XStack gap="$2">
             <StyledFilterButton
               circular
               onPress={() => setShowFilter(!showFilter)}
@@ -63,7 +66,16 @@ const DashboardHeader: FC<Props> = ({ onChangeText }) => {
                 </View>
               }
             />
-          </View>
+            <StyledFilterButton
+              circular
+              onPress={() => router.push("/chat")}
+              icon={
+                <View flex={1} alignItems="center">
+                  <MessageCircle size={24} color="white" />
+                </View>
+              }
+            />
+          </XStack>
         </XStack>
         {showFilter && <SearchFilter filters={tasteFilters} />}
       </LinearGradient>

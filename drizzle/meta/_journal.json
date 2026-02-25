@@ -71,6 +71,13 @@
       "when": 1771855309835,
       "tag": "0009_add_equipment_tables",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1771937240814,
+      "tag": "0010_cold_adam_destine",
+      "breakpoints": true
     }
   ]
 }

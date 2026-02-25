@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Image } from "react-native";
 import { Button, Text, YStack } from "tamagui";
-import { ChevronDown } from "@tamagui/lucide-icons";
+import { ChevronDown, RotateCcw, SlidersHorizontal } from "@tamagui/lucide-icons";
 import Markdown from "react-native-markdown-display";
 import { Chat } from "@/components/Chat";
 import type { UIMessage } from "ai";
@@ -113,9 +113,17 @@ const MESSAGE_MARKDOWN_STYLE = {
 
 interface ChatHeaderProps {
   onClose: () => void;
+  onOpenConfig: () => void;
+  onReset?: () => void;
+  hasMessages?: boolean;
 }
 
-export const ChatHeader: FC<ChatHeaderProps> = ({ onClose }) => (
+export const ChatHeader: FC<ChatHeaderProps> = ({
+  onClose,
+  onOpenConfig,
+  onReset,
+  hasMessages,
+}) => (
   <YStack
     paddingHorizontal="$4"
     paddingTop="$3"
@@ -128,7 +136,31 @@ export const ChatHeader: FC<ChatHeaderProps> = ({ onClose }) => (
       style={{ width: 40, height: 40 }}
       resizeMode="contain"
     />
-    <Button size="$3" circular icon={ChevronDown} onPress={onClose} backgroundColor="transparent" />
+    <YStack flexDirection="row" gap="$2" alignItems="center">
+      {hasMessages && onReset && (
+        <Button
+          size="$3"
+          circular
+          icon={RotateCcw}
+          onPress={onReset}
+          backgroundColor="transparent"
+        />
+      )}
+      <Button
+        size="$3"
+        circular
+        icon={SlidersHorizontal}
+        onPress={onOpenConfig}
+        backgroundColor="transparent"
+      />
+      <Button
+        size="$3"
+        circular
+        icon={ChevronDown}
+        onPress={onClose}
+        backgroundColor="transparent"
+      />
+    </YStack>
   </YStack>
 );
 
