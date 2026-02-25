@@ -21,6 +21,7 @@ type ProviderConfig = {
 type ProviderChatTransportOptions = {
   systemPrompt: string;
   getEquipmentContext: () => string | null;
+  getBeanContext: () => string | null;
   getRagPromptContext: (query: string) => Promise<string | null>;
   getProviderConfig: () => Promise<ProviderConfig>;
   unavailableMessage: string;
@@ -48,6 +49,7 @@ export class ProviderChatTransport implements ChatTransport<UIMessage> {
     const systemPrompt = [
       this.options.systemPrompt,
       this.options.getEquipmentContext(),
+      this.options.getBeanContext(),
       ragPromptContext,
     ]
       .filter(Boolean)
