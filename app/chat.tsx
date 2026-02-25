@@ -6,6 +6,7 @@ import { useChat } from "@ai-sdk/react";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { useTranslation } from "react-i18next";
 import { apple } from "@react-native-ai/apple";
+import type { UIMessage } from "ai";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Chat } from "@/components/Chat";
 import { ProFeatureOverlay } from "@/components/ui";
@@ -26,6 +27,16 @@ import { ProviderChatTransport } from "@/features/chat/transport/ProviderChatTra
 import { getChatErrorMessage } from "@/features/chat/utils/chatHelpers";
 import { buildEquipmentSummary } from "@/features/chat/utils/promptHelpers";
 import { useBeanChatContext } from "@/features/chat/hooks/useBeanChatContext";
+import { useChatStore } from "@/store/chat-store";
+
+type ChatHelpers = {
+  messages: UIMessage[];
+  error: Error | undefined;
+  sendMessage: (input: { text: string }) => void;
+  setMessages: (messages: UIMessage[]) => void;
+  stop: () => void;
+  status: string;
+};
 
 const getOnDeviceUnavailableReason = (): "android" | "ios" | null => {
   if (Platform.OS !== "ios") return "android";
@@ -117,10 +128,22 @@ const ChatPage: FC = () => {
     [equipmentContext, beanContext, getProviderConfig, getRagPromptContext, i18n.language],
   );
 
-  const { messages, error, sendMessage, status } = useChat({
+  const { messages, error, sendMessage, setMessages, stop, status } = useChat({
     transport,
     onError: (transportError: Error) => console.error(transportError),
-  });
+  }) as ChatHelpers;
+
+  const didRestore = useRef(false);
+  useEffect(() => {
+    if (didRestore.current) return;
+    didRestore.current = true;
+    const stored = useChatStore.getState().messages;
+    if (stored.length > 0) setMessages(stored);
+  }, []);
+
+  useEffect(() => {
+    useChatStore.getState().setMessages(messages);
+  }, [messages]);
 
   useEffect(() => {
     if (messages.length === 0) return;
@@ -129,6 +152,12 @@ const ChatPage: FC = () => {
       scrollViewRef.current?.scrollToEnd({ animated: true });
     }, 100);
   }, [messages]);
+
+  const handleReset = () => {
+    stop();
+    setMessages([]);
+    useChatStore.getState().clearMessages();
+  };
 
   const openAiUnavailable = provider === "openai" && !hasOpenAiApiKey ? "openaiNoKey" : null;
   const claudeUnavailable = provider === "claude" && !hasClaudeApiKey ? "claudeNoKey" : null;
@@ -141,6 +170,8 @@ const ChatPage: FC = () => {
         <ChatHeader
           onClose={() => router.back()}
           onOpenConfig={() => setIsAiConfigSheetOpen(true)}
+          onReset={handleReset}
+          hasMessages={messages.length > 0}
         />
 
         <ProFeatureOverlay isPro={true}>

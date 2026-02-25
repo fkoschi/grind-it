@@ -116,7 +116,7 @@ const RoasteryDetailPage: FC = () => {
     <View flex={1} bgC="$screenBackground">
       <LinearGradient
         height={"$14"}
-        colors={["#F2D0C2", "#D4876C"]}
+        colors={["#FFDAAB", "#E89E3F"]}
         borderBottomLeftRadius="$12"
         borderBottomRightRadius="$12"
         start={[0, 1]}
@@ -156,6 +156,19 @@ const RoasteryDetailPage: FC = () => {
       >
         <ScrollView flex={1} py="$6" px="$6">
           <YStack gap="$4" pb="$12">
+            {/* Map — driven from form state so it updates immediately on address change */}
+            {(watch("latitude") ?? roastery.latitude) != null &&
+              (watch("longitude") ?? roastery.longitude) != null && (
+                <StaticMap
+                  latitude={(watch("latitude") ?? roastery.latitude)!}
+                  longitude={(watch("longitude") ?? roastery.longitude)!}
+                  height={180}
+                  theme="bw"
+                  zoom={14}
+                  onPress={handleOpenMaps}
+                />
+              )}
+
             {/* Name */}
             <XStack gap="$3" alignItems="center" justifyContent="center">
               <YStack gap="$2" flex={1}>
@@ -247,18 +260,6 @@ const RoasteryDetailPage: FC = () => {
                 )}
               </XStack>
             </YStack>
-
-            {/* Map — driven from form state so it updates immediately on address change */}
-            {(watch("latitude") ?? roastery.latitude) != null &&
-              (watch("longitude") ?? roastery.longitude) != null && (
-                <StaticMap
-                  latitude={(watch("latitude") ?? roastery.latitude)!}
-                  longitude={(watch("longitude") ?? roastery.longitude)!}
-                  height={180}
-                  theme="warm"
-                  onPress={handleOpenMaps}
-                />
-              )}
 
             {/* Address */}
             <YStack gap="$2">

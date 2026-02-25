@@ -159,6 +159,7 @@
   "chat.equipment.context": "User equipment: {{summary}}. Use this to tailor hardware advice.",
   "chat.unavailable.openaiNoKey": "OpenAI is selected, but no API key is saved. Open chat settings to add one.",
   "chat.unavailable.claudeNoKey": "Claude is selected, but no API key is saved. Open chat settings to add one.",
+  "chat.reset": "Reset conversation",
 
   "pro.title": "Pro version only",
   "pro.subtitle": "Upgrade to Pro to use this feature.",
