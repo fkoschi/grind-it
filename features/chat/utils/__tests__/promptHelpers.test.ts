@@ -44,8 +44,8 @@ describe("formatSingleBeanContext", () => {
 
   it("includes only non-zero aroma fields", () => {
     const result = formatSingleBeanContext(fullBean, tastes);
-    expect(result).toContain("Fruity 90");
-    expect(result).toContain("Sour 35");
+    expect(result).toContain("Fruity+++"); // 90 → +++
+    expect(result).toContain("Sour+"); // 35 → +
     expect(result).not.toContain("Nutty");
     expect(result).not.toContain("Spices");
   });
@@ -82,5 +82,12 @@ describe("formatAllBeansContext", () => {
     const result = formatAllBeansContext([fullBean]);
     expect(result).toContain("grind 8.5");
     expect(result).toContain("dose 18.5g");
+  });
+
+  it("omits aroma below 34 and uses ++ for 67-84 range", () => {
+    const bean = { name: "Test", aromaFruity: 20, aromaFloral: 75 };
+    const result = formatAllBeansContext([bean]);
+    expect(result).not.toContain("Fruity");
+    expect(result).toContain("Floral++");
   });
 });

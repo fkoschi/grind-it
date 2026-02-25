@@ -38,28 +38,8 @@ export const formatRagPromptContext = async (query: string): Promise<string | nu
   ].join("\n\n");
 };
 
-const AROMA_LABELS: Record<string, string> = {
-  aromaFruity: "Fruity",
-  aromaFloral: "Floral",
-  aromaSweet: "Sweet",
-  aromaNutty: "Nutty",
-  aromaSpices: "Spices",
-  aromaRoasted: "Roasted",
-  aromaGreen: "Green",
-  aromaSour: "Sour",
-  aromaOther: "Other",
-};
-
-const aromaRating = (value: number | null | undefined): string => {
-  if (value == null || value <= 0) return "";
-  if (value <= 33) return "";
-  if (value <= 66) return "+";
-  if (value <= 84) return "++";
-  return "+++";
-};
-
 export type BeanContextRow = {
-  name: string | null;
+  name: string;
   roastery?: string | null;
   arabicaAmount?: number | null;
   robustaAmount?: number | null;
@@ -75,6 +55,38 @@ export type BeanContextRow = {
   aromaGreen?: number | null;
   aromaSour?: number | null;
   aromaOther?: number | null;
+};
+
+type AromaKey = keyof Pick<
+  BeanContextRow,
+  | "aromaFruity"
+  | "aromaFloral"
+  | "aromaSweet"
+  | "aromaNutty"
+  | "aromaSpices"
+  | "aromaRoasted"
+  | "aromaGreen"
+  | "aromaSour"
+  | "aromaOther"
+>;
+
+const AROMA_LABELS: Record<AromaKey, string> = {
+  aromaFruity: "Fruity",
+  aromaFloral: "Floral",
+  aromaSweet: "Sweet",
+  aromaNutty: "Nutty",
+  aromaSpices: "Spices",
+  aromaRoasted: "Roasted",
+  aromaGreen: "Green",
+  aromaSour: "Sour",
+  aromaOther: "Other",
+};
+
+const aromaRating = (value: number | null | undefined): string => {
+  if (value == null || value <= 33) return "";
+  if (value <= 66) return "+";
+  if (value <= 84) return "++";
+  return "+++";
 };
 
 export const formatSingleBeanContext = (
@@ -99,14 +111,15 @@ export const formatSingleBeanContext = (
     lines.push(grindParts.join(" | "));
   }
 
-  const aromaEntries = Object.entries(AROMA_LABELS)
+  const aromaEntries = (Object.entries(AROMA_LABELS) as [AromaKey, string][])
     .map(([key, label]) => {
-      const value = (bean as Record<string, number | null | undefined>)[key];
-      return value != null && value > 0 ? `${label} ${value}` : null;
+      const value = bean[key as AromaKey];
+      const rating = aromaRating(value);
+      return rating ? `${label}${rating}` : null;
     })
     .filter((x): x is string => x !== null);
   if (aromaEntries.length > 0) {
-    lines.push(`Aroma: ${aromaEntries.join(", ")}`);
+    lines.push(`Aroma: ${aromaEntries.join(" ")}`);
   }
 
   if (tastes.length > 0) {
@@ -128,9 +141,9 @@ export const formatAllBeansContext = (beans: BeanContextRow[]): string | null =>
       bean.arabicaAmount != null ? `Arabica ${bean.arabicaAmount}%` : null,
     ].filter(Boolean);
 
-    const aromaSummary = Object.entries(AROMA_LABELS)
+    const aromaSummary = (Object.entries(AROMA_LABELS) as [AromaKey, string][])
       .map(([key, label]) => {
-        const value = (bean as Record<string, number | null | undefined>)[key];
+        const value = bean[key as AromaKey];
         const rating = aromaRating(value);
         return rating ? `${label}${rating}` : null;
       })
