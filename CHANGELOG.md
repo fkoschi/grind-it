@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.13.0](https://github.com/fkoschi/grind-it/compare/v1.12.0...v1.13.0) (2026-02-26)
+
+
+### ✨ Features
+
+* add payment via revenuecat ([#28](https://github.com/fkoschi/grind-it/issues/28)) ([986069e](https://github.com/fkoschi/grind-it/commit/986069ec3c2d19c16709bd90c53513f66cb5e3e2))
+* apply some animations ([#33](https://github.com/fkoschi/grind-it/issues/33)) ([f70733b](https://github.com/fkoschi/grind-it/commit/f70733b693269273e88259b4e26b00c176414190))
+* redesign cards on settings page ([#31](https://github.com/fkoschi/grind-it/issues/31)) ([3a6b026](https://github.com/fkoschi/grind-it/commit/3a6b0268f145554ec4fdd08a7da4e453b6bcc692))
+
 ## [1.12.0](https://github.com/fkoschi/grind-it/compare/v1.11.3...v1.12.0) (2026-02-22)
 
 
