@@ -310,9 +310,12 @@ const SettingsPage: FC = () => {
           </Animated.View>
 
           <Animated.View style={getAnimatedStyle(4)}>
-            <SettingsCard.Root onPress={handleShareData} disabled={isExportLoading}>
+            <SettingsCard.Root
+              onPress={isPro ? handleShareData : () => router.push("/upgrade")}
+              disabled={isPro && isExportLoading}
+            >
               <SettingsCard.Icon color="$accentAmber">
-                {isExportLoading ? (
+                {isPro && isExportLoading ? (
                   <Spinner size="small" color="$accentAmber" />
                 ) : (
                   <Share2 size={24} color="$accentAmber" />
@@ -328,9 +331,31 @@ const SettingsPage: FC = () => {
             </SettingsCard.Root>
           </Animated.View>
 
+          <Animated.View style={getAnimatedStyle(5)}>
+            <SettingsCard.Root
+              onPress={isPro ? handleImportData : () => router.push("/upgrade")}
+              disabled={isPro && isImportLoading}
+            >
+              <SettingsCard.Icon color="$accentMauve">
+                {isPro && isImportLoading ? (
+                  <Spinner size="small" color="$accentMauve" />
+                ) : (
+                  <Upload size={24} color="$accentMauve" />
+                )}
+              </SettingsCard.Icon>
+              <SettingsCard.Content
+                title={t("settings.importData")}
+                subtitle={t("settings.importData.description")}
+              />
+              <SettingsCard.Bg>
+                <ImportBg />
+              </SettingsCard.Bg>
+            </SettingsCard.Root>
+          </Animated.View>
+
           {!isPro && (
             <>
-              <Animated.View style={getAnimatedStyle(5)}>
+              <Animated.View style={getAnimatedStyle(6)}>
                 <SettingsCard.Root onPress={() => router.push("/upgrade")}>
                   <SettingsCard.Icon color="$primary">
                     <Crown size={24} color="$primary" />
@@ -345,7 +370,7 @@ const SettingsPage: FC = () => {
                 </SettingsCard.Root>
               </Animated.View>
 
-              <Animated.View style={getAnimatedStyle(6)}>
+              <Animated.View style={getAnimatedStyle(7)}>
                 <SettingsCard.Root onPress={handleRestore} disabled={isRestoring}>
                   <SettingsCard.Icon color="$accentMauve">
                     {isRestoring ? (
@@ -365,25 +390,6 @@ const SettingsPage: FC = () => {
               </Animated.View>
             </>
           )}
-
-          <Animated.View style={getAnimatedStyle(isPro ? 5 : 7)}>
-            <SettingsCard.Root onPress={handleImportData} disabled={isImportLoading}>
-              <SettingsCard.Icon color="$accentMauve">
-                {isImportLoading ? (
-                  <Spinner size="small" color="$accentMauve" />
-                ) : (
-                  <Upload size={24} color="$accentMauve" />
-                )}
-              </SettingsCard.Icon>
-              <SettingsCard.Content
-                title={t("settings.importData")}
-                subtitle={t("settings.importData.description")}
-              />
-              <SettingsCard.Bg>
-                <ImportBg />
-              </SettingsCard.Bg>
-            </SettingsCard.Root>
-          </Animated.View>
         </View>
       </ScrollView>
       <TabBar />

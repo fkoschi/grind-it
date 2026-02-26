@@ -209,6 +209,23 @@
         }
       }
     },
+    "proRequired" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grind It Pro required"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grind It Pro erforderlich"
+          }
+        }
+      }
+    },
     "grindIt" : {
       "extractionState" : "manual",
       "localizations" : {

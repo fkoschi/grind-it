@@ -28,6 +28,7 @@ import { getChatErrorMessage } from "@/features/chat/utils/chatHelpers";
 import { buildEquipmentSummary } from "@/features/chat/utils/promptHelpers";
 import { useBeanChatContext } from "@/features/chat/hooks/useBeanChatContext";
 import { useChatStore } from "@/store/chat-store";
+import { useIsProUser } from "@/hooks/useIsProUser";
 
 type ChatHelpers = {
   messages: UIMessage[];
@@ -52,6 +53,7 @@ const ChatPage: FC = () => {
   const { db } = useDatabase();
   const { beanId } = useLocalSearchParams<{ beanId?: string }>();
   const beanContext = useBeanChatContext(beanId ? Number(beanId) : undefined);
+  const isPro = useIsProUser();
 
   const keyboardHeight = useKeyboardHeight();
   const onDeviceUnavailableReason = useMemo(() => getOnDeviceUnavailableReason(), []);
@@ -174,7 +176,7 @@ const ChatPage: FC = () => {
           hasMessages={messages.length > 0}
         />
 
-        <ProFeatureOverlay isPro={true}>
+        <ProFeatureOverlay isPro={isPro}>
           <YStack flex={1} bgC="transparent" paddingBottom={keyboardHeight}>
             <ScrollView
               ref={scrollViewRef}

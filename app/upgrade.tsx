@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { Pressable } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button, Spinner, Text, View, XStack, YStack, styled } from "tamagui";
-import { Sparkles, MessageCircle, Crown } from "@tamagui/lucide-icons";
+import { Sparkles, MessageCircle, Crown, Share2, Watch } from "@tamagui/lucide-icons";
 import { useRouter } from "expo-router";
 import { Alert } from "react-native";
 import { useTranslation } from "react-i18next";
@@ -108,6 +108,38 @@ const UpgradePage: FC = () => {
             </ThemedText>
           </YStack>
         </FeatureCard>
+
+        <FeatureCard>
+          <View bgC="$primary" borderRadius="$4" p="$2">
+            <Share2 size={20} color="$white" />
+          </View>
+          <YStack flex={1}>
+            <ThemedText fw={600} fontSize="$4">
+              {t("upgrade.feature.data.title")}
+            </ThemedText>
+            <ThemedText fw={400} fontSize="$2" opacity={0.7}>
+              {t("upgrade.feature.data.description")}
+            </ThemedText>
+          </YStack>
+        </FeatureCard>
+
+        <FeatureCard>
+          <View bgC="$primary" borderRadius="$4" p="$2">
+            <Watch size={20} color="$white" />
+          </View>
+          <YStack flex={1}>
+            <ThemedText fw={600} fontSize="$4">
+              {t("upgrade.feature.watch.title")}
+            </ThemedText>
+            <ThemedText fw={400} fontSize="$2" opacity={0.7}>
+              {t("upgrade.feature.watch.description")}
+            </ThemedText>
+          </YStack>
+        </FeatureCard>
+
+        <ThemedText fw={400} fontSize="$2" textAlign="center" opacity={0.5} mt="$2">
+          {t("upgrade.moreFeatures")}
+        </ThemedText>
       </YStack>
 
       <YStack px="$4" py="$4" pb={insets.bottom + 16} gap="$2">
