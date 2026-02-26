@@ -1,248 +1,241 @@
-import { FC, useRef, useEffect } from "react";
-import { KeyboardAvoidingView, Platform, ScrollView as RNScrollView, Image } from "react-native";
-import { View, YStack, Text, Button, ScrollView } from "tamagui";
-import { useRouter } from "expo-router";
-import { ChevronDown } from "@tamagui/lucide-icons";
-import { Chat } from "@/components/Chat";
+import { FC, useEffect, useMemo, useRef } from "react";
+import { Modal, Platform, ScrollView as RNScrollView } from "react-native";
+import { ScrollView, View, YStack } from "tamagui";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport } from "ai";
-import { fetch as expoFetch } from "expo/fetch";
-import { generateAPIUrl } from "@/utils";
-import Markdown from "react-native-markdown-display";
-import { ProFeatureOverlay } from "@/components/ui";
+import { LinearGradient } from "tamagui/linear-gradient";
 import { useTranslation } from "react-i18next";
+import { apple } from "@react-native-ai/apple";
+import type { UIMessage } from "ai";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { Chat } from "@/components/Chat";
+import { ProFeatureOverlay } from "@/components/ui";
+import {
+  ChatEmptyState,
+  ChatErrorBanner,
+  ChatHeader,
+  ChatMessageList,
+  ChatUnavailableBanner,
+} from "@/components/Chat/ChatScreenParts";
+import { useDatabase } from "@/provider/DatabaseProvider";
+import { useEquipmentData } from "@/hooks/useEquipmentData";
+import { useKeyboardHeight } from "@/hooks/useKeyboard";
+import { ChatAiConfigSheet } from "@/features/chat/components/ChatAiConfigSheet";
+import { useChatAiConfig } from "@/features/chat/hooks/useChatAiConfig";
+import { useChatKnowledgeBase } from "@/features/chat/hooks/useChatKnowledgeBase";
+import { ProviderChatTransport } from "@/features/chat/transport/ProviderChatTransport";
+import { getChatErrorMessage } from "@/features/chat/utils/chatHelpers";
+import { buildEquipmentSummary } from "@/features/chat/utils/promptHelpers";
+import { useBeanChatContext } from "@/features/chat/hooks/useBeanChatContext";
+import { useChatStore } from "@/store/chat-store";
+
+type ChatHelpers = {
+  messages: UIMessage[];
+  error: Error | undefined;
+  sendMessage: (input: { text: string }) => void;
+  setMessages: (messages: UIMessage[]) => void;
+  stop: () => void;
+  status: string;
+};
+
+const getOnDeviceUnavailableReason = (): "android" | "ios" | null => {
+  if (Platform.OS !== "ios") return "android";
+  if (!apple.isAvailable()) return "ios";
+  return null;
+};
 
 const ChatPage: FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const scrollViewRef = useRef<RNScrollView>(null);
+  const { machine, grinder } = useEquipmentData();
+  const { db } = useDatabase();
+  const { beanId } = useLocalSearchParams<{ beanId?: string }>();
+  const beanContext = useBeanChatContext(beanId ? Number(beanId) : undefined);
 
-  const { messages, error, sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({
-      fetch: expoFetch as unknown as typeof globalThis.fetch,
-      api: generateAPIUrl("/api/chat"),
+  const keyboardHeight = useKeyboardHeight();
+  const onDeviceUnavailableReason = useMemo(() => getOnDeviceUnavailableReason(), []);
+
+  const {
+    provider,
+    hasOpenAiApiKey,
+    hasClaudeApiKey,
+    isAiConfigSheetOpen,
+    setIsAiConfigSheetOpen,
+    openAiApiKeyInput,
+    claudeApiKeyInput,
+    isSavingOpenAiKey,
+    isSavingClaudeKey,
+    isDeletingOpenAiKey,
+    isDeletingClaudeKey,
+    setOpenAiApiKeyInput,
+    setClaudeApiKeyInput,
+    getProviderConfig,
+    handleProviderChange,
+    handleSaveOpenAiApiKey,
+    handleSaveClaudeApiKey,
+    handleDeleteOpenAiApiKey,
+    handleDeleteClaudeApiKey,
+  } = useChatAiConfig({ t });
+
+  const { getRagPromptContext } = useChatKnowledgeBase(db);
+
+  const equipmentLabels = useMemo(
+    () => ({
+      machine: t("equipment.machine"),
+      grinder: t("equipment.grinder"),
     }),
-    onError: (error) => console.error(error, "ERROR"),
-  });
+    [i18n.language],
+  );
 
-  // Auto-scroll to bottom when messages change
+  const equipmentSummary = useMemo(
+    () => buildEquipmentSummary(machine, grinder, equipmentLabels, "; "),
+    [machine, grinder, equipmentLabels],
+  );
+
+  const equipmentWelcome = useMemo(
+    () => buildEquipmentSummary(machine, grinder, equipmentLabels, ", "),
+    [machine, grinder, equipmentLabels],
+  );
+
+  const equipmentContext = useMemo(
+    () => (equipmentSummary ? t("chat.equipment.context", { summary: equipmentSummary }) : null),
+    [equipmentSummary, i18n.language],
+  );
+
+  const welcomeMessage = useMemo(
+    () =>
+      equipmentWelcome
+        ? `${t("chat.welcome")}\n\n${t("chat.welcomeEquipmentLine", {
+            equipment: equipmentWelcome,
+          })}`
+        : t("chat.welcome"),
+    [equipmentWelcome, i18n.language],
+  );
+
+  const transport = useMemo(
+    () =>
+      new ProviderChatTransport({
+        systemPrompt: t("chat.systemPrompt"),
+        getEquipmentContext: () => equipmentContext,
+        getBeanContext: () => beanContext,
+        getRagPromptContext,
+        getProviderConfig,
+        unavailableMessage: t("chat.error.appleUnavailable"),
+        missingOpenAiKeyMessage: t("chat.error.openAiMissingKey"),
+        missingClaudeKeyMessage: t("chat.error.claudeMissingKey"),
+      }),
+    [equipmentContext, beanContext, getProviderConfig, getRagPromptContext, i18n.language],
+  );
+
+  const { messages, error, sendMessage, setMessages, stop, status } = useChat({
+    transport,
+    onError: (transportError: Error) => console.error(transportError),
+  }) as ChatHelpers;
+
+  const didRestore = useRef(false);
   useEffect(() => {
-    if (messages.length > 0) {
-      setTimeout(() => {
-        scrollViewRef.current?.scrollToEnd({ animated: true });
-      }, 100);
-    }
+    if (didRestore.current) return;
+    didRestore.current = true;
+    const stored = useChatStore.getState().messages;
+    if (stored.length > 0) setMessages(stored);
+  }, []);
+
+  useEffect(() => {
+    useChatStore.getState().setMessages(messages);
   }, [messages]);
 
-  if (error) {
-    return (
-      <View flex={1} backgroundColor="$screenBackground" padding="$4">
-        <Text color="$red10">Error: {error.message}</Text>
-      </View>
-    );
-  }
+  useEffect(() => {
+    if (messages.length === 0) return;
+
+    setTimeout(() => {
+      scrollViewRef.current?.scrollToEnd({ animated: true });
+    }, 100);
+  }, [messages]);
+
+  const handleReset = () => {
+    stop();
+    setMessages([]);
+    useChatStore.getState().clearMessages();
+  };
+
+  const openAiUnavailable = provider === "openai" && !hasOpenAiApiKey ? "openaiNoKey" : null;
+  const claudeUnavailable = provider === "claude" && !hasClaudeApiKey ? "claudeNoKey" : null;
+  const onDeviceUnavailable = provider === "on-device" ? onDeviceUnavailableReason : null;
+  const activeUnavailableReason = onDeviceUnavailable ?? openAiUnavailable ?? claudeUnavailable;
 
   return (
-    <ProFeatureOverlay>
-      <View flex={1} backgroundColor="$screenBackground">
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={{ flex: 1 }}
-          keyboardVerticalOffset={48}
-        >
-          <YStack flex={1}>
-            {/* Header with Logo and Close Button */}
-            <YStack
-              paddingHorizontal="$4"
-              paddingTop="$3"
-              flexDirection="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Image
-                source={require("@/assets/images/icon.png")}
-                style={{ width: 40, height: 40 }}
-                resizeMode="contain"
-              />
-              <Button
-                size="$3"
-                circular
-                icon={ChevronDown}
-                onPress={() => router.back()}
-                backgroundColor="transparent"
-              />
-            </YStack>
+    <View flex={1} backgroundColor="$screenBackground">
+      <LinearGradient flex={1} colors={["#FFFFFF", "#F5E6D0"]} start={[0, 0]} end={[0, 1]}>
+        <ChatHeader
+          onClose={() => router.back()}
+          onOpenConfig={() => setIsAiConfigSheetOpen(true)}
+          onReset={handleReset}
+          hasMessages={messages.length > 0}
+        />
 
-            {/* Chat Messages */}
+        <ProFeatureOverlay isPro={true}>
+          <YStack flex={1} bgC="transparent" paddingBottom={keyboardHeight}>
             <ScrollView
               ref={scrollViewRef}
               flex={1}
               contentContainerStyle={{
                 paddingHorizontal: "$4",
-                paddingBottom: "$4",
                 flexGrow: 1,
               }}
             >
-              <Chat.Root>
-                {/* Empty State */}
-                {messages.length === 0 && (
-                  <YStack
-                    flex={1}
-                    maxWidth={"90%"}
-                    alignItems="center"
-                    justifyContent="center"
-                    gap="$4"
-                    paddingBottom="$8"
-                  >
-                    <Text fontSize="$9" fontFamily="$sodabery" color="$primary">
-                      {t("chat.title")}
-                    </Text>
-                    <Image
-                      source={require("@/assets/images/no-data.png")}
-                      style={{ width: 200, height: 200 }}
-                      resizeMode="contain"
-                    />
-                    <Chat.Message alignment="left">
-                      <Markdown
-                        style={{
-                          body: {
-                            color: "#000000",
-                            fontSize: 15,
-                            lineHeight: 22,
-                          },
-                          paragraph: {
-                            marginVertical: 0,
-                            fontSize: 15,
-                            lineHeight: 22,
-                          },
-                        }}
-                      >
-                        {t("chat.welcome")}
-                      </Markdown>
-                    </Chat.Message>
-                  </YStack>
-                )}
-
-                {messages.map((msg) => {
-                  const isUser = msg.role === "user";
-                  const text = msg.parts
-                    .filter((part) => part.type === "text")
-                    .map((part) => part.text)
-                    .join("");
-
-                  return (
-                    <Chat.Message key={msg.id} alignment={isUser ? "right" : "left"}>
-                      {isUser ? (
-                        <Chat.Bubble variant="primary">{text}</Chat.Bubble>
-                      ) : (
-                        <Markdown
-                          style={{
-                            body: {
-                              color: "#000000",
-                              fontSize: 15,
-                              lineHeight: 22,
-                            },
-                            heading1: {
-                              fontSize: 20,
-                              fontWeight: "bold",
-                              marginTop: 8,
-                              marginBottom: 4,
-                              color: "#000000",
-                            },
-                            heading2: {
-                              fontSize: 18,
-                              fontWeight: "bold",
-                              marginTop: 8,
-                              marginBottom: 4,
-                              color: "#000000",
-                            },
-                            heading3: {
-                              fontSize: 16,
-                              fontWeight: "bold",
-                              marginTop: 6,
-                              marginBottom: 3,
-                              color: "#000000",
-                            },
-                            strong: {
-                              fontWeight: "bold",
-                              color: "#000000",
-                            },
-                            em: {
-                              fontStyle: "italic",
-                              color: "#000000",
-                            },
-                            list_item: {
-                              marginVertical: 2,
-                              flexDirection: "row",
-                            },
-                            bullet_list: {
-                              marginVertical: 4,
-                            },
-                            ordered_list: {
-                              marginVertical: 4,
-                            },
-                            paragraph: {
-                              marginVertical: 4,
-                              fontSize: 15,
-                              lineHeight: 22,
-                            },
-                            code_inline: {
-                              backgroundColor: "rgba(0, 0, 0, 0.05)",
-                              color: "#000000",
-                              fontFamily: "monospace",
-                              fontSize: 14,
-                              paddingHorizontal: 4,
-                              paddingVertical: 2,
-                              borderRadius: 3,
-                            },
-                            code_block: {
-                              backgroundColor: "rgba(0, 0, 0, 0.05)",
-                              color: "#000000",
-                              fontFamily: "monospace",
-                              fontSize: 14,
-                              padding: 8,
-                              borderRadius: 4,
-                              marginVertical: 4,
-                            },
-                            fence: {
-                              backgroundColor: "rgba(0, 0, 0, 0.05)",
-                              color: "#000000",
-                              fontFamily: "monospace",
-                              fontSize: 14,
-                              padding: 8,
-                              borderRadius: 4,
-                              marginVertical: 4,
-                            },
-                            blockquote: {
-                              backgroundColor: "rgba(0, 0, 0, 0.03)",
-                              borderLeftColor: "rgba(0, 0, 0, 0.2)",
-                              borderLeftWidth: 3,
-                              marginLeft: 0,
-                              paddingLeft: 10,
-                              paddingVertical: 4,
-                              marginVertical: 4,
-                            },
-                            link: {
-                              color: "#0066cc",
-                              textDecorationLine: "underline",
-                            },
-                          }}
-                        >
-                          {text}
-                        </Markdown>
-                      )}
-                    </Chat.Message>
-                  );
-                })}
-              </Chat.Root>
+              {messages.length === 0 && <ChatEmptyState message={welcomeMessage} />}
+              {activeUnavailableReason && (
+                <ChatUnavailableBanner message={t(`chat.unavailable.${activeUnavailableReason}`)} />
+              )}
+              <ChatMessageList messages={messages} />
             </ScrollView>
 
-            {/* Input */}
-            <Chat.Input onSend={(text) => sendMessage({ text })} isLoading={status !== "ready"} />
+            {error && <ChatErrorBanner message={getChatErrorMessage(error, t)} />}
+
+            <Chat.Input
+              onSend={(text) => sendMessage({ text })}
+              isLoading={status !== "ready"}
+              disabled={activeUnavailableReason !== null}
+            />
           </YStack>
-        </KeyboardAvoidingView>
-      </View>
-    </ProFeatureOverlay>
+        </ProFeatureOverlay>
+      </LinearGradient>
+
+      <Modal
+        visible={isAiConfigSheetOpen}
+        animationType="slide"
+        presentationStyle="fullScreen"
+        onRequestClose={() => setIsAiConfigSheetOpen(false)}
+      >
+        <SafeAreaProvider>
+          <SafeAreaView style={{ flex: 1 }} edges={["top", "bottom"]}>
+            <View flex={1} backgroundColor="$screenBackground">
+              <ChatAiConfigSheet
+                provider={provider}
+                hasOpenAiApiKey={hasOpenAiApiKey}
+                hasClaudeApiKey={hasClaudeApiKey}
+                openAiApiKeyInput={openAiApiKeyInput}
+                claudeApiKeyInput={claudeApiKeyInput}
+                isSavingOpenAiKey={isSavingOpenAiKey}
+                isSavingClaudeKey={isSavingClaudeKey}
+                isDeletingOpenAiKey={isDeletingOpenAiKey}
+                isDeletingClaudeKey={isDeletingClaudeKey}
+                onProviderChange={handleProviderChange}
+                onOpenAiApiKeyInputChange={setOpenAiApiKeyInput}
+                onClaudeApiKeyInputChange={setClaudeApiKeyInput}
+                onSaveOpenAiApiKey={handleSaveOpenAiApiKey}
+                onSaveClaudeApiKey={handleSaveClaudeApiKey}
+                onDeleteOpenAiApiKey={handleDeleteOpenAiApiKey}
+                onDeleteClaudeApiKey={handleDeleteClaudeApiKey}
+                onClose={() => setIsAiConfigSheetOpen(false)}
+                t={t}
+              />
+            </View>
+          </SafeAreaView>
+        </SafeAreaProvider>
+      </Modal>
+    </View>
   );
 };
 

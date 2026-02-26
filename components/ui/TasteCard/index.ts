@@ -1,0 +1,1 @@
+export { TasteCard } from "./TasteCard";

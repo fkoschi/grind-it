@@ -1,6 +1,7 @@
 import { TamaguiProvider } from "tamagui";
 import config from "../tamagui.config";
-import { useFonts } from "expo-font";
+import { useFonts } from "@expo-google-fonts/darker-grotesque";
+import { darkerGrotesqueFonts } from "../constants/fonts";
 
 const preview = {
   parameters: {
@@ -14,8 +15,8 @@ const preview = {
   decorators: [
     (Story: any) => {
       const [loaded] = useFonts({
-        Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
-        InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
+        ...darkerGrotesqueFonts,
+        "TBJSodabery-Light": require("../assets/fonts/TBJSodabery-Light.otf"),
       });
 
       if (!loaded) {

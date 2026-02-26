@@ -2,7 +2,7 @@
   "expo": {
     "name": "Grind It",
     "slug": "grind-it",
-    "version": "1.11.2",
+    "version": "1.12.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "grind-it",
@@ -14,7 +14,8 @@
       "appStoreUrl": "https://apps.apple.com/de/app/grind-it/id6740140366",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
-      }
+      },
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {

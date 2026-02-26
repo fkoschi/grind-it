@@ -6,9 +6,10 @@ import { useTranslation } from "react-i18next";
 interface ChatInputProps {
   onSend: (message: string) => void;
   isLoading?: boolean;
+  disabled?: boolean;
 }
 
-export const ChatInput = ({ onSend, isLoading }: ChatInputProps) => {
+export const ChatInput = ({ onSend, isLoading, disabled }: ChatInputProps) => {
   const { t } = useTranslation();
   const [message, setMessage] = useState("");
 
@@ -20,9 +21,9 @@ export const ChatInput = ({ onSend, isLoading }: ChatInputProps) => {
   };
 
   return (
-    <View padding="$4" backgroundColor="$screenBackground">
+    <View padding="$4" opacity={disabled ? 0.5 : 1} pointerEvents={disabled ? "none" : "auto"}>
       <XStack
-        backgroundColor="$gray4"
+        backgroundColor="rgba(255, 255, 255, 0.9)"
         borderRadius="$10" // Pill shape
         paddingHorizontal="$4"
         paddingVertical="$2"
@@ -39,7 +40,7 @@ export const ChatInput = ({ onSend, isLoading }: ChatInputProps) => {
           onChangeText={setMessage}
           onSubmitEditing={handleSend}
           multiline
-          color="$black"
+          color="$secondary"
           numberOfLines={1}
           maxHeight={120} // Limit height growth
         />
@@ -50,7 +51,7 @@ export const ChatInput = ({ onSend, isLoading }: ChatInputProps) => {
           icon={Send}
           backgroundColor="transparent"
           borderWidth={0}
-          color={message.trim() ? "$primary" : "$gray10"}
+          color={message.trim() ? "$primary" : "$gray3"}
           onPress={handleSend}
           disabled={!message.trim() || isLoading}
           hoverStyle={{ scale: 1.1 }}

@@ -42,7 +42,21 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen
+          name="roasteries/[id]/detail"
+          options={{
+            headerShown: false,
+            presentation: "fullScreenModal",
+            animation: "slide_from_bottom",
+          }}
+        />
+        <Stack.Screen
           name="taste/EditTasteComponent"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="equipment/index"
           options={{
             headerShown: false,
           }}
