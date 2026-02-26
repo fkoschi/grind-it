@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Avatar, ScrollView, Spinner, Text, View } from "tamagui";
-import { Coffee, Droplets, Share2, Store, Upload } from "@tamagui/lucide-icons";
+import { Coffee, Crown, Droplets, RotateCcw, Share2, Store, Upload } from "@tamagui/lucide-icons";
 import { useRouter } from "expo-router";
 import { Share, Alert, Platform, Animated } from "react-native";
 import { File, Paths } from "expo-file-system";
@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import Svg, { Path as SvgPath, Circle, Rect } from "react-native-svg";
 
 import { version } from "../package.json";
+import { usePurchase } from "@/provider/PurchaseProvider";
 
 const RoasteriesBg = () => (
   <Svg width={80} height={80} viewBox="0 0 80 80" fill="none">
@@ -70,6 +71,33 @@ const ImportBg = () => (
   </Svg>
 );
 
+const UpgradeBg = () => (
+  <Svg width={80} height={80} viewBox="0 0 80 80" fill="none">
+    <SvgPath
+      d="M40 8 L50 28 L72 28 L54 42 L60 64 L40 50 L20 64 L26 42 L8 28 L30 28 Z"
+      fill="#E89E3F"
+    />
+  </Svg>
+);
+
+const RestoreBg = () => (
+  <Svg width={80} height={80} viewBox="0 0 80 80" fill="none">
+    <Circle cx="40" cy="40" r="28" stroke="#B08EA2" strokeWidth={6} fill="none" />
+    <SvgPath
+      d="M40 12 L40 22 M20 18 L26 26"
+      stroke="#B08EA2"
+      strokeWidth={4}
+      strokeLinecap="round"
+    />
+    <SvgPath
+      d="M40 40 L40 26 M40 40 L52 46"
+      stroke="#B08EA2"
+      strokeWidth={4}
+      strokeLinecap="round"
+    />
+  </Svg>
+);
+
 const SettingsPage: FC = () => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -78,7 +106,25 @@ const SettingsPage: FC = () => {
   const [isSharing, setIsSharing] = useState(false);
 
   const { importData, isImporting } = useDataImport();
+  const { isPro, restorePurchases } = usePurchase();
   const [isPickingFile, setIsPickingFile] = useState(false);
+  const [isRestoring, setIsRestoring] = useState(false);
+
+  const handleRestore = async () => {
+    setIsRestoring(true);
+    try {
+      const restored = await restorePurchases();
+      if (restored) {
+        Alert.alert(t("upgrade.restore.success.title"), t("upgrade.restore.success.message"));
+      } else {
+        Alert.alert(t("upgrade.restore.empty.title"), t("upgrade.restore.empty.message"));
+      }
+    } catch {
+      Alert.alert(t("upgrade.error.title"), t("upgrade.error.message"));
+    } finally {
+      setIsRestoring(false);
+    }
+  };
 
   const handleShareData = async () => {
     setIsSharing(true);
@@ -195,7 +241,7 @@ const SettingsPage: FC = () => {
 
   const isExportLoading = isExporting || isSharing;
   const isImportLoading = isImporting || isPickingFile;
-  const { getAnimatedStyle } = useStaggeredReveal({ itemCount: 6 });
+  const { getAnimatedStyle } = useStaggeredReveal({ itemCount: 8 });
 
   return (
     <View bgC={"$screenBackground"} flex={1}>
@@ -264,9 +310,12 @@ const SettingsPage: FC = () => {
           </Animated.View>
 
           <Animated.View style={getAnimatedStyle(4)}>
-            <SettingsCard.Root onPress={handleShareData} disabled={isExportLoading}>
+            <SettingsCard.Root
+              onPress={isPro ? handleShareData : () => router.push("/upgrade")}
+              disabled={isPro && isExportLoading}
+            >
               <SettingsCard.Icon color="$accentAmber">
-                {isExportLoading ? (
+                {isPro && isExportLoading ? (
                   <Spinner size="small" color="$accentAmber" />
                 ) : (
                   <Share2 size={24} color="$accentAmber" />
@@ -283,9 +332,12 @@ const SettingsPage: FC = () => {
           </Animated.View>
 
           <Animated.View style={getAnimatedStyle(5)}>
-            <SettingsCard.Root onPress={handleImportData} disabled={isImportLoading}>
+            <SettingsCard.Root
+              onPress={isPro ? handleImportData : () => router.push("/upgrade")}
+              disabled={isPro && isImportLoading}
+            >
               <SettingsCard.Icon color="$accentMauve">
-                {isImportLoading ? (
+                {isPro && isImportLoading ? (
                   <Spinner size="small" color="$accentMauve" />
                 ) : (
                   <Upload size={24} color="$accentMauve" />
@@ -300,6 +352,44 @@ const SettingsPage: FC = () => {
               </SettingsCard.Bg>
             </SettingsCard.Root>
           </Animated.View>
+
+          {!isPro && (
+            <>
+              <Animated.View style={getAnimatedStyle(6)}>
+                <SettingsCard.Root onPress={() => router.push("/upgrade")}>
+                  <SettingsCard.Icon color="$primary">
+                    <Crown size={24} color="$primary" />
+                  </SettingsCard.Icon>
+                  <SettingsCard.Content
+                    title={t("settings.upgradePro")}
+                    subtitle={t("settings.upgradePro.description")}
+                  />
+                  <SettingsCard.Bg>
+                    <UpgradeBg />
+                  </SettingsCard.Bg>
+                </SettingsCard.Root>
+              </Animated.View>
+
+              <Animated.View style={getAnimatedStyle(7)}>
+                <SettingsCard.Root onPress={handleRestore} disabled={isRestoring}>
+                  <SettingsCard.Icon color="$accentMauve">
+                    {isRestoring ? (
+                      <Spinner size="small" color="$accentMauve" />
+                    ) : (
+                      <RotateCcw size={24} color="$accentMauve" />
+                    )}
+                  </SettingsCard.Icon>
+                  <SettingsCard.Content
+                    title={t("settings.restorePurchases")}
+                    subtitle={t("settings.restorePurchases.description")}
+                  />
+                  <SettingsCard.Bg>
+                    <RestoreBg />
+                  </SettingsCard.Bg>
+                </SettingsCard.Root>
+              </Animated.View>
+            </>
+          )}
         </View>
       </ScrollView>
       <TabBar />

@@ -1,6 +1,9 @@
+import { usePurchase } from "@/provider/PurchaseProvider";
+
 /**
- * Check wether the user has a pro subscription
+ * Check whether the user has a pro subscription
  */
 export const useIsProUser = (): boolean => {
-  return false;
+  const { isPro } = usePurchase();
+  return isPro;
 };

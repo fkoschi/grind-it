@@ -4,6 +4,7 @@ import { useDatabase } from "./DatabaseProvider";
 import { beanTable } from "@/db/schema";
 import { useWatchSync } from "@/hooks/useWatchSync";
 import { useAllBeansForSync } from "@/hooks/useAllBeansForSync";
+import { usePurchase } from "@/provider/PurchaseProvider";
 
 interface BeanDataContextState {
   allBeans?: { id: number }[];
@@ -17,15 +18,18 @@ export const BeanDataProvider: FC<PropsWithChildren> = ({ children }) => {
   // Query all beans once at the provider level - persists across routes
   const { data: allBeans } = useLiveQuery(db.select({ id: beanTable.id }).from(beanTable));
 
-  // Watch sync integration
+  // Watch sync integration (Pro only)
+  const { isPro } = usePurchase();
   const { syncBeans } = useWatchSync();
   const { beans, roasteries } = useAllBeansForSync();
 
   // Debounce timer ref
   const syncTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Sync beans to Watch when they change (with 2 second debounce)
+  // Sync beans to Watch when they change (with 2 second debounce, Pro only)
   useEffect(() => {
+    if (!isPro) return;
+
     // Clear any existing timer
     if (syncTimerRef.current) {
       clearTimeout(syncTimerRef.current);
@@ -47,7 +51,7 @@ export const BeanDataProvider: FC<PropsWithChildren> = ({ children }) => {
         clearTimeout(syncTimerRef.current);
       }
     };
-  }, [beans, roasteries, syncBeans]);
+  }, [beans, roasteries, syncBeans, isPro]);
 
   return <BeanDataContext.Provider value={{ allBeans }}>{children}</BeanDataContext.Provider>;
 };

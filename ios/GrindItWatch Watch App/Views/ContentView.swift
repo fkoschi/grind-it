@@ -21,7 +21,6 @@ struct ContentView: View {
                         .background(Color.grindItBackground)
                 } else if beans.isEmpty {
                     VStack(spacing: 12) {
-                        // Use the same image as iPhone app
                         Image("no-data")
                             .resizable()
                             .scaledToFit()
@@ -37,6 +36,12 @@ struct ContentView: View {
                             .font(.system(size: 10))
                             .foregroundColor(.grindItCopyText)
                             .multilineTextAlignment(.center)
+
+                        Text(String(localized: "proRequired"))
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundColor(.grindItPrimary)
+                            .multilineTextAlignment(.center)
+                            .padding(.top, 4)
                     }
                     .padding()
                 } else {

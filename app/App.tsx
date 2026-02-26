@@ -10,6 +10,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { DatabaseProvider } from "@/provider/DatabaseProvider";
 import { BeanDataProvider } from "@/provider/BeanDataProvider";
+import { PurchaseProvider } from "@/provider/PurchaseProvider";
 
 import "react-native-reanimated";
 
@@ -43,11 +44,13 @@ const App: FC<PropsWithChildren> = ({ children }) => {
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <GestureHandlerRootView>
         <TamaguiProvider config={tamaguiConfig} defaultTheme="light">
-          <DatabaseProvider>
-            <PortalProvider shouldAddRootHost>
-              <BeanDataProvider>{children}</BeanDataProvider>
-            </PortalProvider>
-          </DatabaseProvider>
+          <PurchaseProvider>
+            <DatabaseProvider>
+              <PortalProvider shouldAddRootHost>
+                <BeanDataProvider>{children}</BeanDataProvider>
+              </PortalProvider>
+            </DatabaseProvider>
+          </PurchaseProvider>
         </TamaguiProvider>
       </GestureHandlerRootView>
     </View>
