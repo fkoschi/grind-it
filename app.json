@@ -2,7 +2,7 @@
   "expo": {
     "name": "Grind It",
     "slug": "grind-it",
-    "version": "1.13.0",
+    "version": "1.13.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "grind-it",
@@ -23,7 +23,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.fkoschi.grindit",
-      "versionCode": 1
+      "versionCode": 3
     },
     "web": {
       "bundler": "metro",
