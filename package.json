@@ -21,9 +21,9 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@ai-sdk/react": "^3.0.41",
     "@ai-sdk/anthropic": "^2.0.66",
     "@ai-sdk/openai": "^3.0.1",
+    "@ai-sdk/react": "^3.0.41",
     "@expensify/react-native-live-markdown": "^0.1.318",
     "@expo-google-fonts/darker-grotesque": "^0.2.3",
     "@expo/vector-icons": "^15.0.3",
@@ -118,6 +118,7 @@
     "lint-staged": "^16.2.7",
     "oxfmt": "^0.24.0",
     "oxlint": "^1.39.0",
+    "reg-cli": "^0.18.14",
     "standard-version": "^9.5.0",
     "typescript": "~5.9.2"
   },

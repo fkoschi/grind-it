@@ -39,3 +39,7 @@ storybook-static
 .actrc
 
 docs/
+
+# Maestro visual regression (generated during CI)
+.maestro/screenshots/actual/
+.maestro/screenshots/diff/

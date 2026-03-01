@@ -36,5 +36,7 @@ export const Default: Story = {
     tastes: [{ flavor: "Chocolate" }, { flavor: "Nutty" }, { flavor: "Caramel" }],
     onEditPress: () => console.log("Edit pressed"),
     onDegreePress: () => console.log("Degree pressed"),
+    onAromaEditPress: () => console.log("Aroma edit pressed"),
+    onAromaInfoPress: () => console.log("Aroma info pressed"),
   },
 };

@@ -35,7 +35,10 @@ const EditRoasteries: FC = () => {
       end={[0, 0]}
     >
       <View>
-        <Pressable style={{ position: "sticky", top: 80, left: 32 }} onPress={() => router.back()}>
+        <Pressable
+          style={{ position: "absolute", top: 80, left: 32 }}
+          onPress={() => router.back()}
+        >
           <Image
             source={require("@/assets/icons/back.png")}
             style={{ width: 24, height: 24, tintColor: "white" }}

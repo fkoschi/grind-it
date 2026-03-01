@@ -1,0 +1,5 @@
+appId: com.fkoschi.grind-it
+---
+- launchApp
+- waitForAnimationToEnd
+- takeScreenshot: dashboard-empty

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-native";
 import type { ComponentType } from "react";
-import Toast from "./Toast";
+import Toast, { type ToastProps } from "./Toast";
 import { View, Button, YStack } from "tamagui";
 import { HeartIcon } from "../Icons";
 import { useToastStore } from "@/store/toast-store";
@@ -21,92 +21,60 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const ToastTrigger = ({ title, ...props }: any) => {
+interface ToastTriggerProps extends ToastProps {
+  title: string;
+}
+
+const ToastTrigger = ({ title, ...props }: ToastTriggerProps) => {
   const { showToast } = useToastStore();
   return <Button onPress={() => showToast(props)}>{title}</Button>;
 };
 
 export const Success: Story = {
-  render: () => (
-    <ToastTrigger title="Show Success Toast" message="Bean saved successfully!" variant="success" />
-  ),
+  args: { message: "Bean saved successfully!", variant: "success" },
+  render: (args) => <ToastTrigger title="Show Success Toast" {...args} />,
 };
 
 export const Error: Story = {
-  render: () => (
-    <ToastTrigger
-      title="Show Error Toast"
-      message="Failed to save bean. Please try again."
-      variant="error"
-    />
-  ),
+  args: { message: "Failed to save bean. Please try again.", variant: "error" },
+  render: (args) => <ToastTrigger title="Show Error Toast" {...args} />,
 };
 
 export const Info: Story = {
-  render: () => (
-    <ToastTrigger
-      title="Show Info Toast"
-      message="This is an informational message"
-      variant="info"
-    />
-  ),
+  args: { message: "This is an informational message", variant: "info" },
+  render: (args) => <ToastTrigger title="Show Info Toast" {...args} />,
 };
 
 export const WithCloseButton: Story = {
-  render: () => (
-    <ToastTrigger
-      title="Show Toast with Close"
-      message="You can close this toast"
-      variant="success"
-      showClose={true}
-      onClose={() => console.log("Toast closed")}
-    />
-  ),
+  args: { message: "You can close this toast", variant: "success", showClose: true },
+  render: (args) => <ToastTrigger title="Show Toast with Close" {...args} />,
 };
 
 export const LongMessage: Story = {
-  render: () => (
-    <ToastTrigger
-      title="Show Long Message"
-      message="This is a very long message that demonstrates how the toast handles longer text content. It should wrap properly and maintain good readability."
-      variant="info"
-      showClose={true}
-    />
-  ),
+  args: {
+    message:
+      "This is a very long message that demonstrates how the toast handles longer text content. It should wrap properly and maintain good readability.",
+    variant: "info",
+    showClose: true,
+  },
+  render: (args) => <ToastTrigger title="Show Long Message" {...args} />,
 };
 
 export const CustomIcon: Story = {
-  render: () => (
-    <ToastTrigger
-      title="Show Custom Icon"
-      message="Added to favorites"
-      variant="success"
-      icon={<HeartIcon fill="white" size={20} />}
-    />
+  args: { message: "Added to favorites", variant: "success" },
+  render: (args) => (
+    <ToastTrigger title="Show Custom Icon" {...args} icon={<HeartIcon fill="white" size={20} />} />
   ),
 };
 
 export const NoIcon: Story = {
-  render: () => (
-    <ToastTrigger
-      title="Show No Icon"
-      message="Simple message without an icon"
-      variant="info"
-      icon={null}
-    />
-  ),
+  args: { message: "Simple message without an icon", variant: "info" },
+  render: (args) => <ToastTrigger title="Show No Icon" {...args} icon={null} />,
 };
 
 export const ErrorWithClose: Story = {
-  render: () => (
-    <ToastTrigger
-      title="Show Error with Close"
-      message="Connection failed"
-      variant="error"
-      showClose={true}
-      onClose={() => console.log("Error toast dismissed")}
-    />
-  ),
+  args: { message: "Connection failed", variant: "error", showClose: true },
+  render: (args) => <ToastTrigger title="Show Error with Close" {...args} />,
 };
 
 const InteractiveExampleComponent = () => {
@@ -156,5 +124,6 @@ const InteractiveExampleComponent = () => {
 };
 
 export const InteractiveExample: Story = {
+  args: { message: "Interactive demo" },
   render: () => <InteractiveExampleComponent />,
 };
