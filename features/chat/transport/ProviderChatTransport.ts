@@ -1,6 +1,6 @@
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
-import { apple } from "@react-native-ai/apple";
+import { Platform } from "react-native";
 import {
   ChatTransport,
   createUIMessageStream,
@@ -11,6 +11,8 @@ import {
 } from "ai";
 import { extractLatestUserQuery } from "@/features/chat/utils/chatHelpers";
 import type { AiProvider } from "@/store/ai-provider-store";
+
+const apple = Platform.OS === "ios" ? require("@react-native-ai/apple").apple : null;
 
 type ProviderConfig = {
   provider: AiProvider;
@@ -91,7 +93,7 @@ export class ProviderChatTransport implements ChatTransport<UIMessage> {
           return;
         }
 
-        if (!apple.isAvailable()) {
+        if (!apple?.isAvailable()) {
           throw new Error(this.options.unavailableMessage);
         }
 

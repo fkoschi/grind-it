@@ -5,7 +5,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useChat } from "@ai-sdk/react";
 import { LinearGradient } from "tamagui/linear-gradient";
 import { useTranslation } from "react-i18next";
-import { apple } from "@react-native-ai/apple";
+const apple = Platform.OS === "ios" ? require("@react-native-ai/apple").apple : null;
 import type { UIMessage } from "ai";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Chat } from "@/components/Chat";
@@ -41,7 +41,7 @@ type ChatHelpers = {
 
 const getOnDeviceUnavailableReason = (): "android" | "ios" | null => {
   if (Platform.OS !== "ios") return "android";
-  if (!apple.isAvailable()) return "ios";
+  if (!apple?.isAvailable()) return "ios";
   return null;
 };
 
