@@ -124,9 +124,27 @@ jobs:
           cd ios
           pod install
 
-      - name: List available simulators
+      - name: Create and boot iOS Simulator
         run: |
-          xcrun simctl list devices available
+          # List available runtimes
+          xcrun simctl list runtimes
+
+          # Get the latest iOS runtime
+          IOS_RUNTIME=$(xcrun simctl list runtimes | grep "iOS" | tail -1 | awk '{print $NF}')
+          echo "Using iOS runtime: $IOS_RUNTIME"
+
+          # Create simulator if it doesn't exist
+          SIMULATOR_ID=$(xcrun simctl list devices | grep "iPhone 16" | grep -oE '\([A-F0-9-]+\)' | tr -d '()' | head -1)
+          if [ -z "$SIMULATOR_ID" ]; then
+            SIMULATOR_ID=$(xcrun simctl create "iPhone 16" com.apple.CoreSimulator.SimDeviceType.iPhone-16 "$IOS_RUNTIME")
+            echo "Created simulator: $SIMULATOR_ID"
+          else
+            echo "Using existing simulator: $SIMULATOR_ID"
+          fi
+
+          # Boot the simulator
+          xcrun simctl boot "$SIMULATOR_ID" || true
+          echo "SIMULATOR_ID=$SIMULATOR_ID" >> $GITHUB_ENV
 
       - name: Build iOS (Debug)
         run: |
@@ -135,6 +153,7 @@ jobs:
             -scheme GrindIt \
             -configuration Debug \
             -sdk iphonesimulator \
+            -destination "id=${{ env.SIMULATOR_ID }}" \
             -derivedDataPath build \
             build \
             CODE_SIGNING_ALLOWED=NO
@@ -143,10 +162,6 @@ jobs:
         run: |
           curl -Ls "https://get.maestro.mobile.dev" | bash
           echo "$HOME/.maestro/bin" >> $GITHUB_PATH
-
-      - name: Boot iOS Simulator
-        run: |
-          xcrun simctl boot "iPhone 16" || true
 
       - name: Install App on Simulator
         run: |
