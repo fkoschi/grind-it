@@ -63,7 +63,7 @@ const EditTastePage: FC<EditTastePageProps> = ({ data }) => {
       >
         <View>
           <Pressable
-            style={{ position: "sticky", top: 80, left: 32 }}
+            style={{ position: "absolute", top: 80, left: 32 }}
             onPress={() => router.back()}
           >
             <Image

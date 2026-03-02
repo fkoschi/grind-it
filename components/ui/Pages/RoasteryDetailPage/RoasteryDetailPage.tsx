@@ -64,7 +64,7 @@ const RoasteryDetailPageUI: FC<RoasteryDetailPageUIProps> = ({
         end={[0, 0]}
       >
         <View>
-          <Pressable style={{ position: "sticky", top: 80, left: 32 }} onPress={onBack}>
+          <Pressable style={{ position: "absolute", top: 80, left: 32 }} onPress={onBack}>
             <ThemedText fw={600} fontSize={16} color="$white">
               ←
             </ThemedText>

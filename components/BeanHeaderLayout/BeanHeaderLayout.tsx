@@ -37,7 +37,10 @@ const BeanHeaderLayout = () => {
         start={[0, 1]}
         end={[0, 0]}
       >
-        <Pressable style={{ position: "sticky", top: 80, left: 32 }} onPress={() => router.back()}>
+        <Pressable
+          style={{ position: "absolute", top: 80, left: 32 }}
+          onPress={() => router.back()}
+        >
           {isAddRoute ? (
             <ClearIcon size={24} fill="#000" />
           ) : (
