@@ -124,13 +124,17 @@ jobs:
           cd ios
           pod install
 
+      - name: List available simulators
+        run: |
+          xcrun simctl list devices available
+
       - name: Build iOS (Debug)
         run: |
           xcodebuild \
             -workspace ios/GrindIt.xcworkspace \
             -scheme GrindIt \
             -configuration Debug \
-            -destination 'generic/platform=iOS Simulator' \
+            -sdk iphonesimulator \
             -derivedDataPath build \
             build \
             CODE_SIGNING_ALLOWED=NO
@@ -142,18 +146,11 @@ jobs:
 
       - name: Boot iOS Simulator
         run: |
-          # Get the first available simulator
-          SIMULATOR_ID=$(xcrun simctl list devices available | grep "iPhone" | head -1 | grep -oE '\([A-F0-9-]+\)' | tr -d '()' || echo "")
-          if [ -z "$SIMULATOR_ID" ]; then
-            # If no simulator found, create one
-            SIMULATOR_ID=$(xcrun simctl create "Test iPhone" com.apple.CoreSimulator.SimDeviceType.iPhone-16 com.apple.CoreSimulator.SimRuntime.iOS-18-4 2>/dev/null | tail -1 || xcrun simctl create "Test iPhone" com.apple.CoreSimulator.SimDeviceType.iPhone-16 2>/dev/null | tail -1)
-          fi
-          xcrun simctl boot "$SIMULATOR_ID" || true
-          echo "SIMULATOR_ID=$SIMULATOR_ID" >> $GITHUB_ENV
+          xcrun simctl boot "iPhone 16" || true
 
       - name: Install App on Simulator
         run: |
-          xcrun simctl install "${{ env.SIMULATOR_ID }}" build/Build/Products/Debug-iphonesimulator/GrindIt.app
+          xcrun simctl install booted build/Build/Products/Debug-iphonesimulator/GrindIt.app
 
       - name: Start Metro bundler
         run: |
