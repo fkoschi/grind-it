@@ -87,7 +87,7 @@ jobs:
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: "16.2"
+          xcode-version: "16.3"
 
       - name: Setup PNPM
         uses: pnpm/action-setup@v4
@@ -130,7 +130,6 @@ jobs:
             -workspace ios/GrindIt.xcworkspace \
             -scheme GrindIt \
             -configuration Debug \
-            -sdk iphonesimulator \
             -destination 'platform=iOS Simulator,OS=latest,name=iPhone 16' \
             -derivedDataPath build \
             build \
@@ -149,6 +148,14 @@ jobs:
         run: |
           xcrun simctl install booted build/Build/Products/Debug-iphonesimulator/GrindIt.app
 
+      - name: Start Metro bundler
+        run: |
+          npx expo start --dev-client --port 8081 &
+          for i in $(seq 1 30); do
+            curl -s http://localhost:8081/status && break
+            sleep 2
+          done
+
       - name: Run Maestro Visual Tests
         env:
           MAESTRO_DRIVER_STARTUP_TIMEOUT: 120000
@@ -159,7 +166,7 @@ jobs:
         if: always()
         run: |
           mkdir -p .maestro/screenshots/actual
-          find ~/.maestro/tests -name "dashboard-empty.png" -exec cp {} .maestro/screenshots/actual/ \;
+          mv dashboard-empty.png .maestro/screenshots/actual/ || true
 
       - name: Compare screenshots against baseline
         run: |

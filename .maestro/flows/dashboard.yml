@@ -1,5 +1,17 @@
 appId: com.fkoschi.grind-it
 ---
 - launchApp
-- waitForAnimationToEnd
+- openLink: "grind-it://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081"
+- tapOn:
+    text: "Open"
+    optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
+- tapOn:
+    text: "Go home"
+    optional: true
+- extendedWaitUntil:
+    visible: "No beans found"
+    timeout: 30000
 - takeScreenshot: dashboard-empty
