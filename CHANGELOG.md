@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/fkoschi/grind-it/compare/v1.13.1...v1.14.0) (2026-03-02)
+
+
+### 🐛 Bug Fixes
+
+* android conditional apple llm loading ([#36](https://github.com/fkoschi/grind-it/issues/36)) ([33e918f](https://github.com/fkoschi/grind-it/commit/33e918f4f25d4a0dc05136d66e0ab7b09ed04cd8))
+
+
+### ✨ Features
+
+* **ci:** add quality gate, fix iOS build, and add Maestro visual regression ([#37](https://github.com/fkoschi/grind-it/issues/37)) ([b49fd13](https://github.com/fkoschi/grind-it/commit/b49fd13b465ddacaf9527044bfaa64784b40cc3b))
+
 ### [1.13.2](https://github.com/fkoschi/grind-it/compare/v1.13.1...v1.13.2) (2026-03-01)
 
 ### [1.13.1](https://github.com/fkoschi/grind-it/compare/v1.13.0...v1.13.1) (2026-02-27)
