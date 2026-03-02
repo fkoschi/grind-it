@@ -124,56 +124,14 @@ jobs:
           cd ios
           pod install
 
-      - name: Create and boot iOS Simulator
+      - name: Build and install iOS app on simulator
         run: |
-          # List available runtimes
-          xcrun simctl list runtimes
-
-          # Get the latest iOS runtime
-          IOS_RUNTIME=$(xcrun simctl list runtimes | grep "iOS" | tail -1 | awk '{print $NF}')
-          echo "Using iOS runtime: $IOS_RUNTIME"
-
-          # Create simulator if it doesn't exist
-          SIMULATOR_ID=$(xcrun simctl list devices | grep "iPhone 16" | grep -oE '\([A-F0-9-]+\)' | tr -d '()' | head -1)
-          if [ -z "$SIMULATOR_ID" ]; then
-            SIMULATOR_ID=$(xcrun simctl create "iPhone 16" com.apple.CoreSimulator.SimDeviceType.iPhone-16 "$IOS_RUNTIME")
-            echo "Created simulator: $SIMULATOR_ID"
-          else
-            echo "Using existing simulator: $SIMULATOR_ID"
-          fi
-
-          # Boot the simulator
-          xcrun simctl boot "$SIMULATOR_ID" || true
-          echo "SIMULATOR_ID=$SIMULATOR_ID" >> $GITHUB_ENV
-
-      - name: Build iOS (Debug)
-        run: |
-          xcodebuild \
-            -workspace ios/GrindIt.xcworkspace \
-            -scheme GrindIt \
-            -configuration Debug \
-            -sdk iphonesimulator \
-            -destination "id=${{ env.SIMULATOR_ID }}" \
-            -derivedDataPath build \
-            build \
-            CODE_SIGNING_ALLOWED=NO
+          npx expo run:ios --no-build-cache
 
       - name: Install Maestro CLI
         run: |
           curl -Ls "https://get.maestro.mobile.dev" | bash
           echo "$HOME/.maestro/bin" >> $GITHUB_PATH
-
-      - name: Install App on Simulator
-        run: |
-          xcrun simctl install booted build/Build/Products/Debug-iphonesimulator/GrindIt.app
-
-      - name: Start Metro bundler
-        run: |
-          npx expo start --dev-client --port 8081 &
-          for i in $(seq 1 30); do
-            curl -s http://localhost:8081/status && break
-            sleep 2
-          done
 
       - name: Run Maestro Visual Tests
         env:
