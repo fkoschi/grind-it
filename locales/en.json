@@ -190,6 +190,8 @@
   "upgrade.restore.success.message": "Your Pro purchase has been restored.",
   "upgrade.restore.empty.title": "Nothing to restore",
   "upgrade.restore.empty.message": "No previous purchases found.",
+  "upgrade.loadError": "Could not load purchase options. Please check your connection and try again.",
+  "upgrade.retryButton": "Try again",
 
   "aroma.edit.title": "Edit aroma profile",
   "aroma.edit.subtitle": "Adjust the aroma strengths for this bean (0-100)",

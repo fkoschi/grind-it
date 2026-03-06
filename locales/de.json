@@ -189,6 +189,8 @@
   "upgrade.restore.success.message": "Dein Pro-Kauf wurde wiederhergestellt.",
   "upgrade.restore.empty.title": "Nichts zum Wiederherstellen",
   "upgrade.restore.empty.message": "Keine früheren Käufe gefunden.",
+  "upgrade.loadError": "Kaufoptionen konnten nicht geladen werden. Bitte prüfe deine Verbindung und versuche es erneut.",
+  "upgrade.retryButton": "Erneut versuchen",
 
   "aroma.edit.title": "Aroma-Profil bearbeiten",
   "aroma.edit.subtitle": "Passe die Aromastärken für diese Bohne an (0-100)",

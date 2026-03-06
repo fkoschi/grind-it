@@ -26,11 +26,13 @@ const UpgradePage: FC = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { purchasePro, restorePurchases, currentOffering, isLoading } = usePurchase();
+  const { purchasePro, restorePurchases, currentOffering, isLoading, hasError, retry } =
+    usePurchase();
   const [isPurchasing, setIsPurchasing] = useState(false);
   const [isRestoring, setIsRestoring] = useState(false);
 
   const price = currentOffering?.lifetime?.product.priceString;
+  const showError = !isLoading && hasError;
 
   const handlePurchase = async () => {
     setIsPurchasing(true);
@@ -143,28 +145,48 @@ const UpgradePage: FC = () => {
       </YStack>
 
       <YStack px="$4" py="$4" pb={insets.bottom + 16} gap="$2">
-        <Button
-          size="$5"
-          bgC="$primary"
-          color="$white"
-          fontWeight="600"
-          onPress={handlePurchase}
-          disabled={isPurchasing || isLoading || !currentOffering}
-          opacity={isPurchasing || isLoading ? 0.7 : 1}
-          borderRadius="$8"
-        >
-          {isPurchasing ? (
-            <Spinner color="$white" />
-          ) : price ? (
-            t("upgrade.purchaseButton", { price })
-          ) : (
-            t("upgrade.purchaseButtonLoading")
-          )}
-        </Button>
+        {showError ? (
+          <>
+            <ThemedText fw={400} fontSize="$3" textAlign="center" opacity={0.6}>
+              {t("upgrade.loadError")}
+            </ThemedText>
+            <Button
+              size="$5"
+              bgC="$primary"
+              color="$white"
+              fontWeight="600"
+              onPress={retry}
+              borderRadius="$8"
+            >
+              {t("upgrade.retryButton")}
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button
+              size="$5"
+              bgC="$primary"
+              color="$white"
+              fontWeight="600"
+              onPress={handlePurchase}
+              disabled={isPurchasing || isLoading || !currentOffering}
+              opacity={isPurchasing || isLoading ? 0.7 : 1}
+              borderRadius="$8"
+            >
+              {isPurchasing ? (
+                <Spinner color="$white" />
+              ) : price ? (
+                t("upgrade.purchaseButton", { price })
+              ) : (
+                t("upgrade.purchaseButtonLoading")
+              )}
+            </Button>
 
-        <ThemedText fw={300} fontSize={12} textAlign="center" opacity={0.5} mt="$1">
-          {t("upgrade.oneTimePurchase")}
-        </ThemedText>
+            <ThemedText fw={300} fontSize={12} textAlign="center" opacity={0.5} mt="$1">
+              {t("upgrade.oneTimePurchase")}
+            </ThemedText>
+          </>
+        )}
 
         <Button
           size="$3"

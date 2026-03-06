@@ -21,6 +21,8 @@ interface PurchaseContextState {
   purchasePro: () => Promise<boolean>;
   restorePurchases: () => Promise<boolean>;
   isLoading: boolean;
+  hasError: boolean;
+  retry: () => void;
 }
 
 const PurchaseContext = createContext<PurchaseContextState | undefined>(undefined);
@@ -29,8 +31,31 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo | null>(null);
   const [currentOffering, setCurrentOffering] = useState<PurchasesOffering | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const [isConfigured, setIsConfigured] = useState(false);
 
   const isPro = customerInfo?.entitlements.active[PRO_ENTITLEMENT_ID] !== undefined;
+
+  const fetchOfferings = async () => {
+    setIsLoading(true);
+    setHasError(false);
+    try {
+      const info = await Purchases.getCustomerInfo();
+      setCustomerInfo(info);
+
+      const offerings = await Purchases.getOfferings();
+      setCurrentOffering(offerings.current);
+
+      if (!offerings.current) {
+        setHasError(true);
+      }
+    } catch (error) {
+      console.error("RevenueCat init error:", error);
+      setHasError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     const apiKey = Platform.OS === "ios" ? IOS_API_KEY : ANDROID_API_KEY;
@@ -38,26 +63,16 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
     if (!apiKey) {
       console.warn("RevenueCat API key not configured. Purchases will not work.");
       setIsLoading(false);
+      setHasError(true);
       return;
     }
 
-    Purchases.configure({ apiKey });
+    if (!isConfigured) {
+      Purchases.configure({ apiKey });
+      setIsConfigured(true);
+    }
 
-    const init = async () => {
-      try {
-        const info = await Purchases.getCustomerInfo();
-        setCustomerInfo(info);
-
-        const offerings = await Purchases.getOfferings();
-        setCurrentOffering(offerings.current);
-      } catch (error) {
-        console.error("RevenueCat init error:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    init();
+    fetchOfferings();
 
     const onCustomerInfoUpdate = (info: CustomerInfo) => {
       setCustomerInfo(info);
@@ -108,7 +123,16 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <PurchaseContext.Provider
-      value={{ isPro, currentOffering, customerInfo, purchasePro, restorePurchases, isLoading }}
+      value={{
+        isPro,
+        currentOffering,
+        customerInfo,
+        purchasePro,
+        restorePurchases,
+        isLoading,
+        hasError,
+        retry: fetchOfferings,
+      }}
     >
       {children}
     </PurchaseContext.Provider>
